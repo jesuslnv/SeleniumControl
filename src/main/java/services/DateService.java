@@ -1,18 +1,12 @@
 package services;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 public final class DateService {
-
-    public static void main(String args[]) {
-        String wawa = getDateOffset(4, "");
-        System.out.println(wawa);
-    }
 
     /**
      * @param date   Is the Date to be returned formatted

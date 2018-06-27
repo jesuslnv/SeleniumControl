@@ -42,9 +42,9 @@ public abstract class Page {
     }
 
     /**
-     * @param mainTabName       The Main Tab Name to return after the validation is finished
-     * @param fileName          The FileName to be tracked in the Downloads Tab
-     * @param timeOutDownload   Is the Maximum time to wait until the file is downloaded
+     * @param mainTabName     The Main Tab Name to return after the validation is finished
+     * @param fileName        The FileName to be tracked in the Downloads Tab
+     * @param timeOutDownload Is the Maximum time to wait until the file is downloaded
      * @return Returns "True" if the download is successful, in other cases will return "False"
      */
     public boolean verify_FileDownloadedCorrectly(String mainTabName, String fileName, int timeOutDownload) {
@@ -67,8 +67,8 @@ public abstract class Page {
     }
 
     /**
-     * @param modalXPath    Is the Modal xPath to be tracked
-     * @param timeOut       Is the Maximum time to wait until the Modal disappears
+     * @param modalXPath Is the Modal xPath to be tracked
+     * @param timeOut    Is the Maximum time to wait until the Modal disappears
      */
     public void waitForModal(String modalXPath, int timeOut) {
         try {
@@ -94,7 +94,7 @@ public abstract class Page {
     /**
      * @param timeOutLoad Time in seconds to wait until Page Loads
      */
-    public void waitForPageLoad(int timeOutLoad){
+    public void waitForPageLoad(int timeOutLoad) {
         WebDriverWait wait = new WebDriverWait(webDriver, timeOutLoad);
         ExpectedCondition<Boolean> pageLoadCondition = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
         wait.until(pageLoadCondition);
