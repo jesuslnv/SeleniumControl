@@ -1,5 +1,7 @@
 package components;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.ArrayList;
 
 public abstract class Page {
+    private static final Logger logger = LogManager.getLogger();
     protected final WebDriver webDriver;
 
     /**
@@ -26,7 +29,8 @@ public abstract class Page {
         for (String windowHandle : webDriver.getWindowHandles()) {
             WebDriver windowObj = webDriver.switchTo().window(windowHandle);
             if (windowObj.getTitle().contains(tabName)) {
-                System.out.println("Switching to Tab: " + tabName);
+                Logger logger = LogManager.getRootLogger();
+                logger.info("Switching to Tab: " + tabName);
                 break;
             }
         }
@@ -38,7 +42,8 @@ public abstract class Page {
     public void switchToLastTab() {
         ArrayList<String> tabs = new ArrayList<>(webDriver.getWindowHandles());
         WebDriver windowObj = webDriver.switchTo().window(tabs.get(tabs.size() - 1));
-        System.out.println("Switching to Tab: " + windowObj.getTitle());
+        Logger logger = LogManager.getRootLogger();
+        logger.info("Switching to Tab: " + windowObj.getTitle());
     }
 
     /**
@@ -87,7 +92,8 @@ public abstract class Page {
                 throw new InterruptedException("Modal TimeOut / Still Visible");
             }
         } catch (Exception ex) {
-            System.out.println("Modal does Not found.");
+            Logger logger = LogManager.getRootLogger();
+            logger.error("Modal not found.");
         }
     }
 
