@@ -32,12 +32,13 @@
     </build>
 
     <dependencies>
+        <!-- SELENIUM -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>3.12.0</version>
         </dependency>
-        <!-- LOG4J DEPENDENCIES -->
+        <!-- LOG4J -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
