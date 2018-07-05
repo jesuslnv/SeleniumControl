@@ -29,7 +29,6 @@ public abstract class Page {
         for (String windowHandle : webDriver.getWindowHandles()) {
             WebDriver windowObj = webDriver.switchTo().window(windowHandle);
             if (windowObj.getTitle().contains(tabName)) {
-                Logger logger = LogManager.getRootLogger();
                 logger.info("Switching to Tab: " + tabName);
                 break;
             }
@@ -42,7 +41,6 @@ public abstract class Page {
     public void switchToLastTab() {
         ArrayList<String> tabs = new ArrayList<>(webDriver.getWindowHandles());
         WebDriver windowObj = webDriver.switchTo().window(tabs.get(tabs.size() - 1));
-        Logger logger = LogManager.getRootLogger();
         logger.info("Switching to Tab: " + windowObj.getTitle());
     }
 
@@ -92,7 +90,6 @@ public abstract class Page {
                 throw new InterruptedException("Modal TimeOut / Still Visible");
             }
         } catch (Exception ex) {
-            Logger logger = LogManager.getRootLogger();
             logger.error("Modal not found.");
         }
     }
