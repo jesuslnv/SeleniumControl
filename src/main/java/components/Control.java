@@ -41,8 +41,9 @@ public abstract class Control {
      * @return True or False if the control Exists or Not
      */
     public boolean isControlExist() {
-        WebElement webElement = webDriver.findElement(By.xpath(xPath));
-        return (webElement == null);
+        WebDriverWait wait = new WebDriverWait(webDriver, 60);
+        WebElement webElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xPath)));
+        return (webElement != null);
     }
 
     /**
