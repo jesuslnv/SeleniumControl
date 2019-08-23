@@ -61,7 +61,7 @@ public abstract class Control {
     /**
      * Put the mouse Above the predefined xPath
      */
-    public void mosueHover() {
+    public void mouseHover() {
         Actions actions = new Actions(webDriver);
         WebDriverWait wait = new WebDriverWait(webDriver, 60);
         WebElement elementSource = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
