@@ -48,7 +48,7 @@ public final class ParameterService {
             SecretKeySpec secretKeySpec = createCustomSecretKeySpec();
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
-            byte[] encrypted = cipher.doFinal(ENCRYPT_KEY.getBytes("UTF-8"));
+            byte[] encrypted = cipher.doFinal(stringToEncrypt.getBytes("UTF-8"));
             stringEncrypted = Base64.getEncoder().encodeToString(encrypted);
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException ex) {
             logger.error("Error while encrypting: " + ex.getMessage());
