@@ -13,13 +13,13 @@ This project doesn't run anything by itself but you can compile and use it as a 
 * [Components](#Components)
     * [Page](#Page)
     * [Control](#Control)
-      * [ButtonControl](#ButtonControl)
-      * [SelectControl](#SelectControl)
-      * [TextControl](#TextControl)
+      1. [ButtonControl](#ButtonControl)
+      2. [SelectControl](#SelectControl)
+      3. [TextControl](#TextControl)
 * [Services](#Services)
     * [DateService](#DateService)
     * [ParameterService](#ParameterService)
-    * [PenetrationTesting](#PenetrationTesting)
+    * [PenetrationTestingService](#PenetrationTestingService)
 
 # Components
 There are different components two main components declared in the project:
@@ -86,8 +86,6 @@ The performed Scan includes **Passive Scan**, **Active Scan** and **Spider Scan*
 |Function Name                      |Action Perfomed|
 |---                                |---|
 |runScanner                         |Returns a Map with an Alert List for each scan type|
-
----
 
 <!-- LINKS -->
 [stars-shield]: https://img.shields.io/github/stars/jesuslnv/SeleniumControl.svg
