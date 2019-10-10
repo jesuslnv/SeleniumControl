@@ -29,20 +29,23 @@ The Page component contains all the functions related to the **WebSite** that al
 
 |Function Name                      |Action Perfomed|
 |---                                |---|
-|[switchToTab]()                        |Switch To Specific Tab using Name|
+|switchToTab                        |Switch To Specific Tab using Name|
 |switchToLastTab                    |Switch To Last Tab|
 |verify_FileDownloadedCorrectly     |Verify File Downloaded Correctly|
 |waitForModal                       |Wait for Modal to disappear|
 |waitForPageLoad                    |Wait for Page Load|
 
-- [x] **"switchToTab":** Switch To Specific Tab using Name
-- [x] **"switchToLastTab":** Switch To Last Tab
-- [x] **"verify_FileDownloadedCorrectly":** Verify File Downloaded Correctly
-- [x] **"waitForModal":** Wait for Modal to disappear
-- [x] **"waitForPageLoad":** Wait for Page Load
-
 ## Control
 The Control component contains all the functions to manipulate all the existing elements in the **WebSite**.
+
+|Function Name                      |Action Perfomed|
+|---                                |---|
+|setxPosition                       |Moves the view in axis "X"|
+|setyPosition                       |Moves the view in axis "Y"|
+|isControlExist                     |Validates if the Control exist in the view|
+|dragAndDrop                        |Allows to Drag and Drop elements in the view |
+|mouseHover                         |Locates the mouse in specified Xpath|
+
 - [x] "setxPosition" Moves the view in axis "X"
 - [x] "setyPosition" Moves the view in axis "Y"
 - [x] "isControlExist" Validates if the Control exist in the view
