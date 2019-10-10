@@ -43,7 +43,7 @@ public final class ParameterService {
      * @param stringToEncrypt Is the name of the String to be encrypted
      * @return Returns the String encrypted
      */
-    public static String encryptData(String stringToEncrypt) {
+    public static String encryptString(String stringToEncrypt) {
         String stringEncrypted = null;
         try {
             SecretKeySpec secretKeySpec = createCustomSecretKeySpec();
@@ -61,7 +61,7 @@ public final class ParameterService {
      * @param stringToDecrypt Is the name of the String to be decrypted
      * @return Returns the String decrypted
      */
-    public static String decryptData(String stringToDecrypt) {
+    public static String decryptString(String stringToDecrypt) {
         String stringDecrypted = null;
         try {
             SecretKeySpec secretKeySpec = createCustomSecretKeySpec();

@@ -10,11 +10,17 @@ import java.util.List;
 
 public final class PenetrationTesting {
     private static final Logger LOGGER = LogManager.getLogger();
+    /* The IP to establish the ZAP connection */
     public static String HTTP_IP = "127.0.0.1";
+    /* The PORT to establish the ZAP connection */
     public static int HTTP_PORT = 9090;
+    /* The STRENGTH level used in the scanner */
     public static String SCANNER_STRENGTH = "High";
+    /* The THRESHOLD level used in the scanner */
     public static String SCANNER_THRESHOLD = "Low";
+    /* The RISK LEVEL minimum to be considered in the Alert List */
     public static String RISK_LEVEL = "MEDIUM";
+    //-------------------------------------------------------------------------------
     private static HashMap<String, String> ATTACK_CODES = new HashMap<>() {{
         put("DIRECTORY_BROWSING", "0");
         put("PATH_TRAVERSAL", "6");
