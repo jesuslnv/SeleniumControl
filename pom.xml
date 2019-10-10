@@ -41,6 +41,12 @@
             <artifactId>selenium-java</artifactId>
             <version>3.141.59</version>
         </dependency>
+        <!-- BDD Security -->
+        <dependency>
+            <groupId>org.zaproxy</groupId>
+            <artifactId>zap-clientapi</artifactId>
+            <version>1.7.0</version>
+        </dependency>
         <!-- LOG4J -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
