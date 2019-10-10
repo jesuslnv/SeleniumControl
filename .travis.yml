@@ -1,8 +1,8 @@
 language: java
 #dist: trusty
 
-#jdk:
-#  - oraclejdk12
+jdk:
+  - oraclejdk12
 
 script:
   #- mvn clean -U package
