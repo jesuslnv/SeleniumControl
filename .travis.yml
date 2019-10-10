@@ -11,6 +11,6 @@ addons:
   sonarcloud:
     organization: "seleniumcontrol"
     token:
-      secure: "c96ce45335355638bf63f0c12369a97354ab893f"
+      secure: "dqpwrrb5Knr7p0v7_ovXPg"
       #c96ce45335355638bf63f0c12369a97354ab893f
       #dqpwrrb5Knr7p0v7_ovXPg
