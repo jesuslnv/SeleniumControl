@@ -2,10 +2,6 @@ language: java
 dist: trusty
 # specifying other dists doesn't make sense because `trusty` doesn't have `oraclejdk8` (fails due to `Sorry, but JDK '[oraclejdk8]' is not known.`) which is the only supported JDK currently. Testing on Mac OSX doesn't make too much sense since it will run the same `maven` based build routine.
 
-jdk:
-  - oraclejdk12
-  - openjdk12
-
 script:
   - mvn clean -U package
   # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
@@ -15,6 +11,8 @@ addons:
   sonarcloud:
     organization: "seleniumcontrol"
     token:
-      secure: "90a4d8d47a8ab4453f5da7efb9c932844a660dca"
+      secure: "a22e3c6812a3a471ade529c6f95ad"
+      #90a4d8d47a8ab4453f5da7efb9c932844a660dca
+      #a22e3c6812a3a471ade529c6f95ad
     branches:
       - master
