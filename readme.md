@@ -46,18 +46,48 @@ The Control component contains all the functions to manipulate all the existing 
 |dragAndDrop                        |Allows to Drag and Drop elements in the view |
 |mouseHover                         |Locates the mouse in specified Xpath|
 
-- [x] "setxPosition" Moves the view in axis "X"
-- [x] "setyPosition" Moves the view in axis "Y"
-- [x] "isControlExist" Validates if the Control exist in the view
-- [x] "dragAndDrop" Allows to Drag and Drop elements in the view 
-- [x] "mouseHover" Locates the mouse in specified Xpath
+There is a list of different controls to be used: 
 
-### 1. ButtonControl
-- "setWaitForClick" Set time in seconds to wait until for do a Click
-- "setAutoScroll" Set the AutoScroll enabled or disabled (True or False)
-- "click" The event to perform a Click on element
-- "rightClick" The event to perform a Right Click on element
-- "doubleClick" The event to perform a Double Click on element
+#### 1. ButtonControl
+Is a control for manipulate any button, it includes links.
+
+#### 2. SelectControl
+Is a control for manipulate any button, it includes links.
+
+#### 3. TextControl
+Is a control for manipulate any button, it includes links.
+
+# Services
+There are different necessary services to manipulate variables in Selenium.
+
+## DateService
+This service helps to interact with a Date and perform different operations
+
+|Function Name                      |Action Perfomed|
+|---                                |---|
+|getDateTimeFormat                  |Returns the Date formatted as String|
+|getDateOffset                      |Returns the Date formatted as String with the amount of days added|
+|addMinutes                         |Returns the Date modified in Minutes as Date|
+
+## ParameterService
+This service allows you to store or manipulate parameters
+
+|Function Name                      |Action Perfomed|
+|---                                |---|
+|setParameter                       |Sets a parameter to be stored|
+|getParameter                       |Returns the value of a previously stored parameter|
+|encryptString                      |Used to encrypt a String|
+|decryptString                      |Used to decrypt a String|
+
+## PenetrationTestingService
+This service allows you to run a scanner that connects directly to a running **OWASP ZAP** instance and execute different tests to detect different security vulnerabilities.
+The performed Scan includes **Passive Scan**, **Active Scan** and **Spider Scan**.
+
+|Function Name                      |Action Perfomed|
+|---                                |---|
+|runScanner                         |Returns a Map with an Alert List for each scan type|
+
+---
 
 <!-- LINKS -->
 [stars-shield]: https://img.shields.io/github/stars/jesuslnv/SeleniumControl.svg

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public final class PenetrationTesting {
+public final class PenetrationTestingService {
     private static final Logger LOGGER = LogManager.getLogger();
     /* The IP to establish the ZAP connection */
     public static String HTTP_IP = "127.0.0.1";
@@ -55,7 +55,7 @@ public final class PenetrationTesting {
 
     /**
      * @param urlToScan Is the url to be scanned
-     * @return Returns a Map with an AlertList group with each scan type (1. Passive Scan, 2. Active Scan, 3. Spider Scan)
+     * @return Returns a Map with an Alert List for each scan type (1. Passive Scan, 2. Active Scan, 3. Spider Scan)
      */
     public static HashMap<String, List<Alert>> runScanner(String urlToScan) {
         hashMapScannedAlertsFound = new HashMap<>();
