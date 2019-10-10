@@ -1,7 +1,7 @@
 [![Stargazers][stars-shield]][stars-url]
-[![Travis][travis-shield]](travis-url)
-[![MIT License][license-shield]](license-url)
-[![LinkedIn][linkedin-shield]](linkedin-url)
+[![Travis][travis-shield]][travis-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
 # Selenium Control
 
@@ -31,7 +31,7 @@ This project doesn't run anything by itself but you can compile and use it as a 
 [stars-url]: https://github.com/jesuslnv/SeleniumControl/stargazers
 [travis-shield]: https://travis-ci.org/jesuslnv/SeleniumControl.svg?branch=master
 [travis-url]: https://travis-ci.org/jesuslnv/SeleniumControl
-[license-shield]: https://img.shields.io/github/license/jesuslnv/SeleniumControl.svg?style=flat-square
+[license-shield]: https://img.shields.io/github/license/jesuslnv/SeleniumControl.svg
 [license-url]: https://github.com/jesuslnv/SeleniumControl/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=1E5799
 [linkedin-url]: https://pe.linkedin.com/in/jesus-luis-neira-vizcarra-27b4b31a
