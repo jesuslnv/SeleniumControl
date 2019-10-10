@@ -13,9 +13,9 @@ This project doesn't run anything by itself but you can compile and use it as a 
 * [Components](#Components)
     * [Page](#Page)
     * [Control](#Control)
-      1. [ButtonControl](#ButtonControl)
-      2. [SelectControl](#SelectControl)
-      3. [TextControl](#TextControl)
+      1. [ButtonControl](#A.ButtonControl)
+      2. [SelectControl](#B.SelectControl)
+      3. [TextControl](#C.TextControl)
 * [Services](#Services)
     * [DateService](#DateService)
     * [ParameterService](#ParameterService)
@@ -48,13 +48,13 @@ The Control component contains all the functions to manipulate all the existing 
 
 There is a list of different controls to be used: 
 
-#### 1. ButtonControl
+#### A.ButtonControl
 Is a control for manipulate any button, it includes links.
 
-#### 2. SelectControl
+#### B.SelectControl
 Is a control for manipulate any button, it includes links.
 
-#### 3. TextControl
+#### C.TextControl
 Is a control for manipulate any button, it includes links.
 
 # Services
