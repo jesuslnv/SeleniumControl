@@ -12,18 +12,18 @@ This is a base project to use as "Base Library" in your main Selenium Projects w
 This project doesn't run anything by itself but you can compile and use it as a base library to call different components in your Selenium Web Testing:
 * Components
   * Page
-	[x] Switch To Specific Tab using Name
-	[x] Switch To Last Tab
-	[x] Verify File Downloaded Correctly
-	[x] Wait for Modal
-	[x] Wait for Page Load
+	- [x] Switch To Specific Tab using Name
+	- [x] Switch To Last Tab
+	- [x] Verify File Downloaded Correctly
+	- [x] Wait for Modal
+	- [x] Wait for Page Load
 	
   * Control
-	[x] Set X Position (Moves the view in axis "X")
-	[x] Set Y Position (Moves the view in axis "Y")
-	[x] Is Control Exist (Validates if the Control exist in the view)
-	[x] Drag And Drop (Allows to Drag and Drop elements in the view) 
-	[x] Mouse Hover (Locates the mouse in specified Xpath)
+	- [x] Set X Position (Moves the view in axis "X")
+	- [x] Set Y Position (Moves the view in axis "Y")
+	- [x] Is Control Exist (Validates if the Control exist in the view)
+	- [x] Drag And Drop (Allows to Drag and Drop elements in the view) 
+	- [x] Mouse Hover (Locates the mouse in specified Xpath)
 	
 
 <!-- LINKS -->
