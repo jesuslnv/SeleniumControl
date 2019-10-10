@@ -58,7 +58,7 @@ Is a control for manipulate any button, it includes links.
 Is a control for manipulate any button, it includes links.
 
 # Services
-There are different necessary services to manipulate variables in Selenium.
+There are different necessary services to manipulate variables in Selenium and also to run tests that don't belong to Selenium by default.
 
 ## DateService
 This service helps to interact with a Date and perform different operations
