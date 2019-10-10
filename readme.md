@@ -7,24 +7,54 @@
 
 This is a base project to use as "Base Library" in your main Selenium Projects which simplifies the declaration and use of web components.
 
-## Getting Started
+# Getting Started
 
 This project doesn't run anything by itself but you can compile and use it as a base library to call different components in your Selenium Web Testing:
-* Components
-  * Page
-	- [x] Switch To Specific Tab using Name
-	- [x] Switch To Last Tab
-	- [x] Verify File Downloaded Correctly
-	- [x] Wait for Modal
-	- [x] Wait for Page Load
-	
-  * Control
-	- [x] Set X Position (Moves the view in axis "X")
-	- [x] Set Y Position (Moves the view in axis "Y")
-	- [x] Is Control Exist (Validates if the Control exist in the view)
-	- [x] Drag And Drop (Allows to Drag and Drop elements in the view) 
-	- [x] Mouse Hover (Locates the mouse in specified Xpath)
-	
+* [Components](#Components)
+    * [Page](#Page)
+    * [Control](#Control)
+      * [ButtonControl](#ButtonControl)
+      * [SelectControl](#SelectControl)
+      * [TextControl](#TextControl)
+* [Services](#Services)
+    * [DateService](#DateService)
+    * [ParameterService](#ParameterService)
+    * [PenetrationTesting](#PenetrationTesting)
+
+# Components
+There are different components two main components declared in the project:
+
+## Page
+The Page component contains all the functions related to the **WebSite** that allows you to navigate it.
+
+|Function Name                      |Action Perfomed|
+|---                                |---|
+|[switchToTab]()                        |Switch To Specific Tab using Name|
+|switchToLastTab                    |Switch To Last Tab|
+|verify_FileDownloadedCorrectly     |Verify File Downloaded Correctly|
+|waitForModal                       |Wait for Modal to disappear|
+|waitForPageLoad                    |Wait for Page Load|
+
+- [x] **"switchToTab":** Switch To Specific Tab using Name
+- [x] **"switchToLastTab":** Switch To Last Tab
+- [x] **"verify_FileDownloadedCorrectly":** Verify File Downloaded Correctly
+- [x] **"waitForModal":** Wait for Modal to disappear
+- [x] **"waitForPageLoad":** Wait for Page Load
+
+## Control
+The Control component contains all the functions to manipulate all the existing elements in the **WebSite**.
+- [x] "setxPosition" Moves the view in axis "X"
+- [x] "setyPosition" Moves the view in axis "Y"
+- [x] "isControlExist" Validates if the Control exist in the view
+- [x] "dragAndDrop" Allows to Drag and Drop elements in the view 
+- [x] "mouseHover" Locates the mouse in specified Xpath
+
+### 1. ButtonControl
+- "setWaitForClick" Set time in seconds to wait until for do a Click
+- "setAutoScroll" Set the AutoScroll enabled or disabled (True or False)
+- "click" The event to perform a Click on element
+- "rightClick" The event to perform a Right Click on element
+- "doubleClick" The event to perform a Double Click on element
 
 <!-- LINKS -->
 [stars-shield]: https://img.shields.io/github/stars/jesuslnv/SeleniumControl.svg
