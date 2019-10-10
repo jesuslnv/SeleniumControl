@@ -49,13 +49,13 @@ The Control component contains all the functions to manipulate all the existing 
 There is a list of different controls to be used: 
 
 #### A. ButtonControl
-Is a control for manipulate any button, it includes links.
+Is a control for manipulate any Button or Links in the **WebSite**.
 
 #### B. SelectControl
-Is a control for manipulate any button, it includes links.
+Is a control for manipulate any Select in the **WebSite**.
 
 #### C. TextControl
-Is a control for manipulate any button, it includes links.
+Is a control for manipulate any Text in the **WebSite**.
 
 # Services
 There are different necessary services to manipulate variables in Selenium and also to run tests that don't belong to Selenium by default.
