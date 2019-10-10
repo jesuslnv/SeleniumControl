@@ -19,8 +19,3 @@ script:
 #        - master
 #c96ce45335355638bf63f0c12369a97354ab893f
 #dqpwrrb5Knr7p0v7_ovXPg
-
-cache:
-  directories:
-    - "$HOME/.m2/repository"
-    - "$HOME/.sonar/cache"
