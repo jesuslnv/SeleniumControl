@@ -1,6 +1,8 @@
 package components.control;
 
 import components.Control;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public final class ButtonControl extends Control {
+    private static final Logger LOGGER = LogManager.getLogger();
     private int timeOut = 60;
     private int waitForClick = 0;
     private boolean autoScroll = true;
@@ -58,8 +61,8 @@ public final class ButtonControl extends Control {
         ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(" + xPosition + "," + yPosition + ")", "");
         try {
             Thread.sleep(waitForClick * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (InterruptedException ex) {
+            LOGGER.error(ex.getMessage());
         }
         btn.click();
     }
@@ -73,8 +76,8 @@ public final class ButtonControl extends Control {
         ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(" + xPosition + "," + yPosition + ")", "");
         try {
             Thread.sleep(waitForClick * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (InterruptedException ex) {
+            LOGGER.error(ex.getMessage());
         }
         Actions action = new Actions(webDriver).contextClick(btn);
         action.build().perform();
@@ -89,8 +92,8 @@ public final class ButtonControl extends Control {
         ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(" + xPosition + "," + yPosition + ")", "");
         try {
             Thread.sleep(waitForClick * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (InterruptedException ex) {
+            LOGGER.error(ex.getMessage());
         }
         Actions action = new Actions(webDriver).doubleClick(btn);
         action.build().perform();

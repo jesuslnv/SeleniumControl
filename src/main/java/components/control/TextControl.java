@@ -1,6 +1,8 @@
 package components.control;
 
 import components.Control;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public final class TextControl extends Control {
+    private static final Logger LOGGER = LogManager.getLogger();
     private int timeOut = 60;
     private int waitAfterClean = 0;
     private int waitForClick = 0;
@@ -66,8 +69,8 @@ public final class TextControl extends Control {
         }
         try {
             Thread.sleep(waitAfterClean * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (InterruptedException ex) {
+            LOGGER.error(ex.getMessage());
         }
         inputText.sendKeys(value);
     }
@@ -85,16 +88,16 @@ public final class TextControl extends Control {
         }
         try {
             Thread.sleep(waitAfterClean * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (InterruptedException ex) {
+            LOGGER.error(ex.getMessage());
         }
         inputText.sendKeys(value);
         WebElement inputAutoComplete = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(autoCompleteXpath)));
         Actions actions = new Actions(webDriver);
         try {
             Thread.sleep(waitForClick * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (InterruptedException ex) {
+            LOGGER.error(ex.getMessage());
         }
         actions.moveToElement(inputAutoComplete).moveToElement(inputAutoComplete).click().build().perform();
     }

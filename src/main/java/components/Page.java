@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.ArrayList;
 
 public abstract class Page {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     protected final WebDriver webDriver;
 
     /**
@@ -29,7 +29,7 @@ public abstract class Page {
         for (String windowHandle : webDriver.getWindowHandles()) {
             WebDriver windowObj = webDriver.switchTo().window(windowHandle);
             if (windowObj.getTitle().contains(tabName)) {
-                logger.info("Switching to Tab: " + tabName);
+                LOGGER.info("Switching to Tab: " + tabName);
                 break;
             }
         }
@@ -41,7 +41,7 @@ public abstract class Page {
     public void switchToLastTab() {
         ArrayList<String> tabs = new ArrayList<>(webDriver.getWindowHandles());
         WebDriver windowObj = webDriver.switchTo().window(tabs.get(tabs.size() - 1));
-        logger.info("Switching to Tab: " + windowObj.getTitle());
+        LOGGER.info("Switching to Tab: " + windowObj.getTitle());
     }
 
     /**
@@ -61,7 +61,7 @@ public abstract class Page {
             WebDriverWait wait = new WebDriverWait(webDriver, timeOutDownload);
             wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[contains(@displayName,'" + fileName + "') and @progress='100'])[1]")));
         } catch (InterruptedException ex) {
-            ex.printStackTrace();
+            LOGGER.error(ex.getMessage());
             return false;
         } finally {
             switchToTab(mainTabName);
@@ -90,7 +90,7 @@ public abstract class Page {
                 throw new InterruptedException("Modal TimeOut / Still Visible");
             }
         } catch (Exception ex) {
-            logger.error("Modal not found.");
+            LOGGER.error("Modal not found.");
         }
     }
 

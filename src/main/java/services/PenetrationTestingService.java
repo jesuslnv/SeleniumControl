@@ -130,7 +130,7 @@ public final class PenetrationTestingService {
             }
             LOGGER.info("Active Scan Completed in " + scanTime + " seconds");
             LOGGER.info("-------------------------------------------------------------------------");
-            //Call the function to print the Alerts based on riskLevel settled
+            //Call the function to display the Alerts based on riskLevel settled
             updateMapSecurityAlertList("ACTIVE SCAN | " + scanTypeName);
         } catch (ClientApiException | InterruptedException ex) {
             LOGGER.error("Active Scan Error: " + ex.getMessage());
@@ -158,7 +158,7 @@ public final class PenetrationTestingService {
             }
             LOGGER.info("Spider Scan Completed in " + scanTime + " seconds");
             LOGGER.info("-------------------------------------------------------------------------");
-            //Call the function to print the Alerts based on riskLevel settled
+            //Call the function to display the Alerts based on riskLevel settled
             updateMapSecurityAlertList("SPIDER SCAN");
         } catch (ClientApiException | InterruptedException ex) {
             LOGGER.error("Spider Scan Error: " + ex.getMessage());
