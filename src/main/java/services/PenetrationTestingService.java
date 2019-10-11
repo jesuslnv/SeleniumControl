@@ -21,34 +21,7 @@ public final class PenetrationTestingService {
     /* The RISK LEVEL minimum to be considered in the Alert List */
     public static String RISK_LEVEL = "MEDIUM";
     //-------------------------------------------------------------------------------
-    private final static HashMap<String, String> ATTACK_CODES = new HashMap<>() {{
-        put("DIRECTORY_BROWSING", "0");
-        put("PATH_TRAVERSAL", "6");
-        put("REMOTE_FILE_INCLUSION", "7");
-        put("SOURCE_CODE_DISCLOSURE", "10045");
-        put("REMOTE_CODE_EXECUTION", "20018");
-        put("EXTERNAL_REDIRECT", "20019");
-        put("BUFFER_OVERFLOW", "30001");
-        put("FORMAT_STRING_ERROR", "30002");
-        put("CRLF_INJECTION", "40003");
-        put("PARAMETER_TAMPERING", "40008");
-        put("SERVER_SIDE_INCLUDE", "40009");
-        put("CROSS_SITE_SCRIPTING", "40012,40014,40016,40017");
-        put("SQL_INJECTION", "40018");
-        put("SCRIPT_ACTIVE_SCAN_RULES", "50000");
-        put("SERVER_SIDE_CODE_INJECTION", "90019");
-        put("REMOTE_OS_COMMAND_INJECTION", "90020");
-        //put("REMOTE_CODE_EXECUTION","20018");
-        //put("LDAP_INJECTION","40015");
-        //put("INSECURE_HTTP_METHODS","90028");
-        //put("XPATH_INJECTION","90021");
-        //put("PADDING_ORACLE","90024");
-        //put("SHELL_SHOCK","10048");
-        //put("XML_EXTERNAL_ENTITY","90023");
-        //put("PARAMETER_POLLUTION","20014");
-        //put("EL_INJECTION","90025");
-        //put("PADDING_ORACLE","90024");
-    }};
+    private static HashMap<String, String> ATTACK_CODES = new HashMap<>();
     private static ClientApi clientApi = new ClientApi(HTTP_IP, HTTP_PORT);
     private static String previousUrlScanned = "";
     private static HashMap<String, List<Alert>> hashMapScannedAlertsFound;
@@ -59,6 +32,8 @@ public final class PenetrationTestingService {
      */
     public static HashMap<String, List<Alert>> runScanner(String urlToScan) {
         hashMapScannedAlertsFound = new HashMap<>();
+        //Call the function to configure the MAP with the ATTACK_CODES
+        configureMapAttackCodes();
         //Verify if the "urlToScan" is equals to the "previousUrlScanned" to avoid multiple scans to the same URL.
         if (urlToScan.equals(previousUrlScanned)) {
             return null;
@@ -200,5 +175,35 @@ public final class PenetrationTestingService {
         }
         //Add Alert List Found to the Map
         hashMapScannedAlertsFound.put(mapScanType, lstAlerts);
+    }
+
+    private static void configureMapAttackCodes(){
+        //Configure Attack Codes in Map
+        ATTACK_CODES.put("DIRECTORY_BROWSING", "0");
+        ATTACK_CODES.put("PATH_TRAVERSAL", "6");
+        ATTACK_CODES.put("REMOTE_FILE_INCLUSION", "7");
+        ATTACK_CODES.put("SOURCE_CODE_DISCLOSURE", "10045");
+        ATTACK_CODES.put("REMOTE_CODE_EXECUTION", "20018");
+        ATTACK_CODES.put("EXTERNAL_REDIRECT", "20019");
+        ATTACK_CODES.put("BUFFER_OVERFLOW", "30001");
+        ATTACK_CODES.put("FORMAT_STRING_ERROR", "30002");
+        ATTACK_CODES.put("CRLF_INJECTION", "40003");
+        ATTACK_CODES.put("PARAMETER_TAMPERING", "40008");
+        ATTACK_CODES.put("SERVER_SIDE_INCLUDE", "40009");
+        ATTACK_CODES.put("CROSS_SITE_SCRIPTING", "40012,40014,40016,40017");
+        ATTACK_CODES.put("SQL_INJECTION", "40018");
+        ATTACK_CODES.put("SCRIPT_ACTIVE_SCAN_RULES", "50000");
+        ATTACK_CODES.put("SERVER_SIDE_CODE_INJECTION", "90019");
+        ATTACK_CODES.put("REMOTE_OS_COMMAND_INJECTION", "90020");
+        //ATTACK_CODES.put("REMOTE_CODE_EXECUTION","20018");
+        //ATTACK_CODES.put("LDAP_INJECTION","40015");
+        //ATTACK_CODES.put("INSECURE_HTTP_METHODS","90028");
+        //ATTACK_CODES.put("XPATH_INJECTION","90021");
+        //ATTACK_CODES.put("PADDING_ORACLE","90024");
+        //ATTACK_CODES.put("SHELL_SHOCK","10048");
+        //ATTACK_CODES.put("XML_EXTERNAL_ENTITY","90023");
+        //ATTACK_CODES.put("PARAMETER_POLLUTION","20014");
+        //ATTACK_CODES.put("EL_INJECTION","90025");
+        //ATTACK_CODES.put("PADDING_ORACLE","90024");
     }
 }
