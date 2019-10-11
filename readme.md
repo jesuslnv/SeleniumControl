@@ -1,5 +1,6 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Travis][travis-shield]][travis-url]
+[![Sonar][sonar-shield]][sonar-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
@@ -92,6 +93,8 @@ The performed Scan includes **Passive Scan**, **Active Scan** and **Spider Scan*
 [stars-url]: https://github.com/jesuslnv/SeleniumControl/stargazers
 [travis-shield]: https://travis-ci.org/jesuslnv/SeleniumControl.svg?branch=master
 [travis-url]: https://travis-ci.org/jesuslnv/SeleniumControl
+[sonar-shield]: https://sonarcloud.io/api/project_badges/measure?project=jesuslnv_SeleniumControl&metric=alert_status
+[sonar-url]: https://sonarcloud.io/dashboard?id=jesuslnv_SeleniumControl
 [license-shield]: https://img.shields.io/github/license/jesuslnv/SeleniumControl.svg
 [license-url]: https://github.com/jesuslnv/SeleniumControl/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=1E5799
