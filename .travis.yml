@@ -4,16 +4,15 @@ language: java
 jdk:
   - oraclejdk12
 
-script:
-  #- mvn clean -U package
-  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=jesuslnv_SeleniumControl
 addons:
   sonarcloud:
     organization: "d3f8a5336ce9588e797e9a71f16a14997b5949856daf7e11f94a1ff158"
     token:
-      secure: "c2ec800f99e877db68bcac7ed3b8d85ce513acd1" # encrypted value of your token
+      secure: "c27e2ce7cefa8b4ecd1dd5c3367ed9637b31ef7a" # encrypted value of your token
     branches:
       - master
-#d3f8a5336ce9588e797e9a71f16a14997b5949856daf7e11f94a1ff158
-#c2ec800f99e877db68bcac7ed3b8d85ce513acd1
+#c27e2ce7cefa8b4ecd1dd5c3367ed9637b31ef7a
+script:
+  #- mvn clean -U package
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=jesuslnv_SeleniumControl
