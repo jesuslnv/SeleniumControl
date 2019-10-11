@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 
 public abstract class Page {
@@ -42,7 +41,7 @@ public abstract class Page {
     public void switchToLastTab() {
         ArrayList<String> tabs = new ArrayList<>(webDriver.getWindowHandles());
         WebDriver windowObj = webDriver.switchTo().window(tabs.get(tabs.size() - 1));
-        LOGGER.info(MessageFormat.format("Switching to Tab: {0}", windowObj.getTitle()));
+        LOGGER.info(String.format("Switching to Tab: %s", windowObj.getTitle()));
     }
 
     /**
