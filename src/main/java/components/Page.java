@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
 public abstract class Page {
@@ -29,7 +30,7 @@ public abstract class Page {
         for (String windowHandle : webDriver.getWindowHandles()) {
             WebDriver windowObj = webDriver.switchTo().window(windowHandle);
             if (windowObj.getTitle().contains(tabName)) {
-                LOGGER.info(String.format("Switching to Tab: %s", tabName));
+                LOGGER.info(MessageFormat.format("Switching to Tab: {0}", tabName));
                 break;
             }
         }
