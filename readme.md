@@ -32,7 +32,7 @@ The Page component contains all the functions related to the **WebSite** that al
 |---                                |---|
 |switchToTab                        |Switch To Specific Tab using Name|
 |switchToLastTab                    |Switch To Last Tab|
-|verify_FileDownloadedCorrectly     |Verify File Downloaded Correctly|
+|fileDownloadedCorrectly            |Verifies if the File is Correctly Downloaded|
 |waitForModal                       |Wait for Modal to disappear|
 |waitForPageLoad                    |Wait for Page Load|
 

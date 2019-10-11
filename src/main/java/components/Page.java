@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 
 public abstract class Page {
@@ -30,7 +29,7 @@ public abstract class Page {
         for (String windowHandle : webDriver.getWindowHandles()) {
             WebDriver windowObj = webDriver.switchTo().window(windowHandle);
             if (windowObj.getTitle().contains(tabName)) {
-                LOGGER.info(MessageFormat.format("Switching to Tab: {0}", tabName));
+                LOGGER.info("Switching to Tab: " + tabName);
                 break;
             }
         }
@@ -51,7 +50,7 @@ public abstract class Page {
      * @param timeOutDownload Is the Maximum time to wait until the file is downloaded
      * @return Returns "True" if the download is successful, in other cases will return "False"
      */
-    public boolean verify_FileDownloadedCorrectly(String mainTabName, String fileName, int timeOutDownload) {
+    public boolean fileDownloadedCorrectly(String mainTabName, String fileName, int timeOutDownload) {
         try {
             Thread.sleep(1000);
             ((JavascriptExecutor) webDriver).executeScript("window.open();");
@@ -59,7 +58,7 @@ public abstract class Page {
             switchToTab("New Tab");
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
-            LOGGER.error(ex.getMessage());
+            LOGGER.error("File Download Error:" + ex.getMessage());
             Thread.currentThread().interrupt();
             return false;
         } finally {
@@ -81,11 +80,11 @@ public abstract class Page {
             WebDriverWait wait = new WebDriverWait(webDriver, 5);
             wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(modalXPath)));
             for (int i = 0; i < timeOut; i++) {
-                isVisible = webDriver.findElements(By.xpath(modalXPath)).size() > 0;
+                isVisible = !webDriver.findElements(By.xpath(modalXPath)).isEmpty();
                 if (isVisible) {
                     Thread.sleep(1000);
                 } else {
-                    i = timeOut;
+                    break;
                 }
             }
             if (isVisible) {
