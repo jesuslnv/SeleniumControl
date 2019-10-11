@@ -57,15 +57,15 @@ public abstract class Page {
             Thread.sleep(1000);
             switchToTab("New Tab");
             Thread.sleep(1000);
-            webDriver.navigate().to("about:downloads");
-            WebDriverWait wait = new WebDriverWait(webDriver, timeOutDownload);
-            wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[contains(@displayName,'" + fileName + "') and @progress='100'])[1]")));
         } catch (InterruptedException ex) {
             LOGGER.error(ex.getMessage());
             return false;
         } finally {
             switchToTab(mainTabName);
         }
+        webDriver.navigate().to("about:downloads");
+        WebDriverWait wait = new WebDriverWait(webDriver, timeOutDownload);
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[contains(@displayName,'" + fileName + "') and @progress='100'])[1]")));
         return true;
     }
 
