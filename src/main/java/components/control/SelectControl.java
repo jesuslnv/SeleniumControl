@@ -17,7 +17,7 @@ import java.util.List;
 public final class SelectControl extends Control {
     private static final Logger LOGGER = LogManager.getLogger();
     private int timeOut = 60;
-    private int waitForClick = 0;
+    private long waitForClick = 0;
 
     /**
      * @param waitForClick Defines the time to wait before click on element
@@ -55,7 +55,7 @@ public final class SelectControl extends Control {
         for (WebElement option : Options) {
             if (option.getText().equals(value)) {
                 try {
-                    Thread.sleep((long) waitForClick * 1000);
+                    Thread.sleep(waitForClick * 1000);
                 } catch (InterruptedException ex) {
                     LOGGER.error(ex.getMessage());
                     Thread.currentThread().interrupt();

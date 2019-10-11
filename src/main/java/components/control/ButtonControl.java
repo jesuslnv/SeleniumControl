@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public final class ButtonControl extends Control {
     private static final Logger LOGGER = LogManager.getLogger();
     private int timeOut = 60;
-    private int waitForClick = 0;
+    private long waitForClick = 0;
     private boolean autoScroll = true;
 
     /**
