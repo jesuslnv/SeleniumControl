@@ -4,9 +4,9 @@ jdk: oraclejdk12
 
 addons:
   sonarcloud:
-    organization: "d3f8a5336ce9588e797e9a71f16a14997b5949856daf7e11f94a1ff158"
+    organization: d3f8a5336ce9588e797e9a71f16a14997b5949856daf7e11f94a1ff158
     token:
-      secure: "c27e2ce7cefa8b4ecd1dd5c3367ed9637b31ef7a" # encrypted value of your token
+      secure: c27e2ce7cefa8b4ecd1dd5c3367ed9637b31ef7a # encrypted value of your token
     branches:
       - master
 
