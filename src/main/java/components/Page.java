@@ -41,7 +41,9 @@ public abstract class Page {
     public void switchToLastTab() {
         ArrayList<String> tabs = new ArrayList<>(webDriver.getWindowHandles());
         WebDriver windowObj = webDriver.switchTo().window(tabs.get(tabs.size() - 1));
-        LOGGER.info(new StringBuilder().append("Switching to Tab: ").append(windowObj.getTitle()).toString());
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Switching to Tab: ").append(windowObj.getTitle());
+        LOGGER.info(stringBuilder.toString());
     }
 
     /**
