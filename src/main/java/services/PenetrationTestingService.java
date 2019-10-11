@@ -32,20 +32,25 @@ public final class PenetrationTestingService {
      */
     public static HashMap<String, List<Alert>> runScanner(String urlToScan) {
         hashMapScannedAlertsFound = new HashMap<>();
-        //Call the function to configure the MAP with the ATTACK_CODES
-        configureMapAttackCodes();
+        //-----------------------------------------------------------------------------------------------------------
         //Verify if the "urlToScan" is equals to the "previousUrlScanned" to avoid multiple scans to the same URL.
         if (urlToScan.equals(previousUrlScanned)) {
             return null;
         }
+        //-----------------------------------------------------------------------------------------------------------
         //Run Passive Scan First (Because is the most basic and simple Scan)
         runPassiveScan();
+        //-----------------------------------------------------------------------------------------------------------
+        //Call the function to configure the MAP with the ATTACK_CODES for "Active Scan"
+        configureMapAttackCodes();
         //Run Active Scan with each specified Penetration Test
         ATTACK_CODES.forEach((attackType, attackTypeId) -> {
             runActiveScan(urlToScan, attackType, attackTypeId);
         });
+        //-----------------------------------------------------------------------------------------------------------
         //Run Spider Scan at Last
         runSpiderScan(urlToScan);
+        //-----------------------------------------------------------------------------------------------------------
         //Set the current URL scanned to the previous
         previousUrlScanned = urlToScan;
         return hashMapScannedAlertsFound;
@@ -177,8 +182,9 @@ public final class PenetrationTestingService {
         hashMapScannedAlertsFound.put(mapScanType, lstAlerts);
     }
 
-    private static void configureMapAttackCodes(){
+    private static void configureMapAttackCodes() {
         //Configure Attack Codes in Map
+        ATTACK_CODES = new HashMap<>();
         ATTACK_CODES.put("DIRECTORY_BROWSING", "0");
         ATTACK_CODES.put("PATH_TRAVERSAL", "6");
         ATTACK_CODES.put("REMOTE_FILE_INCLUSION", "7");
