@@ -81,7 +81,9 @@ public final class TextControl extends Control {
      * @param autoCompleteXpath is the xPath for the displayed popup text to be clicked
      */
     public void setTextAutoComplete(String value, String autoCompleteXpath) {
+        //Using the base SetText
         setText(value);
+        //Adding an option to Click on the displayed autocomplete popup when you write the text
         WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
         WebElement inputAutoComplete = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(autoCompleteXpath)));
         Actions actions = new Actions(webDriver);

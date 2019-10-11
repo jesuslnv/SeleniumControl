@@ -117,10 +117,10 @@ public final class PenetrationTestingService {
             //Call the function to update the AlertList based on riskLevel settled
             updateMapSecurityAlertList("PASSIVE SCAN");
         } catch (ClientApiException ex) {
-            LOGGER.error("Passive Scan Error: " + ex.getMessage());
+            LOGGER.error("Passive Scan \"ClientApiException\" Error: " + ex.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
         } catch (InterruptedException ex) {
-            LOGGER.error("Passive Scan Error: " + ex.getMessage());
+            LOGGER.error("Passive Scan \"InterruptedException\" Error: " + ex.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
             Thread.currentThread().interrupt();
         }
@@ -156,13 +156,13 @@ public final class PenetrationTestingService {
             }
             LOGGER.info("Active Scan Completed in " + scanTime + " seconds");
             LOGGER.info("-------------------------------------------------------------------------");
-            //Call the function to display the Alerts based on riskLevel settled
+            //Call the function to update the AlertList based on riskLevel settled
             updateMapSecurityAlertList("ACTIVE SCAN | " + scanTypeName);
         } catch (ClientApiException ex) {
-            LOGGER.error("Active Scan Error: " + ex.getMessage());
+            LOGGER.error("Active Scan \"ClientApiException\" Error: " + ex.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
         } catch (InterruptedException ex) {
-            LOGGER.error("Active Scan Error: " + ex.getMessage());
+            LOGGER.error("Active Scan \"InterruptedException\" Error: " + ex.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
             Thread.currentThread().interrupt();
         }
@@ -186,15 +186,15 @@ public final class PenetrationTestingService {
                 progress = Integer.parseInt(((ApiResponseElement) clientApi.spider.status(scanId)).getValue());
                 //LOGGER.info("Spider progress : " + progress + "%");
             }
-            LOGGER.info("Spider Scan Completed in " + scanTime + " seconds");
+            LOGGER.info(String.format("Spider Scan Completed in %d seconds", scanTime));
             LOGGER.info("-------------------------------------------------------------------------");
-            //Call the function to display the Alerts based on riskLevel settled
+            //Call the function to update the AlertList based on riskLevel settled
             updateMapSecurityAlertList("SPIDER SCAN");
         } catch (ClientApiException ex) {
-            LOGGER.error("Spider Scan Error: " + ex.getMessage());
+            LOGGER.error("Spider Scan \"ClientApiException\" Error: " + ex.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
         } catch (InterruptedException ex) {
-            LOGGER.error("Spider Scan Error: " + ex.getMessage());
+            LOGGER.error("Spider Scan \"InterruptedException\" Error: " + ex.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
             Thread.currentThread().interrupt();
         }
