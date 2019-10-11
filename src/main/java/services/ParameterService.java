@@ -47,7 +47,7 @@ public final class ParameterService {
         String stringEncrypted = null;
         try {
             SecretKeySpec secretKeySpec = createCustomSecretKeySpec();
-            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");//AES/ECB/PKCS5PADDING
+            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
             byte[] encrypted = cipher.doFinal(stringToEncrypt.getBytes(StandardCharsets.UTF_8));
             stringEncrypted = Base64.getEncoder().encodeToString(encrypted);
