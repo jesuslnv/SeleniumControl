@@ -29,7 +29,7 @@ public abstract class Page {
         for (String windowHandle : webDriver.getWindowHandles()) {
             WebDriver windowObj = webDriver.switchTo().window(windowHandle);
             if (windowObj.getTitle().contains(tabName)) {
-                LOGGER.info("Switching to Tab: " + tabName);
+                LOGGER.info(String.format("Switching to Tab: %s", tabName));
                 break;
             }
         }
