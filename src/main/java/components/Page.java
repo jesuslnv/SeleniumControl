@@ -59,6 +59,7 @@ public abstract class Page {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
             LOGGER.error(ex.getMessage());
+            Thread.currentThread().interrupt();
             return false;
         } finally {
             switchToTab(mainTabName);
