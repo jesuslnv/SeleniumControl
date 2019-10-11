@@ -70,7 +70,7 @@ public final class TextControl extends Control {
         try {
             Thread.sleep(waitAfterClean * 1000);
         } catch (InterruptedException ex) {
-            LOGGER.error(ex.getMessage());
+            LOGGER.error("Error in \"SetText\" Function: " + ex.getMessage());
             Thread.currentThread().interrupt();
         }
         inputText.sendKeys(value);
@@ -81,25 +81,14 @@ public final class TextControl extends Control {
      * @param autoCompleteXpath is the xPath for the displayed popup text to be clicked
      */
     public void setTextAutoComplete(String value, String autoCompleteXpath) {
+        setText(value);
         WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
-        WebElement inputText = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
-        ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(" + xPosition + "," + yPosition + ")", "");
-        if (cleanText) {
-            inputText.clear();
-        }
-        try {
-            Thread.sleep(waitAfterClean * 1000);
-        } catch (InterruptedException ex) {
-            LOGGER.error(ex.getMessage());
-            Thread.currentThread().interrupt();
-        }
-        inputText.sendKeys(value);
         WebElement inputAutoComplete = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(autoCompleteXpath)));
         Actions actions = new Actions(webDriver);
         try {
             Thread.sleep(waitForClick * 1000);
         } catch (InterruptedException ex) {
-            LOGGER.error(ex.getMessage());
+            LOGGER.error("Error in \"SetTextAutoComplete\" Function: " + ex.getMessage());
             Thread.currentThread().interrupt();
         }
         actions.moveToElement(inputAutoComplete).moveToElement(inputAutoComplete).click().build().perform();
