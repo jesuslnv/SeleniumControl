@@ -46,7 +46,7 @@ public final class ParameterService {
     public static String encryptString(String stringToEncrypt) {
         String stringEncrypted = null;
         try {
-            SecretKeySpec secretKeySpec = createCustomSecretKeySpec();
+            SecretKeySpec secretKeySpec = createCustomSecretKeySpec1();
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
             byte[] encrypted = cipher.doFinal(stringToEncrypt.getBytes(StandardCharsets.UTF_8));
@@ -64,7 +64,7 @@ public final class ParameterService {
     public static String decryptString(String stringToDecrypt) {
         String stringDecrypted = null;
         try {
-            SecretKeySpec secretKeySpec = createCustomSecretKeySpec();
+            SecretKeySpec secretKeySpec = createCustomSecretKeySpec2();
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
             byte[] decrypted = Base64.getDecoder().decode(stringToDecrypt);
@@ -75,7 +75,20 @@ public final class ParameterService {
         return stringDecrypted;
     }
 
-    private static SecretKeySpec createCustomSecretKeySpec() {
+    private static SecretKeySpec createCustomSecretKeySpec1() {
+        SecretKeySpec secretKeySpec = null;
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+            byte[] tmpKey = messageDigest.digest(ENCRYPT_KEY.getBytes("UTF-8"));
+            tmpKey = Arrays.copyOf(tmpKey, 16);
+            secretKeySpec = new SecretKeySpec(tmpKey, "AES");
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
+            logger.error(ex.getMessage());
+        }
+        return secretKeySpec;
+    }
+
+    private static SecretKeySpec createCustomSecretKeySpec2() {
         SecretKeySpec secretKeySpec = null;
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
