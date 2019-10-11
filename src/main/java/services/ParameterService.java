@@ -79,10 +79,10 @@ public final class ParameterService {
         SecretKeySpec secretKeySpec = null;
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
-            byte[] tmpKey = messageDigest.digest(ENCRYPT_KEY.getBytes("UTF-8"));
+            byte[] tmpKey = messageDigest.digest(ENCRYPT_KEY.getBytes(StandardCharsets.UTF_8));
             tmpKey = Arrays.copyOf(tmpKey, 16);
             secretKeySpec = new SecretKeySpec(tmpKey, "AES");
-        } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
+        } catch (NoSuchAlgorithmException ex) {
             logger.error(ex.getMessage());
         }
         return secretKeySpec;

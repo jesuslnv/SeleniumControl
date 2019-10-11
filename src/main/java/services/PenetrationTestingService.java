@@ -11,20 +11,62 @@ import java.util.List;
 public final class PenetrationTestingService {
     private static final Logger LOGGER = LogManager.getLogger();
     /* The IP to establish the ZAP connection */
-    public static String HTTP_IP = "127.0.0.1";
+    private static String HTTP_IP = "127.0.0.1";
     /* The PORT to establish the ZAP connection */
-    public static int HTTP_PORT = 9090;
+    private static int HTTP_PORT = 9090;
     /* The STRENGTH level used in the scanner */
-    public static String SCANNER_STRENGTH = "High";
+    private static String SCANNER_STRENGTH = "High";
     /* The THRESHOLD level used in the scanner */
-    public static String SCANNER_THRESHOLD = "Low";
+    private static String SCANNER_THRESHOLD = "Low";
     /* The RISK LEVEL minimum to be considered in the Alert List */
-    public static String RISK_LEVEL = "MEDIUM";
+    private static String RISK_LEVEL = "MEDIUM";
     //-------------------------------------------------------------------------------
     private static HashMap<String, String> ATTACK_CODES = new HashMap<>();
     private static ClientApi clientApi = new ClientApi(HTTP_IP, HTTP_PORT);
     private static String previousUrlScanned = "";
     private static HashMap<String, List<Alert>> hashMapScannedAlertsFound;
+
+    //<editor-fold desc="GETTER AND SETTERS">
+    public static String getHttpIp() {
+        return HTTP_IP;
+    }
+
+    public static void setHttpIp(String httpIp) {
+        HTTP_IP = httpIp;
+    }
+
+    public static int getHttpPort() {
+        return HTTP_PORT;
+    }
+
+    public static void setHttpPort(int httpPort) {
+        HTTP_PORT = httpPort;
+    }
+
+    public static String getScannerStrength() {
+        return SCANNER_STRENGTH;
+    }
+
+    public static void setScannerStrength(String scannerStrength) {
+        SCANNER_STRENGTH = scannerStrength;
+    }
+
+    public static String getScannerThreshold() {
+        return SCANNER_THRESHOLD;
+    }
+
+    public static void setScannerThreshold(String scannerThreshold) {
+        SCANNER_THRESHOLD = scannerThreshold;
+    }
+
+    public static String getRiskLevel() {
+        return RISK_LEVEL;
+    }
+
+    public static void setRiskLevel(String riskLevel) {
+        RISK_LEVEL = riskLevel;
+    }
+    //</editor-fold>
 
     /**
      * @param urlToScan Is the url to be scanned
