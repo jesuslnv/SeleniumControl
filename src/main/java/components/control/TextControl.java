@@ -71,6 +71,7 @@ public final class TextControl extends Control {
             Thread.sleep(waitAfterClean * 1000);
         } catch (InterruptedException ex) {
             LOGGER.error(ex.getMessage());
+            Thread.currentThread().interrupt();
         }
         inputText.sendKeys(value);
     }
@@ -90,6 +91,7 @@ public final class TextControl extends Control {
             Thread.sleep(waitAfterClean * 1000);
         } catch (InterruptedException ex) {
             LOGGER.error(ex.getMessage());
+            Thread.currentThread().interrupt();
         }
         inputText.sendKeys(value);
         WebElement inputAutoComplete = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(autoCompleteXpath)));
@@ -98,6 +100,7 @@ public final class TextControl extends Control {
             Thread.sleep(waitForClick * 1000);
         } catch (InterruptedException ex) {
             LOGGER.error(ex.getMessage());
+            Thread.currentThread().interrupt();
         }
         actions.moveToElement(inputAutoComplete).moveToElement(inputAutoComplete).click().build().perform();
     }

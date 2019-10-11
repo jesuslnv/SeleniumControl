@@ -58,6 +58,7 @@ public final class SelectControl extends Control {
                     Thread.sleep(waitForClick * 1000);
                 } catch (InterruptedException ex) {
                     LOGGER.error(ex.getMessage());
+                    Thread.currentThread().interrupt();
                 }
                 option.click();
                 break;
@@ -77,6 +78,7 @@ public final class SelectControl extends Control {
             Thread.sleep(waitForClick * 1000);
         } catch (InterruptedException ex) {
             LOGGER.error(ex.getMessage());
+            Thread.currentThread().interrupt();
         }
         selector.click();
         WebElement elementToSelect = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(elementXPath)));
@@ -86,6 +88,7 @@ public final class SelectControl extends Control {
             Thread.sleep(waitForClick * 1000);
         } catch (InterruptedException ex) {
             LOGGER.error(ex.getMessage());
+            Thread.currentThread().interrupt();
         }
         elementToSelect.click();
     }
@@ -122,6 +125,7 @@ public final class SelectControl extends Control {
             }
         } catch (InterruptedException ex) {
             LOGGER.error(ex.getMessage());
+            Thread.currentThread().interrupt();
         }
     }
 }

@@ -90,8 +90,9 @@ public abstract class Page {
             if (isVisible) {
                 throw new InterruptedException("Modal TimeOut / Still Visible");
             }
-        } catch (Exception ex) {
+        } catch (InterruptedException ex) {
             LOGGER.error("Modal not found.");
+            Thread.currentThread().interrupt();
         }
     }
 

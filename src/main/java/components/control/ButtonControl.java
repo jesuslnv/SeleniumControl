@@ -63,6 +63,7 @@ public final class ButtonControl extends Control {
             Thread.sleep(waitForClick * 1000);
         } catch (InterruptedException ex) {
             LOGGER.error(ex.getMessage());
+            Thread.currentThread().interrupt();
         }
         btn.click();
     }
@@ -78,6 +79,7 @@ public final class ButtonControl extends Control {
             Thread.sleep(waitForClick * 1000);
         } catch (InterruptedException ex) {
             LOGGER.error(ex.getMessage());
+            Thread.currentThread().interrupt();
         }
         Actions action = new Actions(webDriver).contextClick(btn);
         action.build().perform();
@@ -94,6 +96,7 @@ public final class ButtonControl extends Control {
             Thread.sleep(waitForClick * 1000);
         } catch (InterruptedException ex) {
             LOGGER.error(ex.getMessage());
+            Thread.currentThread().interrupt();
         }
         Actions action = new Actions(webDriver).doubleClick(btn);
         action.build().perform();
