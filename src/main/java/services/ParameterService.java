@@ -44,11 +44,11 @@ public final class ParameterService {
      * @param stringToEncrypt Is the name of the String to be encrypted
      * @return Returns the String encrypted
      */
-    public static String encryptString(String stringToEncrypt) {
+    public static String encryptString(String stringToEncrypt, String stringKeyInstance) {
         String stringEncrypted = null;
         try {
             SecretKeySpec secretKeySpec = createCustomSecretKeySpec();
-            Cipher cipher = Cipher.getInstance(ENCRYPT_KEY_RANDOM);//"RSA/ECB/PKCS1Padding"
+            Cipher cipher = Cipher.getInstance(stringKeyInstance);//"RSA/ECB/PKCS1Padding"
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
             byte[] encrypted = cipher.doFinal(stringToEncrypt.getBytes(StandardCharsets.UTF_8));
             stringEncrypted = Base64.getEncoder().encodeToString(encrypted);
@@ -62,11 +62,11 @@ public final class ParameterService {
      * @param stringToDecrypt Is the name of the String to be decrypted
      * @return Returns the String decrypted
      */
-    public static String decryptString(String stringToDecrypt) {
+    public static String decryptString(String stringToDecrypt, String stringKeyInstance) {
         String stringDecrypted = null;
         try {
             SecretKeySpec secretKeySpec = createCustomSecretKeySpec();
-            Cipher cipher = Cipher.getInstance(ENCRYPT_KEY_RANDOM);
+            Cipher cipher = Cipher.getInstance(stringKeyInstance);
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
             byte[] decrypted = Base64.getDecoder().decode(stringToDecrypt);
             stringDecrypted = new String(cipher.doFinal(decrypted));
