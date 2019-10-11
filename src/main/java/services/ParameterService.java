@@ -1,5 +1,7 @@
 package services;
 
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,19 +11,18 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public final class ParameterService {
     private static final Logger logger = LogManager.getLogger();
     private static Map<String, String> scDictionary = new HashMap<>();
     private final static String ENCRYPT_KEY = "MisterousKeyGeneratedByJesusNV";
+    private final static String ENCRYPT_KEY_RANDOM = RandomStringUtils.random(64, false, true);
 
     /**
      * @param parameterName  Is the name of the parameter to be stored
@@ -47,7 +48,7 @@ public final class ParameterService {
         String stringEncrypted = null;
         try {
             SecretKeySpec secretKeySpec = createCustomSecretKeySpec();
-            Cipher cipher = Cipher.getInstance("CVE-2017-7902");
+            Cipher cipher = Cipher.getInstance(ENCRYPT_KEY_RANDOM);//"RSA/ECB/PKCS1Padding"
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
             byte[] encrypted = cipher.doFinal(stringToEncrypt.getBytes(StandardCharsets.UTF_8));
             stringEncrypted = Base64.getEncoder().encodeToString(encrypted);
@@ -65,7 +66,7 @@ public final class ParameterService {
         String stringDecrypted = null;
         try {
             SecretKeySpec secretKeySpec = createCustomSecretKeySpec();
-            Cipher cipher = Cipher.getInstance("CVE-2017-7902");
+            Cipher cipher = Cipher.getInstance(ENCRYPT_KEY_RANDOM);
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
             byte[] decrypted = Base64.getDecoder().decode(stringToDecrypt);
             stringDecrypted = new String(cipher.doFinal(decrypted));
