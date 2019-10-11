@@ -21,7 +21,7 @@ public final class PenetrationTestingService {
     /* The RISK LEVEL minimum to be considered in the Alert List */
     public static String RISK_LEVEL = "MEDIUM";
     //-------------------------------------------------------------------------------
-    private static HashMap<String, String> ATTACK_CODES = new HashMap<>() {{
+    private final static HashMap<String, String> ATTACK_CODES = new HashMap<>() {{
         put("DIRECTORY_BROWSING", "0");
         put("PATH_TRAVERSAL", "6");
         put("REMOTE_FILE_INCLUSION", "7");
