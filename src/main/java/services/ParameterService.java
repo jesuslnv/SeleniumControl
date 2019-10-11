@@ -20,7 +20,7 @@ import java.util.Map;
 public final class ParameterService {
     private static final Logger logger = LogManager.getLogger();
     private static Map<String, String> scDictionary = new HashMap<>();
-    private final static String ENCRYPT_KEY = "MisterousKeyGeneratedByJesusNV";
+    private final static String ENCRYPT_KEY = "MisterousKeyGeneratedByJesusLNV";
 
     /**
      * @param parameterName  Is the name of the parameter to be stored
