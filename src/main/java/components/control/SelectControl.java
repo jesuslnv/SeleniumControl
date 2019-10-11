@@ -55,7 +55,7 @@ public final class SelectControl extends Control {
         for (WebElement option : Options) {
             if (option.getText().equals(value)) {
                 try {
-                    Thread.sleep(waitForClick * 1000);
+                    Thread.sleep((long) waitForClick * 1000);
                 } catch (InterruptedException ex) {
                     LOGGER.error(ex.getMessage());
                     Thread.currentThread().interrupt();
