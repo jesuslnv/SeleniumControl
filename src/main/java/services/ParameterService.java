@@ -3,24 +3,25 @@ package services;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+import javax.crypto.*;
+import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
 public final class ParameterService {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private static Map<String, String> scDictionary = new HashMap<>();
-    private static final String ENCRYPT_KEY = "MisterousKeyGeneratedByJesusLNV";
+    private static final String ENCRYPT_KEY = "KeyGeneratedByJesusLNV";
 
     private ParameterService() {
     }
@@ -45,16 +46,16 @@ public final class ParameterService {
      * @param stringToEncrypt Is the name of the String to be encrypted
      * @return Returns the String encrypted
      */
-    public static String encryptString(String stringToEncrypt) {
+    public static String encryptString(String stringToEncrypt, String instanceKey) {
         String stringEncrypted = null;
         try {
             SecretKeySpec secretKeySpec = createCustomSecretKeySpec();
-            final Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            final Cipher cipher = Cipher.getInstance(instanceKey);
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
             byte[] encrypted = cipher.doFinal(stringToEncrypt.getBytes(StandardCharsets.UTF_8));
             stringEncrypted = Base64.getEncoder().encodeToString(encrypted);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException ex) {
-            logger.error("Error while encrypting: {}", ex.getMessage());
+            LOGGER.error("Error while encrypting: {}", ex.getMessage());
         }
         return stringEncrypted;
     }
@@ -63,16 +64,16 @@ public final class ParameterService {
      * @param stringToDecrypt Is the name of the String to be decrypted
      * @return Returns the String decrypted
      */
-    public static String decryptString(String stringToDecrypt) {
+    public static String decryptString(String stringToDecrypt, String instanceKey) {
         String stringDecrypted = null;
         try {
             SecretKeySpec secretKeySpec = createCustomSecretKeySpec();
-            final Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            final Cipher cipher = Cipher.getInstance(instanceKey);
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
             byte[] decrypted = Base64.getDecoder().decode(stringToDecrypt);
             stringDecrypted = new String(cipher.doFinal(decrypted));
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException ex) {
-            logger.error("Error while decrypting: {}", ex.getMessage());
+            LOGGER.error("Error while decrypting: {}", ex.getMessage());
         }
         return stringDecrypted;
     }
@@ -85,7 +86,7 @@ public final class ParameterService {
             tmpKey = Arrays.copyOf(tmpKey, 16);
             secretKeySpec = new SecretKeySpec(tmpKey, "AES");
         } catch (NoSuchAlgorithmException ex) {
-            logger.error("Error creating Custom Key Spec: {}", ex.getMessage());
+            LOGGER.error("Error creating Custom Key Spec: {}", ex.getMessage());
         }
         return secretKeySpec;
     }
