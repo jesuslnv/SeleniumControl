@@ -22,6 +22,9 @@ public final class ParameterService {
     private static Map<String, String> scDictionary = new HashMap<>();
     private static final String ENCRYPT_KEY = "MisterousKeyGeneratedByJesusLNV";
 
+    private ParameterService() {
+    }
+
     /**
      * @param parameterName  Is the name of the parameter to be stored
      * @param parameterValue Is the value of the parameter to be stored
