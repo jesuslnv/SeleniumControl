@@ -50,7 +50,7 @@ public final class ParameterService {
         String stringEncrypted = null;
         try {
             SecretKeySpec secretKeySpec = createCustomSecretKeySpec();
-            final Cipher cipher = Cipher.getInstance(instanceKey);
+            Cipher cipher = Cipher.getInstance(instanceKey);
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
             byte[] encrypted = cipher.doFinal(stringToEncrypt.getBytes(StandardCharsets.UTF_8));
             stringEncrypted = Base64.getEncoder().encodeToString(encrypted);
@@ -68,7 +68,7 @@ public final class ParameterService {
         String stringDecrypted = null;
         try {
             SecretKeySpec secretKeySpec = createCustomSecretKeySpec();
-            final Cipher cipher = Cipher.getInstance(instanceKey);
+            Cipher cipher = Cipher.getInstance(instanceKey);
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
             byte[] decrypted = Base64.getDecoder().decode(stringToDecrypt);
             stringDecrypted = new String(cipher.doFinal(decrypted));
