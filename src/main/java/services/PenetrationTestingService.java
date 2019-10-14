@@ -86,9 +86,9 @@ public final class PenetrationTestingService {
         //Call the function to configure the MAP with the ATTACK_CODES for "Active Scan"
         configureMapAttackCodes();
         //Run Active Scan with each specified Penetration Test
-        ATTACK_CODES.forEach((attackType, attackTypeId) -> {
-            runActiveScan(urlToScan, attackType, attackTypeId);
-        });
+        ATTACK_CODES.forEach((attackType, attackTypeId) ->
+                runActiveScan(urlToScan, attackType, attackTypeId)
+        );
         //-----------------------------------------------------------------------------------------------------------
         //Run Spider Scan at Last
         runSpiderScan(urlToScan);
@@ -152,7 +152,6 @@ public final class PenetrationTestingService {
                 Thread.sleep(1000);
                 scanTime++;
                 progress = Integer.parseInt(((ApiResponseElement) clientApi.ascan.status(scanId)).getValue());
-                //LOGGER.info("Active Scan progress: " + progress + "%");
             }
             LOGGER.info("Active Scan Completed in {} seconds", scanTime);
             LOGGER.info("-------------------------------------------------------------------------");
@@ -184,7 +183,6 @@ public final class PenetrationTestingService {
                 Thread.sleep(1000);
                 scanTime++;
                 progress = Integer.parseInt(((ApiResponseElement) clientApi.spider.status(scanId)).getValue());
-                //LOGGER.info("Spider progress : " + progress + "%");
             }
             LOGGER.info("Spider Scan Completed in {} seconds", scanTime);
             LOGGER.info("-------------------------------------------------------------------------");

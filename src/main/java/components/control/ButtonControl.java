@@ -56,9 +56,8 @@ public final class ButtonControl extends Control {
         WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
         WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
         if (autoScroll) {
-            ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView(true);", btn);
+            navigateToElementLocation(btn);
         }
-        ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(" + xPosition + "," + yPosition + ")", "");
         try {
             Thread.sleep(waitForClick * 1000);
         } catch (InterruptedException ex) {
@@ -74,7 +73,9 @@ public final class ButtonControl extends Control {
     public void rightClick() {
         WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
         WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
-        ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(" + xPosition + "," + yPosition + ")", "");
+        if (autoScroll) {
+            navigateToElementLocation(btn);
+        }
         try {
             Thread.sleep(waitForClick * 1000);
         } catch (InterruptedException ex) {
@@ -91,7 +92,9 @@ public final class ButtonControl extends Control {
     public void doubleClick() {
         WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
         WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
-        ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(" + xPosition + "," + yPosition + ")", "");
+        if (autoScroll) {
+            navigateToElementLocation(btn);
+        }
         try {
             Thread.sleep(waitForClick * 1000);
         } catch (InterruptedException ex) {
@@ -100,5 +103,10 @@ public final class ButtonControl extends Control {
         }
         Actions action = new Actions(webDriver).doubleClick(btn);
         action.build().perform();
+    }
+
+    private void navigateToElementLocation(WebElement webElement) {
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView(true);", webElement);
+        //Element to Move XY ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(" + xPosition + "," + yPosition + ")", "");
     }
 }

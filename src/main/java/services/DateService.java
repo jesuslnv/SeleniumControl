@@ -30,7 +30,7 @@ public final class DateService {
         if (format == null || format.length() < 8) {
             format = "MM/dd/yyyy";
         }
-        Calendar cal = GregorianCalendar.getInstance();
+        Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_YEAR, daysOffset);
         Date before = cal.getTime();
         SimpleDateFormat formatter = new SimpleDateFormat(format);

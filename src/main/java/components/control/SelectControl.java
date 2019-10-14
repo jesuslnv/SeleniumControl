@@ -51,8 +51,8 @@ public final class SelectControl extends Control {
         WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
         WebElement selector = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
         Select dropDown = new Select(selector);
-        List<WebElement> Options = dropDown.getOptions();
-        for (WebElement option : Options) {
+        List<WebElement> options = dropDown.getOptions();
+        for (WebElement option : options) {
             if (option.getText().equals(value)) {
                 try {
                     Thread.sleep(waitForClick * 1000);
