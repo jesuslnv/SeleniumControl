@@ -107,6 +107,5 @@ public final class ButtonControl extends Control {
 
     private void navigateToElementLocation(WebElement webElement) {
         ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView(true);", webElement);
-        //Element to Move XY ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(" + xPosition + "," + yPosition + ")", "");
     }
 }

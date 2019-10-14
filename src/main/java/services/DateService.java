@@ -4,9 +4,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public final class DateService {
+
+    private DateService() {
+    }
 
     /**
      * @param date   Is the Date to be returned formatted
@@ -43,7 +45,7 @@ public final class DateService {
      * @return Returns the Date modified in Minutes as Date
      */
     public static Date addMinutes(Date date, int minutes) {
-        Calendar cal = GregorianCalendar.getInstance();
+        Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.MINUTE, minutes);
         return cal.getTime();

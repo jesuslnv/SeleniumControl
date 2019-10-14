@@ -157,11 +157,11 @@ public final class PenetrationTestingService {
             LOGGER.info("-------------------------------------------------------------------------");
             //Call the function to update the AlertList based on riskLevel settled
             updateMapSecurityAlertList("ACTIVE SCAN | " + scanTypeName);
-        } catch (ClientApiException ex) {
-            LOGGER.error("Active Scan \"ClientApiException\" Error: {}", ex.getMessage());
+        } catch (ClientApiException asEx) {
+            LOGGER.error("Active Scan \"ClientApiException\" Error: {}", asEx.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
-        } catch (InterruptedException ex) {
-            LOGGER.error("Active Scan \"InterruptedException\" Error: {}", ex.getMessage());
+        } catch (InterruptedException asEx) {
+            LOGGER.error("Active Scan \"InterruptedException\" Error: {}", asEx.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
             Thread.currentThread().interrupt();
         }
@@ -188,11 +188,11 @@ public final class PenetrationTestingService {
             LOGGER.info("-------------------------------------------------------------------------");
             //Call the function to update the AlertList based on riskLevel settled
             updateMapSecurityAlertList("SPIDER SCAN");
-        } catch (ClientApiException ex) {
-            LOGGER.error("Spider Scan \"ClientApiException\" Error: {}", ex.getMessage());
+        } catch (ClientApiException ssEx) {
+            LOGGER.error("Spider Scan \"ClientApiException\" Error: {}", ssEx.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
-        } catch (InterruptedException ex) {
-            LOGGER.error("Spider Scan \"InterruptedException\" Error: {}", ex.getMessage());
+        } catch (InterruptedException ssEx) {
+            LOGGER.error("Spider Scan \"InterruptedException\" Error: {}", ssEx.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
             Thread.currentThread().interrupt();
         }
