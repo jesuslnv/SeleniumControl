@@ -3,16 +3,15 @@ package services;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.crypto.*;
-import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
@@ -46,11 +45,11 @@ public final class ParameterService {
      * @param stringToEncrypt Is the name of the String to be encrypted
      * @return Returns the String encrypted
      */
-    public static String encryptString(String stringToEncrypt, String instanceKey) {
+    public static String encryptString(String stringToEncrypt) {
         String stringEncrypted = null;
         try {
             SecretKeySpec secretKeySpec = createCustomSecretKeySpec();
-            Cipher cipher = Cipher.getInstance(instanceKey);
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
             byte[] encrypted = cipher.doFinal(stringToEncrypt.getBytes(StandardCharsets.UTF_8));
             stringEncrypted = Base64.getEncoder().encodeToString(encrypted);
@@ -64,11 +63,11 @@ public final class ParameterService {
      * @param stringToDecrypt Is the name of the String to be decrypted
      * @return Returns the String decrypted
      */
-    public static String decryptString(String stringToDecrypt, String instanceKey) {
+    public static String decryptString(String stringToDecrypt) {
         String stringDecrypted = null;
         try {
             SecretKeySpec secretKeySpec = createCustomSecretKeySpec();
-            Cipher cipher = Cipher.getInstance(instanceKey);
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
             byte[] decrypted = Base64.getDecoder().decode(stringToDecrypt);
             stringDecrypted = new String(cipher.doFinal(decrypted));
