@@ -7,6 +7,7 @@ import org.zaproxy.clientapi.core.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class PenetrationTestingService {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -75,7 +76,7 @@ public final class PenetrationTestingService {
      * @param urlToScan Is the url to be scanned
      * @return Returns a Map with an Alert List for each scan type (1. Passive Scan, 2. Active Scan, 3. Spider Scan)
      */
-    public static HashMap<String, List<Alert>> runScanner(String urlToScan) {
+    public static Map<String, List<Alert>> runScanner(String urlToScan) {
         //Instances the "clientApi" with the previously configured IP and PORT
         clientApi = new ClientApi(httpIp, httpPort);
         hashMapScannedAlertsFound = new HashMap<>();
@@ -118,16 +119,15 @@ public final class PenetrationTestingService {
                 apiResponse = clientApi.pscan.recordsToScan();
             }
             LOGGER.info("Passive Scan Completed in {} seconds", scanTime);
-            LOGGER.info("-------------------------------------------------------------------------");
             //Call the function to update the AlertList based on riskLevel settled
             updateMapSecurityAlertList("PASSIVE SCAN");
         } catch (ClientApiException psEx) {
             LOGGER.error("Passive Scan \"ClientApiException\" Error: {}", psEx.getMessage());
-            LOGGER.info("-------------------------------------------------------------------------");
         } catch (InterruptedException psEx) {
             LOGGER.error("Passive Scan \"InterruptedException\" Error: {}", psEx.getMessage());
-            LOGGER.info("-------------------------------------------------------------------------");
             Thread.currentThread().interrupt();
+        } finally {
+            LOGGER.info("-------------------------------------------------------------------------");
         }
     }
 
@@ -159,16 +159,15 @@ public final class PenetrationTestingService {
                 progress = Integer.parseInt(((ApiResponseElement) clientApi.ascan.status(scanId)).getValue());
             }
             LOGGER.info("Active Scan Completed in {} seconds", scanTime);
-            LOGGER.info("-------------------------------------------------------------------------");
             //Call the function to update the AlertList based on riskLevel settled
             updateMapSecurityAlertList("ACTIVE SCAN | " + scanTypeName);
         } catch (ClientApiException asEx) {
             LOGGER.error("Active Scan \"ClientApiException\" Error: {}", asEx.getMessage());
-            LOGGER.info("-------------------------------------------------------------------------");
         } catch (InterruptedException asEx) {
             LOGGER.error("Active Scan \"InterruptedException\" Error: {}", asEx.getMessage());
-            LOGGER.info("-------------------------------------------------------------------------");
             Thread.currentThread().interrupt();
+        } finally {
+            LOGGER.info("-------------------------------------------------------------------------");
         }
     }
 
@@ -190,16 +189,15 @@ public final class PenetrationTestingService {
                 progress = Integer.parseInt(((ApiResponseElement) clientApi.spider.status(scanId)).getValue());
             }
             LOGGER.info("Spider Scan Completed in {} seconds", scanTime);
-            LOGGER.info("-------------------------------------------------------------------------");
             //Call the function to update the AlertList based on riskLevel settled
             updateMapSecurityAlertList("SPIDER SCAN");
         } catch (ClientApiException ssEx) {
             LOGGER.error("Spider Scan \"ClientApiException\" Error: {}", ssEx.getMessage());
-            LOGGER.info("-------------------------------------------------------------------------");
         } catch (InterruptedException ssEx) {
             LOGGER.error("Spider Scan \"InterruptedException\" Error: {}", ssEx.getMessage());
-            LOGGER.info("-------------------------------------------------------------------------");
             Thread.currentThread().interrupt();
+        } finally {
+            LOGGER.info("-------------------------------------------------------------------------");
         }
     }
 
