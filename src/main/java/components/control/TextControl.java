@@ -70,7 +70,7 @@ public final class TextControl extends Control {
         try {
             Thread.sleep(waitAfterClean * 1000);
         } catch (InterruptedException ex) {
-            LOGGER.error("Error in \"SetText\" Function: " + ex.getMessage());
+            LOGGER.error("Error in \"SetText\" Function: {}", ex.getMessage());
             Thread.currentThread().interrupt();
         }
         inputText.sendKeys(value);
@@ -90,7 +90,7 @@ public final class TextControl extends Control {
         try {
             Thread.sleep(waitForClick * 1000);
         } catch (InterruptedException ex) {
-            LOGGER.error("Error in \"SetTextAutoComplete\" Function: " + ex.getMessage());
+            LOGGER.error("Error in \"SetTextAutoComplete\" Function: {}", ex.getMessage());
             Thread.currentThread().interrupt();
         }
         actions.moveToElement(inputAutoComplete).moveToElement(inputAutoComplete).click().build().perform();

@@ -29,7 +29,7 @@ public abstract class Page {
         for (String windowHandle : webDriver.getWindowHandles()) {
             WebDriver windowObj = webDriver.switchTo().window(windowHandle);
             if (windowObj.getTitle().contains(tabName)) {
-                LOGGER.info("Switching to Tab: " + tabName);
+                LOGGER.info("Switching to Tab: {}", tabName);
                 break;
             }
         }
@@ -58,7 +58,7 @@ public abstract class Page {
             switchToTab("New Tab");
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
-            LOGGER.error("File Download Error:" + ex.getMessage());
+            LOGGER.error("File Download Error: {}", ex.getMessage());
             Thread.currentThread().interrupt();
             return false;
         } finally {
