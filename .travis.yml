@@ -1,6 +1,6 @@
 language: java
 dist: trusty
-jdk: oraclejdk12
+jdk: oraclejdk8
 addons:
   sonarcloud:
     organization: "d3f8a5336ce9588e797e9a71f16a14997b5949856daf7e11f94a1ff158"
