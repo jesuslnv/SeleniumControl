@@ -11,17 +11,17 @@ import java.util.List;
 public final class PenetrationTestingService {
     private static final Logger LOGGER = LogManager.getLogger();
     /* The IP to establish the ZAP connection */
-    private static String http_ip = "127.0.0.1";
+    private static String httpIp = "127.0.0.1";
     /* The PORT to establish the ZAP connection */
-    private static int http_port = 9090;
+    private static int httpPort = 9090;
     /* The STRENGTH level used in the scanner */
-    private static String scanner_strength = "High";
+    private static String scannerStrength = "High";
     /* The THRESHOLD level used in the scanner */
-    private static String scanner_threshold = "Low";
+    private static String scannerThreshold = "Low";
     /* The RISK LEVEL minimum to be considered in the Alert List */
-    private static String risk_level = "MEDIUM";
+    private static String riskLevel = "MEDIUM";
     //-------------------------------------------------------------------------------
-    private static HashMap<String, String> attack_codes = new HashMap<>();
+    private static HashMap<String, String> attackCodes = new HashMap<>();
     private static ClientApi clientApi;
     private static String previousUrlScanned = "";
     private static HashMap<String, List<Alert>> hashMapScannedAlertsFound;
@@ -30,44 +30,44 @@ public final class PenetrationTestingService {
     }
 
     //<editor-fold desc="GETTER AND SETTERS">
-    public static String getHttp_ip() {
-        return http_ip;
+    public static String getHttpIp() {
+        return httpIp;
     }
 
-    public static void setHttp_ip(String http_ip) {
-        PenetrationTestingService.http_ip = http_ip;
+    public static void setHttpIp(String httpIp) {
+        PenetrationTestingService.httpIp = httpIp;
     }
 
-    public static int getHttp_port() {
-        return http_port;
+    public static int getHttpPort() {
+        return httpPort;
     }
 
-    public static void setHttp_port(int http_port) {
-        PenetrationTestingService.http_port = http_port;
+    public static void setHttpPort(int httpPort) {
+        PenetrationTestingService.httpPort = httpPort;
     }
 
-    public static String getScanner_strength() {
-        return scanner_strength;
+    public static String getScannerStrength() {
+        return scannerStrength;
     }
 
-    public static void setScanner_strength(String scanner_strength) {
-        PenetrationTestingService.scanner_strength = scanner_strength;
+    public static void setScannerStrength(String scannerStrength) {
+        PenetrationTestingService.scannerStrength = scannerStrength;
     }
 
-    public static String getScanner_threshold() {
-        return scanner_threshold;
+    public static String getScannerThreshold() {
+        return scannerThreshold;
     }
 
-    public static void setScanner_threshold(String scanner_threshold) {
-        PenetrationTestingService.scanner_threshold = scanner_threshold;
+    public static void setScannerThreshold(String scannerThreshold) {
+        PenetrationTestingService.scannerThreshold = scannerThreshold;
     }
 
-    public static String getRisk_level() {
-        return risk_level;
+    public static String getRiskLevel() {
+        return riskLevel;
     }
 
-    public static void setRisk_level(String risk_level) {
-        PenetrationTestingService.risk_level = risk_level;
+    public static void setRiskLevel(String riskLevel) {
+        PenetrationTestingService.riskLevel = riskLevel;
     }
     //</editor-fold>
 
@@ -77,7 +77,7 @@ public final class PenetrationTestingService {
      */
     public static HashMap<String, List<Alert>> runScanner(String urlToScan) {
         //Instances the "clientApi" with the previously configured IP and PORT
-        clientApi = new ClientApi(http_ip, http_port);
+        clientApi = new ClientApi(httpIp, httpPort);
         hashMapScannedAlertsFound = new HashMap<>();
         //-----------------------------------------------------------------------------------------------------------
         //Verify if the "urlToScan" is equals to the "previousUrlScanned" to avoid multiple scans to the same URL.
@@ -91,7 +91,7 @@ public final class PenetrationTestingService {
         //Call the function to configure the MAP with the ATTACK_CODES for "Active Scan"
         configureMapAttackCodes();
         //Run Active Scan with each specified Penetration Test
-        attack_codes.forEach((attackType, attackTypeId) ->
+        attackCodes.forEach((attackType, attackTypeId) ->
                 runActiveScan(urlToScan, attackType, attackTypeId)
         );
         //-----------------------------------------------------------------------------------------------------------
@@ -146,8 +146,8 @@ public final class PenetrationTestingService {
             //Enable specific Active Scanner
             clientApi.ascan.enableScanners(scanTypeId, null);
             for (String id : scanTypeId.split(",")) {
-                clientApi.ascan.setScannerAttackStrength(id, scanner_strength, null);
-                clientApi.ascan.setScannerAlertThreshold(id, scanner_threshold, null);
+                clientApi.ascan.setScannerAttackStrength(id, scannerStrength, null);
+                clientApi.ascan.setScannerAlertThreshold(id, scannerThreshold, null);
             }
             ApiResponse apiResponse = clientApi.ascan.scan(urlToScan, "True", "False", null, null, null);
             String scanId = ((ApiResponseElement) apiResponse).getValue();
@@ -208,9 +208,9 @@ public final class PenetrationTestingService {
         List<Alert> lstAlerts = new ArrayList<>();
         //By default get "HIGH" risks only
         Alert.Risk risk = Alert.Risk.High;
-        if ("MEDIUM".equalsIgnoreCase(risk_level)) {
+        if ("MEDIUM".equalsIgnoreCase(riskLevel)) {
             risk = Alert.Risk.Medium;
-        } else if ("LOW".equalsIgnoreCase(risk_level)) {
+        } else if ("LOW".equalsIgnoreCase(riskLevel)) {
             risk = Alert.Risk.Low;
         }
         try {
@@ -229,22 +229,22 @@ public final class PenetrationTestingService {
 
     private static void configureMapAttackCodes() {
         //Configure Attack Codes in Map
-        attack_codes = new HashMap<>();
-        attack_codes.put("DIRECTORY_BROWSING", "0");
-        attack_codes.put("PATH_TRAVERSAL", "6");
-        attack_codes.put("REMOTE_FILE_INCLUSION", "7");
-        attack_codes.put("SOURCE_CODE_DISCLOSURE", "10045");
-        attack_codes.put("REMOTE_CODE_EXECUTION", "20018");
-        attack_codes.put("EXTERNAL_REDIRECT", "20019");
-        attack_codes.put("BUFFER_OVERFLOW", "30001");
-        attack_codes.put("FORMAT_STRING_ERROR", "30002");
-        attack_codes.put("CRLF_INJECTION", "40003");
-        attack_codes.put("PARAMETER_TAMPERING", "40008");
-        attack_codes.put("SERVER_SIDE_INCLUDE", "40009");
-        attack_codes.put("CROSS_SITE_SCRIPTING", "40012,40014,40016,40017");
-        attack_codes.put("SQL_INJECTION", "40018");
-        attack_codes.put("SCRIPT_ACTIVE_SCAN_RULES", "50000");
-        attack_codes.put("SERVER_SIDE_CODE_INJECTION", "90019");
-        attack_codes.put("REMOTE_OS_COMMAND_INJECTION", "90020");
+        attackCodes = new HashMap<>();
+        attackCodes.put("DIRECTORY_BROWSING", "0");
+        attackCodes.put("PATH_TRAVERSAL", "6");
+        attackCodes.put("REMOTE_FILE_INCLUSION", "7");
+        attackCodes.put("SOURCE_CODE_DISCLOSURE", "10045");
+        attackCodes.put("REMOTE_CODE_EXECUTION", "20018");
+        attackCodes.put("EXTERNAL_REDIRECT", "20019");
+        attackCodes.put("BUFFER_OVERFLOW", "30001");
+        attackCodes.put("FORMAT_STRING_ERROR", "30002");
+        attackCodes.put("CRLF_INJECTION", "40003");
+        attackCodes.put("PARAMETER_TAMPERING", "40008");
+        attackCodes.put("SERVER_SIDE_INCLUDE", "40009");
+        attackCodes.put("CROSS_SITE_SCRIPTING", "40012,40014,40016,40017");
+        attackCodes.put("SQL_INJECTION", "40018");
+        attackCodes.put("SCRIPT_ACTIVE_SCAN_RULES", "50000");
+        attackCodes.put("SERVER_SIDE_CODE_INJECTION", "90019");
+        attackCodes.put("REMOTE_OS_COMMAND_INJECTION", "90020");
     }
 }
