@@ -116,11 +116,11 @@ public final class PenetrationTestingService {
             LOGGER.info("-------------------------------------------------------------------------");
             //Call the function to update the AlertList based on riskLevel settled
             updateMapSecurityAlertList("PASSIVE SCAN");
-        } catch (ClientApiException ex) {
-            LOGGER.error("Passive Scan \"ClientApiException\" Error: {}", ex.getMessage());
+        } catch (ClientApiException psEx) {
+            LOGGER.error("Passive Scan \"ClientApiException\" Error: {}", psEx.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
-        } catch (InterruptedException ex) {
-            LOGGER.error("Passive Scan \"InterruptedException\" Error: {}", ex.getMessage());
+        } catch (InterruptedException psEx) {
+            LOGGER.error("Passive Scan \"InterruptedException\" Error: {}", psEx.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
             Thread.currentThread().interrupt();
         }
