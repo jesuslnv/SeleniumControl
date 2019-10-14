@@ -112,15 +112,15 @@ public final class PenetrationTestingService {
                 scanTime++;
                 apiResponse = clientApi.pscan.recordsToScan();
             }
-            LOGGER.info("Passive Scan Completed in " + scanTime + " seconds");
+            LOGGER.info("Passive Scan Completed in {} seconds", scanTime);
             LOGGER.info("-------------------------------------------------------------------------");
             //Call the function to update the AlertList based on riskLevel settled
             updateMapSecurityAlertList("PASSIVE SCAN");
         } catch (ClientApiException ex) {
-            LOGGER.error("Passive Scan \"ClientApiException\" Error: " + ex.getMessage());
+            LOGGER.error("Passive Scan \"ClientApiException\" Error: {}", ex.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
         } catch (InterruptedException ex) {
-            LOGGER.error("Passive Scan \"InterruptedException\" Error: " + ex.getMessage());
+            LOGGER.error("Passive Scan \"InterruptedException\" Error: {}", ex.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
             Thread.currentThread().interrupt();
         }
@@ -128,9 +128,9 @@ public final class PenetrationTestingService {
 
     private static void runActiveScan(String urlToScan, String scanTypeName, String scanTypeId) {
         LOGGER.info("--------------------------Starting Active Scan---------------------------");
-        LOGGER.info("Scanning URL: " + urlToScan);
-        LOGGER.info("Scan Type: " + scanTypeName);
-        LOGGER.info("Scan Id: " + scanTypeId);
+        LOGGER.info("Scanning URL: {}", urlToScan);
+        LOGGER.info("Scan Type: {}", scanTypeName);
+        LOGGER.info("Scan Id: {}", scanTypeId);
         try {
             //Remove all Historical Alerts generated Before
             clientApi.alert.deleteAllAlerts();
@@ -154,15 +154,15 @@ public final class PenetrationTestingService {
                 progress = Integer.parseInt(((ApiResponseElement) clientApi.ascan.status(scanId)).getValue());
                 //LOGGER.info("Active Scan progress: " + progress + "%");
             }
-            LOGGER.info("Active Scan Completed in " + scanTime + " seconds");
+            LOGGER.info("Active Scan Completed in {} seconds", scanTime);
             LOGGER.info("-------------------------------------------------------------------------");
             //Call the function to update the AlertList based on riskLevel settled
             updateMapSecurityAlertList("ACTIVE SCAN | " + scanTypeName);
         } catch (ClientApiException ex) {
-            LOGGER.error("Active Scan \"ClientApiException\" Error: " + ex.getMessage());
+            LOGGER.error("Active Scan \"ClientApiException\" Error: {}", ex.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
         } catch (InterruptedException ex) {
-            LOGGER.error("Active Scan \"InterruptedException\" Error: " + ex.getMessage());
+            LOGGER.error("Active Scan \"InterruptedException\" Error: {}", ex.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
             Thread.currentThread().interrupt();
         }
@@ -170,7 +170,7 @@ public final class PenetrationTestingService {
 
     private static void runSpiderScan(String urlToScan) {
         LOGGER.info("--------------------------Starting Spider Scan---------------------------");
-        LOGGER.info("Scanning URL: " + urlToScan);
+        LOGGER.info("Scanning URL: {}", urlToScan);
         try {
             //Remove all Historical Alerts generated Before
             clientApi.alert.deleteAllAlerts();
@@ -186,15 +186,15 @@ public final class PenetrationTestingService {
                 progress = Integer.parseInt(((ApiResponseElement) clientApi.spider.status(scanId)).getValue());
                 //LOGGER.info("Spider progress : " + progress + "%");
             }
-            LOGGER.info(String.format("Spider Scan Completed in %d seconds", scanTime));
+            LOGGER.info("Spider Scan Completed in {} seconds", scanTime);
             LOGGER.info("-------------------------------------------------------------------------");
             //Call the function to update the AlertList based on riskLevel settled
             updateMapSecurityAlertList("SPIDER SCAN");
         } catch (ClientApiException ex) {
-            LOGGER.error("Spider Scan \"ClientApiException\" Error: " + ex.getMessage());
+            LOGGER.error("Spider Scan \"ClientApiException\" Error: {}", ex.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
         } catch (InterruptedException ex) {
-            LOGGER.error("Spider Scan \"InterruptedException\" Error: " + ex.getMessage());
+            LOGGER.error("Spider Scan \"InterruptedException\" Error: {}", ex.getMessage());
             LOGGER.info("-------------------------------------------------------------------------");
             Thread.currentThread().interrupt();
         }
@@ -218,7 +218,7 @@ public final class PenetrationTestingService {
                 }
             }
         } catch (ClientApiException ex) {
-            LOGGER.error(ex.getMessage());
+            LOGGER.error("Error updating Map Security Alert List: {}", ex.getMessage());
         }
         //Add Alert List Found to the Map
         hashMapScannedAlertsFound.put(mapScanType, lstAlerts);

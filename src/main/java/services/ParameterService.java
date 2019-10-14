@@ -51,7 +51,7 @@ public final class ParameterService {
             byte[] encrypted = cipher.doFinal(stringToEncrypt.getBytes(StandardCharsets.UTF_8));
             stringEncrypted = Base64.getEncoder().encodeToString(encrypted);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException ex) {
-            logger.error("Error while encrypting: " + ex.getMessage());
+            logger.error("Error while encrypting: {}", ex.getMessage());
         }
         return stringEncrypted;
     }
@@ -69,7 +69,7 @@ public final class ParameterService {
             byte[] decrypted = Base64.getDecoder().decode(stringToDecrypt);
             stringDecrypted = new String(cipher.doFinal(decrypted));
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException ex) {
-            logger.error("Error while decrypting: " + ex.getMessage());
+            logger.error("Error while decrypting: {}", ex.getMessage());
         }
         return stringDecrypted;
     }
@@ -82,7 +82,7 @@ public final class ParameterService {
             tmpKey = Arrays.copyOf(tmpKey, 16);
             secretKeySpec = new SecretKeySpec(tmpKey, "AES");
         } catch (NoSuchAlgorithmException ex) {
-            logger.error(ex.getMessage());
+            logger.error("Error creating Custom Key Spec: {}", ex.getMessage());
         }
         return secretKeySpec;
     }
