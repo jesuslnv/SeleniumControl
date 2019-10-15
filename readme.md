@@ -82,7 +82,7 @@ This service allows you to store or manipulate parameters
 
 ## PenetrationTestingService
 This service allows you to run a scanner that connects directly to a running **OWASP ZAP** instance and execute different tests to detect different security vulnerabilities.
-The performed Scan includes **Passive Scan**, **Active Scan** and **Spider Scan**.
+The performed Scan includes **Passive Scan** and **Active Scan**.
 
 |Function Name                      |Action Perfomed|
 |---                                |---|
