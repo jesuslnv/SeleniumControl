@@ -4,10 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.zaproxy.clientapi.core.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class PenetrationTestingService {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -21,9 +18,10 @@ public final class PenetrationTestingService {
     private static String scannerThreshold = "Low";
     /* The RISK LEVEL minimum to be considered in the Alert List */
     private static String riskLevel = "MEDIUM";
-    /* Enables spcific Scanners (Passive Scan, Active Scan) */
+    /* Enables spcific Scanners (Passive Scan, Active Scan, Spider Scan) */
     private static boolean enablePassiveScan = true;
     private static boolean enableActiveScan = true;
+    private static boolean enableSpiderScan = true;
     //-------------------------------------------------------------------------------
     private static Map<String, String> attackCodes = new HashMap<>();
     private static ClientApi clientApi;
@@ -89,11 +87,19 @@ public final class PenetrationTestingService {
     public static void setEnableActiveScan(boolean enableActiveScan) {
         PenetrationTestingService.enableActiveScan = enableActiveScan;
     }
+
+    public static boolean isEnableSpiderScan() {
+        return enableSpiderScan;
+    }
+
+    public static void setEnableSpiderScan(boolean enableSpiderScan) {
+        PenetrationTestingService.enableSpiderScan = enableSpiderScan;
+    }
     //</editor-fold>
 
     /**
      * @param urlToScan Is the url to be scanned
-     * @return Returns a Map with an Alert List for each scan type (1. Passive Scan, 2. Active Scan)
+     * @return Returns a Map with an Alert List for each scan type (1. Passive Scan, 2. Active Scan, 3. Spider Scan)
      */
     public static Map<String, List<Alert>> runScanner(String urlToScan) {
         //Instances the "clientApi" with the previously configured IP and PORT
@@ -117,6 +123,11 @@ public final class PenetrationTestingService {
             attackCodes.forEach((attackType, attackTypeId) ->
                     runActiveScan(urlToScan, attackType, attackTypeId)
             );
+        }
+        //-----------------------------------------------------------------------------------------------------------
+        //Run Spider Scan at Last
+        if (enableSpiderScan) {
+            runSpiderScan(urlToScan);
         }
         //-----------------------------------------------------------------------------------------------------------
         //Set the current URL scanned to the previous
@@ -185,6 +196,46 @@ public final class PenetrationTestingService {
             LOGGER.error("Active Scan \"ClientApiException\" Error: {}", asEx.getMessage());
         } catch (InterruptedException asEx) {
             LOGGER.error("Active Scan \"InterruptedException\" Error: {}", asEx.getMessage());
+            Thread.currentThread().interrupt();
+        } finally {
+            LOGGER.info("-------------------------------------------------------------------------");
+        }
+    }
+
+    private static void runSpiderScan(String urlToScan) {
+        LOGGER.info("--------------------------Starting Spider Scan---------------------------");
+        LOGGER.info("Scanning URL: {}", urlToScan);
+        try {
+            //Remove all Historical Alerts generated Before
+            clientApi.alert.deleteAllAlerts();
+            //Enable specific Active Scanner
+            ApiResponse apiResponse = clientApi.spider.scan(urlToScan, null, null, null, null);
+            String scanId = ((ApiResponseElement) apiResponse).getValue();
+            int progress = 0;
+            int scanTime = 0;
+            int progressStuck = 0;
+            //Polling the status until it completes
+            while (progress < 100) {
+                Thread.sleep(1000);
+                scanTime++;
+                progressStuck++;
+                progress = Integer.parseInt(((ApiResponseElement) clientApi.spider.status(scanId)).getValue());
+                //After 90 seconds the "Spider Scan" is automatically stopped to avoid a permanent Stuck bug
+                if (progressStuck > 90) {
+                    //Stop and remove all Scans
+                    clientApi.spider.stopAllScans();
+                    clientApi.spider.removeAllScans();
+                    //Generates an Exception due a possible stuck
+                    throw new InterruptedException("Spider Scan timeout " + progressStuck + " seconds.");
+                }
+            }
+            LOGGER.info("Spider Scan Completed in {} seconds", scanTime);
+            //Call the function to update the AlertList based on riskLevel settled
+            updateMapSecurityAlertList("SPIDER SCAN");
+        } catch (ClientApiException ssEx) {
+            LOGGER.error("Spider Scan \"ClientApiException\" Error: {}", ssEx.getMessage());
+        } catch (InterruptedException ssEx) {
+            LOGGER.error("Spider Scan \"InterruptedException\" Error: {}", ssEx.getMessage());
             Thread.currentThread().interrupt();
         } finally {
             LOGGER.info("-------------------------------------------------------------------------");
