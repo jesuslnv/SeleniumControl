@@ -22,10 +22,10 @@ public final class PenetrationTestingService {
     /* The RISK LEVEL minimum to be considered in the Alert List */
     private static String riskLevel = "MEDIUM";
     //-------------------------------------------------------------------------------
-    private static HashMap<String, String> attackCodes = new HashMap<>();
+    private static Map<String, String> attackCodes = new HashMap<>();
     private static ClientApi clientApi;
     private static String previousUrlScanned = "";
-    private static HashMap<String, List<Alert>> hashMapScannedAlertsFound;
+    private static Map<String, List<Alert>> mapScannedAlertsFound;
 
     private PenetrationTestingService() {
     }
@@ -79,7 +79,7 @@ public final class PenetrationTestingService {
     public static Map<String, List<Alert>> runScanner(String urlToScan) {
         //Instances the "clientApi" with the previously configured IP and PORT
         clientApi = new ClientApi(httpIp, httpPort);
-        hashMapScannedAlertsFound = new HashMap<>();
+        mapScannedAlertsFound = new HashMap<>();
         //-----------------------------------------------------------------------------------------------------------
         //Verify if the "urlToScan" is equals to the "previousUrlScanned" to avoid multiple scans to the same URL.
         if (urlToScan.equals(previousUrlScanned)) {
@@ -101,7 +101,7 @@ public final class PenetrationTestingService {
         //-----------------------------------------------------------------------------------------------------------
         //Set the current URL scanned to the previous
         previousUrlScanned = urlToScan;
-        return hashMapScannedAlertsFound;
+        return mapScannedAlertsFound;
     }
 
     private static void runPassiveScan() {
@@ -222,7 +222,7 @@ public final class PenetrationTestingService {
             LOGGER.error("Error updating Map Security Alert List: {}", ex.getMessage());
         }
         //Add Alert List Found to the Map
-        hashMapScannedAlertsFound.put(mapScanType, lstAlerts);
+        mapScannedAlertsFound.put(mapScanType, lstAlerts);
     }
 
     private static void configureMapAttackCodes() {
