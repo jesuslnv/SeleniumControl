@@ -20,8 +20,10 @@ public final class PenetrationTestingService {
     private static String scannerStrength = "High";
     /* The THRESHOLD level used in the scanner */
     private static String scannerThreshold = "Low";
-    /* The ReportFileLocation sets up where the report is created and the File Name */
-    private static String reportFileLocation = "report.html";
+    /* The ReportFileLocation sets up where the report is created */
+    private static String reportFileLocation = "";
+    /* The ReportFileName sets up the name of the file created */
+    private static String reportFileName = "report.html";
     /* Enables specific Scanners (Passive Scan, Active Scan, Spider Scan) */
     private static boolean enablePassiveScan = true;
     private static boolean enableActiveScan = true;
@@ -73,6 +75,14 @@ public final class PenetrationTestingService {
 
     public static void setReportFileLocation(String reportFileLocation) {
         PenetrationTestingService.reportFileLocation = reportFileLocation;
+    }
+
+    public static String getReportFileName() {
+        return reportFileName;
+    }
+
+    public static void setReportFileName(String reportFileName) {
+        PenetrationTestingService.reportFileName = reportFileName;
     }
 
     public static boolean isEnablePassiveScan() {
@@ -258,7 +268,7 @@ public final class PenetrationTestingService {
         try {
             byte[] bytes = clientApi.core.htmlreport();
             String stringFile = new String(bytes, StandardCharsets.UTF_8);
-            File reportFile = new File(reportFileLocation);
+            File reportFile = new File(reportFileLocation + reportFileName);
             fileWriter = new FileWriter(reportFile);
             fileWriter.write(stringFile);
         } catch (ClientApiException | IOException ex) {
