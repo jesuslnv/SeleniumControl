@@ -243,15 +243,23 @@ public final class PenetrationTestingService {
 
     private static void generateFileReport() {
         //Get alert List to shown in the LOG
+        FileWriter fileWriter = null;
         try {
             byte[] bytes = clientApi.core.htmlreport();
             String stringFile = new String(bytes, StandardCharsets.UTF_8);
             File reportFile = new File(reportFileLocation);
-            FileWriter fileWriter = new FileWriter(reportFile);
+            fileWriter = new FileWriter(reportFile);
             fileWriter.write(stringFile);
-            fileWriter.close();
         } catch (ClientApiException | IOException ex) {
             LOGGER.error("Error generating HTML report: {}", ex.getMessage());
+        } finally {
+            if (fileWriter != null) {
+                try {
+                    fileWriter.close();
+                } catch (IOException ex) {
+                    LOGGER.error("Error closing the file: {}", ex.getMessage());
+                }
+            }
         }
     }
 
