@@ -4,6 +4,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.zaproxy.clientapi.core.*;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public final class PenetrationTestingService {
@@ -16,9 +20,9 @@ public final class PenetrationTestingService {
     private static String scannerStrength = "High";
     /* The THRESHOLD level used in the scanner */
     private static String scannerThreshold = "Low";
-    /* The RISK LEVEL minimum to be considered in the Alert List */
-    private static String riskLevel = "MEDIUM";
-    /* Enables spcific Scanners (Passive Scan, Active Scan, Spider Scan) */
+    /* The ReportFileLocation sets up where the report is created and the File Name */
+    private static String reportFileLocation = "report.html";
+    /* Enables specific Scanners (Passive Scan, Active Scan, Spider Scan) */
     private static boolean enablePassiveScan = true;
     private static boolean enableActiveScan = true;
     private static boolean enableSpiderScan = true;
@@ -26,7 +30,6 @@ public final class PenetrationTestingService {
     private static Map<String, String> attackCodes = new HashMap<>();
     private static ClientApi clientApi;
     private static String previousUrlScanned = "";
-    private static Map<String, List<Alert>> mapScannedAlertsFound;
 
     private PenetrationTestingService() {
     }
@@ -64,12 +67,12 @@ public final class PenetrationTestingService {
         PenetrationTestingService.scannerThreshold = scannerThreshold;
     }
 
-    public static String getRiskLevel() {
-        return riskLevel;
+    public static String getReportFileLocation() {
+        return reportFileLocation;
     }
 
-    public static void setRiskLevel(String riskLevel) {
-        PenetrationTestingService.riskLevel = riskLevel;
+    public static void setReportFileLocation(String reportFileLocation) {
+        PenetrationTestingService.reportFileLocation = reportFileLocation;
     }
 
     public static boolean isEnablePassiveScan() {
@@ -99,16 +102,22 @@ public final class PenetrationTestingService {
 
     /**
      * @param urlToScan Is the url to be scanned
-     * @return Returns a Map with an Alert List for each scan type (1. Passive Scan, 2. Active Scan, 3. Spider Scan)
      */
-    public static Map<String, List<Alert>> runScanner(String urlToScan) {
+    public static void runScanner(String urlToScan) {
+        //-----------------------------------------------------------------------------------------------------------
         //Instances the "clientApi" with the previously configured IP and PORT
         clientApi = new ClientApi(httpIp, httpPort);
-        mapScannedAlertsFound = new HashMap<>();
+        //-----------------------------------------------------------------------------------------------------------
+        try {
+            //Remove all Historical Alerts stored
+            clientApi.alert.deleteAllAlerts();
+        } catch (ClientApiException ex) {
+            LOGGER.error("Error removing Alerts: {}", ex.getMessage());
+        }
         //-----------------------------------------------------------------------------------------------------------
         //Verify if the "urlToScan" is equals to the "previousUrlScanned" to avoid multiple scans to the same URL.
         if (urlToScan.equals(previousUrlScanned)) {
-            return null;
+            return;
         }
         //-----------------------------------------------------------------------------------------------------------
         //Run Passive Scan First (Because is the most basic and simple Scan)
@@ -130,16 +139,16 @@ public final class PenetrationTestingService {
             runSpiderScan(urlToScan);
         }
         //-----------------------------------------------------------------------------------------------------------
+        //Call the function to generate the File Report
+        generateFileReport();
+        //-----------------------------------------------------------------------------------------------------------
         //Set the current URL scanned to the previous
         previousUrlScanned = urlToScan;
-        return mapScannedAlertsFound;
     }
 
     private static void runPassiveScan() {
         LOGGER.info("--------------------------Starting Passive Scan--------------------------");
         try {
-            //Remove all Historical Alerts generated Before
-            clientApi.alert.deleteAllAlerts();
             //Enable all Scanners in Passive Mode
             clientApi.pscan.enableAllScanners();
             ApiResponse apiResponse = clientApi.pscan.recordsToScan();
@@ -150,8 +159,6 @@ public final class PenetrationTestingService {
                 apiResponse = clientApi.pscan.recordsToScan();
             }
             LOGGER.info("Passive Scan Completed in {} seconds", scanTime);
-            //Call the function to update the AlertList based on riskLevel settled
-            updateMapSecurityAlertList("PASSIVE SCAN");
         } catch (ClientApiException psEx) {
             LOGGER.error("Passive Scan \"ClientApiException\" Error: {}", psEx.getMessage());
         } catch (InterruptedException psEx) {
@@ -168,8 +175,6 @@ public final class PenetrationTestingService {
         LOGGER.info("Scan Type: {}", scanTypeName);
         LOGGER.info("Scan Id: {}", scanTypeId);
         try {
-            //Remove all Historical Alerts generated Before
-            clientApi.alert.deleteAllAlerts();
             //Disable all other Scanners by Default
             clientApi.ascan.disableAllScanners(null);
             //Set Attack Mode in OwaspZap
@@ -180,7 +185,7 @@ public final class PenetrationTestingService {
                 clientApi.ascan.setScannerAttackStrength(id, scannerStrength, null);
                 clientApi.ascan.setScannerAlertThreshold(id, scannerThreshold, null);
             }
-            ApiResponse apiResponse = clientApi.ascan.scan(urlToScan, "True", "False", null, null, null);
+            ApiResponse apiResponse = clientApi.ascan.scan(urlToScan, "True", "False", "Default Policy", null, null);
             String scanId = ((ApiResponseElement) apiResponse).getValue();
             int progress = 0;
             int scanTime = 0;
@@ -190,8 +195,6 @@ public final class PenetrationTestingService {
                 progress = Integer.parseInt(((ApiResponseElement) clientApi.ascan.status(scanId)).getValue());
             }
             LOGGER.info("Active Scan Completed in {} seconds", scanTime);
-            //Call the function to update the AlertList based on riskLevel settled
-            updateMapSecurityAlertList("ACTIVE SCAN | " + scanTypeName);
         } catch (ClientApiException asEx) {
             LOGGER.error("Active Scan \"ClientApiException\" Error: {}", asEx.getMessage());
         } catch (InterruptedException asEx) {
@@ -206,8 +209,6 @@ public final class PenetrationTestingService {
         LOGGER.info("--------------------------Starting Spider Scan---------------------------");
         LOGGER.info("Scanning URL: {}", urlToScan);
         try {
-            //Remove all Historical Alerts generated Before
-            clientApi.alert.deleteAllAlerts();
             //Enable specific Active Scanner
             ApiResponse apiResponse = clientApi.spider.scan(urlToScan, null, null, null, null);
             String scanId = ((ApiResponseElement) apiResponse).getValue();
@@ -221,7 +222,7 @@ public final class PenetrationTestingService {
                 progressStuck++;
                 progress = Integer.parseInt(((ApiResponseElement) clientApi.spider.status(scanId)).getValue());
                 //After 90 seconds the "Spider Scan" is automatically stopped to avoid a permanent Stuck bug
-                if (progressStuck > 90) {
+                if (progressStuck >= 60) {
                     //Stop and remove all Scans
                     clientApi.spider.stopAllScans();
                     clientApi.spider.removeAllScans();
@@ -230,8 +231,6 @@ public final class PenetrationTestingService {
                 }
             }
             LOGGER.info("Spider Scan Completed in {} seconds", scanTime);
-            //Call the function to update the AlertList based on riskLevel settled
-            updateMapSecurityAlertList("SPIDER SCAN");
         } catch (ClientApiException ssEx) {
             LOGGER.error("Spider Scan \"ClientApiException\" Error: {}", ssEx.getMessage());
         } catch (InterruptedException ssEx) {
@@ -242,48 +241,38 @@ public final class PenetrationTestingService {
         }
     }
 
-    private static void updateMapSecurityAlertList(String mapScanType) {
+    private static void generateFileReport() {
         //Get alert List to shown in the LOG
-        List<Alert> lstAlerts = new ArrayList<>();
-        //By default get "HIGH" risks only
-        Alert.Risk risk = Alert.Risk.High;
-        if ("MEDIUM".equalsIgnoreCase(riskLevel)) {
-            risk = Alert.Risk.Medium;
-        } else if ("LOW".equalsIgnoreCase(riskLevel)) {
-            risk = Alert.Risk.Low;
-        }
         try {
-            List<Alert> tmpLstAlerts = clientApi.getAlerts("", -1, -1);
-            for (Alert alert : tmpLstAlerts) {
-                if (alert.getRisk().ordinal() >= risk.ordinal()) {
-                    lstAlerts.add(alert);
-                }
-            }
-        } catch (ClientApiException ex) {
-            LOGGER.error("Error updating Map Security Alert List: {}", ex.getMessage());
+            byte[] bytes = clientApi.core.htmlreport();
+            String stringFile = new String(bytes, StandardCharsets.UTF_8);
+            File reportFile = new File(reportFileLocation);
+            FileWriter fileWriter = new FileWriter(reportFile);
+            fileWriter.write(stringFile);
+            fileWriter.close();
+        } catch (ClientApiException | IOException ex) {
+            LOGGER.error("Error generating HTML report: {}", ex.getMessage());
         }
-        //Add Alert List Found to the Map
-        mapScannedAlertsFound.put(mapScanType, lstAlerts);
     }
 
     private static void configureMapAttackCodes() {
         //Configure Attack Codes in Map
         attackCodes = new HashMap<>();
         attackCodes.put("DIRECTORY_BROWSING", "0");
-        attackCodes.put("PATH_TRAVERSAL", "6");
-        attackCodes.put("REMOTE_FILE_INCLUSION", "7");
-        attackCodes.put("SOURCE_CODE_DISCLOSURE", "10045");
-        attackCodes.put("REMOTE_CODE_EXECUTION", "20018");
-        attackCodes.put("EXTERNAL_REDIRECT", "20019");
-        attackCodes.put("BUFFER_OVERFLOW", "30001");
-        attackCodes.put("FORMAT_STRING_ERROR", "30002");
-        attackCodes.put("CRLF_INJECTION", "40003");
-        attackCodes.put("PARAMETER_TAMPERING", "40008");
-        attackCodes.put("SERVER_SIDE_INCLUDE", "40009");
-        attackCodes.put("CROSS_SITE_SCRIPTING", "40012,40014,40016,40017");
-        attackCodes.put("SQL_INJECTION", "40018");
-        attackCodes.put("SCRIPT_ACTIVE_SCAN_RULES", "50000");
-        attackCodes.put("SERVER_SIDE_CODE_INJECTION", "90019");
-        attackCodes.put("REMOTE_OS_COMMAND_INJECTION", "90020");
+//        attackCodes.put("PATH_TRAVERSAL", "6");
+//        attackCodes.put("REMOTE_FILE_INCLUSION", "7");
+//        attackCodes.put("SOURCE_CODE_DISCLOSURE", "10045");
+//        attackCodes.put("REMOTE_CODE_EXECUTION", "20018");
+//        attackCodes.put("EXTERNAL_REDIRECT", "20019");
+//        attackCodes.put("BUFFER_OVERFLOW", "30001");
+//        attackCodes.put("FORMAT_STRING_ERROR", "30002");
+//        attackCodes.put("CRLF_INJECTION", "40003");
+//        attackCodes.put("PARAMETER_TAMPERING", "40008");
+//        attackCodes.put("SERVER_SIDE_INCLUDE", "40009");
+//        attackCodes.put("CROSS_SITE_SCRIPTING", "40012,40014,40016,40017");
+//        attackCodes.put("SQL_INJECTION", "40018");
+//        attackCodes.put("SCRIPT_ACTIVE_SCAN_RULES", "50000");
+//        attackCodes.put("SERVER_SIDE_CODE_INJECTION", "90019");
+//        attackCodes.put("REMOTE_OS_COMMAND_INJECTION", "90020");
     }
 }
