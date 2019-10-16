@@ -149,8 +149,14 @@ public final class PenetrationTestingService {
     private static void runPassiveScan() {
         LOGGER.info("--------------------------Starting Passive Scan--------------------------");
         try {
+            //-----------------------------------------------------------------------------------------------------------
             //Enable all Scanners in Passive Mode
             clientApi.pscan.enableAllScanners();
+            //-----------------------------------------------------------------------------------------------------------
+            //Change all Passive Scans Threshold
+            configurePassiveScanThreshold();
+            //-----------------------------------------------------------------------------------------------------------
+            //Start the Passive Scanner
             ApiResponse apiResponse = clientApi.pscan.recordsToScan();
             int scanTime = 0;
             while (!apiResponse.toString().equals("0")) {
@@ -175,16 +181,21 @@ public final class PenetrationTestingService {
         LOGGER.info("Scan Type: {}", scanTypeName);
         LOGGER.info("Scan Id: {}", scanTypeId);
         try {
+            //-----------------------------------------------------------------------------------------------------------
             //Disable all other Scanners by Default
             clientApi.ascan.disableAllScanners(null);
+            //-----------------------------------------------------------------------------------------------------------
             //Set Attack Mode in OwaspZap
             clientApi.core.setMode("attack");
+            //-----------------------------------------------------------------------------------------------------------
             //Enable specific Active Scanner
             clientApi.ascan.enableScanners(scanTypeId, null);
             for (String id : scanTypeId.split(",")) {
                 clientApi.ascan.setScannerAttackStrength(id, scannerStrength, null);
                 clientApi.ascan.setScannerAlertThreshold(id, scannerThreshold, null);
             }
+            //-----------------------------------------------------------------------------------------------------------
+            //Start the Active Scanner
             ApiResponse apiResponse = clientApi.ascan.scan(urlToScan, "True", "False", "Default Policy", null, null);
             String scanId = ((ApiResponseElement) apiResponse).getValue();
             int progress = 0;
@@ -267,20 +278,37 @@ public final class PenetrationTestingService {
         //Configure Attack Codes in Map
         attackCodes = new HashMap<>();
         attackCodes.put("DIRECTORY_BROWSING", "0");
-//        attackCodes.put("PATH_TRAVERSAL", "6");
-//        attackCodes.put("REMOTE_FILE_INCLUSION", "7");
-//        attackCodes.put("SOURCE_CODE_DISCLOSURE", "10045");
-//        attackCodes.put("REMOTE_CODE_EXECUTION", "20018");
-//        attackCodes.put("EXTERNAL_REDIRECT", "20019");
-//        attackCodes.put("BUFFER_OVERFLOW", "30001");
-//        attackCodes.put("FORMAT_STRING_ERROR", "30002");
-//        attackCodes.put("CRLF_INJECTION", "40003");
-//        attackCodes.put("PARAMETER_TAMPERING", "40008");
-//        attackCodes.put("SERVER_SIDE_INCLUDE", "40009");
-//        attackCodes.put("CROSS_SITE_SCRIPTING", "40012,40014,40016,40017");
-//        attackCodes.put("SQL_INJECTION", "40018");
-//        attackCodes.put("SCRIPT_ACTIVE_SCAN_RULES", "50000");
-//        attackCodes.put("SERVER_SIDE_CODE_INJECTION", "90019");
-//        attackCodes.put("REMOTE_OS_COMMAND_INJECTION", "90020");
+        attackCodes.put("PATH_TRAVERSAL", "6");
+        attackCodes.put("REMOTE_FILE_INCLUSION", "7");
+        attackCodes.put("SOURCE_CODE_DISCLOSURE", "10045");
+        attackCodes.put("REMOTE_CODE_EXECUTION", "20018");
+        attackCodes.put("EXTERNAL_REDIRECT", "20019");
+        attackCodes.put("BUFFER_OVERFLOW", "30001");
+        attackCodes.put("FORMAT_STRING_ERROR", "30002");
+        attackCodes.put("CRLF_INJECTION", "40003");
+        attackCodes.put("PARAMETER_TAMPERING", "40008");
+        attackCodes.put("SERVER_SIDE_INCLUDE", "40009");
+        attackCodes.put("CROSS_SITE_SCRIPTING", "40012,40014,40016,40017");
+        attackCodes.put("SQL_INJECTION", "40018");
+        attackCodes.put("SCRIPT_ACTIVE_SCAN_RULES", "50000");
+        attackCodes.put("SERVER_SIDE_CODE_INJECTION", "90019");
+        attackCodes.put("REMOTE_OS_COMMAND_INJECTION", "90020");
+    }
+
+    private static void configurePassiveScanThreshold() {
+        //-----------------------------------------------------------------------------------------------------------
+        //Change all Passive Scans Threshold one by one
+        try {
+            ApiResponseList apiResponseList = (ApiResponseList) clientApi.pscan.scanners();
+            List<ApiResponse> lstApiResponse = apiResponseList.getItems();
+            for (ApiResponse tmpApiResponse : lstApiResponse) {
+                ApiResponseSet apiResponseSet = (ApiResponseSet) tmpApiResponse;
+                String pScanId = apiResponseSet.getStringValue("id");
+                clientApi.pscan.setScannerAlertThreshold(pScanId, scannerThreshold);
+            }
+        } catch (ClientApiException ex) {
+            LOGGER.error("Error setting up Passive Scan Threshold: {}", ex.getMessage());
+        }
+        //-----------------------------------------------------------------------------------------------------------
     }
 }
