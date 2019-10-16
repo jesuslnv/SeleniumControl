@@ -84,9 +84,21 @@ This service allows you to store or manipulate parameters
 This service allows you to run a scanner that connects directly to a running **OWASP ZAP** instance and execute different tests to detect different security vulnerabilities.
 The performed Scan includes **Passive Scan**, **Active Scan** and **Spider Scan**.
 
+|Predefined Vars                    |Default Value          | Description |
+|---                                |---                    |---          |
+|httpIp                             |"127.0.0.1"            | Defines the IP where the OwaspZap is running|
+|httpPort                           |9090                   | Defines the PORT where the OwaspZap is using|
+|scannerStrength                    |"High"                 | Defines the Scanner Strength to be considered in all the Scans|
+|scannerThreshold                   |"Low"                  | Defines the Scanner Threshold to be considered in all the Scans|
+|reportFileLocation                 |"target/zapReport/"    | Defines the location for the report File|
+|reportFileName                     |"report.html"          | Defines the report File Name|
+|enablePassiveScan                  |true                   | Enables the Passive Scanner (True = Enabled, False = Disabled)|
+|enableActiveScan                   |true                   | Enables the Active Scanner (True = Enabled, False = Disabled)|
+|enableSpiderScan                   |true                   | Enables the Spider Scanner (True = Enabled, False = Disabled)|
+
 |Function Name                      |Action Perfomed|
 |---                                |---|
-|runScanner                         |Returns a Map with an Alert List for each scan type|
+|runScanner                         |Runs the main scanner that includes all the defined scans, and it generates a HTML file report |
 
 <!-- LINKS -->
 [stars-shield]: https://img.shields.io/github/stars/jesuslnv/SeleniumControl.svg
