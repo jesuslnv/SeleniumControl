@@ -21,10 +21,10 @@ public final class PenetrationTestingService {
     private static boolean enablePassiveScan = true;
     private static boolean enableActiveScan = true;
     private static boolean enableSpiderScan = true;
+    private static String previousUrlScanned = "";
     //-------------------------------------------------------------------------------
     private static Map<String, String> attackCodes = new HashMap<>();
     private static ClientApi clientApi;
-    private static String previousUrlScanned = "";
 
     private PenetrationTestingService() {
     }
@@ -91,6 +91,13 @@ public final class PenetrationTestingService {
      */
     public static void setEnableSpiderScan(boolean enableSpiderScan) {
         PenetrationTestingService.enableSpiderScan = enableSpiderScan;
+    }
+
+    /**
+     * @return returns the previous URL scanned stored in this var
+     */
+    public static String getPreviousUrlScanned() {
+        return previousUrlScanned;
     }
     //</editor-fold>
 
