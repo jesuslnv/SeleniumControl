@@ -100,6 +100,24 @@ The performed Scan includes **Passive Scan**, **Active Scan** and **Spider Scan*
 |---                                |---|
 |runScanner                         |Runs the main scanner that includes all the defined scans, and it generates a JSON file report |
 
+## Usage
+Generate a <**jar**> file using the next command:
+```xml
+mvn clean -U package
+```
+When you have the <**jar**> file ready, you can import it in your project to call the scanner 
+
+## Dependencies
+This project requires the next previous configurations:
+1. The [**Owasp Zap**](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project) instance running.
+2. The **Owasp Zap** apikey must be disabled.
+3. The **Owasp Zap** must be configured with the same **IP** and **PORT** that you are going to use in your project. 
+
+Here is an example to run your ZAP with the previous described configuration.
+```xml
+java -jar "ZAPLOCATION\zap-2.8.0.jar" -daemon -host 127.0.0.1 -port 9090 -config api.disablekey=true
+```
+
 <!-- LINKS -->
 [stars-shield]: https://img.shields.io/github/stars/jesuslnv/SeleniumControl.svg
 [stars-url]: https://github.com/jesuslnv/SeleniumControl/stargazers
