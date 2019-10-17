@@ -17,7 +17,7 @@ public final class PenetrationTestingService {
     private static String scannerStrength = "High";
     private static String scannerThreshold = "Low";
     private static String reportFileLocation = "target/zapReport/";
-    private static String reportFileName = "report.json";
+    private static String reportFileName = "report.html";
     private static boolean enablePassiveScan = true;
     private static boolean enableActiveScan = true;
     private static boolean enableSpiderScan = true;
@@ -66,7 +66,7 @@ public final class PenetrationTestingService {
     }
 
     /**
-     * @param reportFileName Is the ReportFileName sets up the name of the file created (Default: "report.json")
+     * @param reportFileName Is the ReportFileName sets up the name of the file created (Default: "report.html")
      */
     public static void setReportFileName(String reportFileName) {
         PenetrationTestingService.reportFileName = reportFileName;
@@ -96,7 +96,7 @@ public final class PenetrationTestingService {
 
     /**
      * @param urlToScan Is the url to be scanned
-     * It generates a JSON Report in a predefined location
+     * It generates a HTML Report in a predefined location
      * If there are a previous report, the function replaces the previous report with a new one
      */
     public static void runScanner(String urlToScan) {
@@ -252,7 +252,7 @@ public final class PenetrationTestingService {
         //Get alert List to shown in the LOG
         FileWriter fileWriter = null;
         try {
-            byte[] bytes = clientApi.core.jsonreport();
+            byte[] bytes = clientApi.core.htmlreport();
             String stringFile = new String(bytes, StandardCharsets.UTF_8);
             //Validates if the File Location don't exists, is created
             File fileValidator = new File(reportFileLocation);
