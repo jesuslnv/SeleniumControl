@@ -12,19 +12,12 @@ import java.util.*;
 
 public final class PenetrationTestingService {
     private static final Logger LOGGER = LogManager.getLogger();
-    /* The IP to establish the ZAP connection */
     private static String httpIp = "127.0.0.1";
-    /* The PORT to establish the ZAP connection */
     private static int httpPort = 9090;
-    /* The STRENGTH level used in the scanner */
     private static String scannerStrength = "High";
-    /* The THRESHOLD level used in the scanner */
     private static String scannerThreshold = "Low";
-    /* The ReportFileLocation sets up where the report is created */
     private static String reportFileLocation = "target/zapReport/";
-    /* The ReportFileName sets up the name of the file created */
-    private static String reportFileName = "report.html";
-    /* Enables specific Scanners (Passive Scan, Active Scan, Spider Scan) */
+    private static String reportFileName = "report.json";
     private static boolean enablePassiveScan = true;
     private static boolean enableActiveScan = true;
     private static boolean enableSpiderScan = true;
@@ -37,74 +30,65 @@ public final class PenetrationTestingService {
     }
 
     //<editor-fold desc="GETTER AND SETTERS">
-    public static String getHttpIp() {
-        return httpIp;
-    }
-
+    /**
+     * @param httpIp Is the IP to establish the ZAP connection (Default: "127.0.0.1")
+     */
     public static void setHttpIp(String httpIp) {
         PenetrationTestingService.httpIp = httpIp;
     }
 
-    public static int getHttpPort() {
-        return httpPort;
-    }
-
+    /**
+     * @param httpPort Is the PORT to establish the ZAP connection (Default: 9090)
+     */
     public static void setHttpPort(int httpPort) {
         PenetrationTestingService.httpPort = httpPort;
     }
 
-    public static String getScannerStrength() {
-        return scannerStrength;
-    }
-
+    /**
+     * @param scannerStrength Is he STRENGTH level used in the scanner (Default: "High")
+     */
     public static void setScannerStrength(String scannerStrength) {
         PenetrationTestingService.scannerStrength = scannerStrength;
     }
 
-    public static String getScannerThreshold() {
-        return scannerThreshold;
-    }
-
+    /**
+     * @param scannerThreshold Is the THRESHOLD level used in the scanner (Default: "Low")
+     */
     public static void setScannerThreshold(String scannerThreshold) {
         PenetrationTestingService.scannerThreshold = scannerThreshold;
     }
 
-    public static String getReportFileLocation() {
-        return reportFileLocation;
-    }
-
+    /**
+     * @param reportFileLocation Is the ReportFileLocation sets up where the report is created (Default: "target/zapReport/")
+     */
     public static void setReportFileLocation(String reportFileLocation) {
         PenetrationTestingService.reportFileLocation = reportFileLocation;
     }
 
-    public static String getReportFileName() {
-        return reportFileName;
-    }
-
+    /**
+     * @param reportFileName Is the ReportFileName sets up the name of the file created (Default: "report.json")
+     */
     public static void setReportFileName(String reportFileName) {
         PenetrationTestingService.reportFileName = reportFileName;
     }
 
-    public static boolean isEnablePassiveScan() {
-        return enablePassiveScan;
-    }
-
+    /**
+     * @param enablePassiveScan Enables the Passive Scan (Default: true)
+     */
     public static void setEnablePassiveScan(boolean enablePassiveScan) {
         PenetrationTestingService.enablePassiveScan = enablePassiveScan;
     }
 
-    public static boolean isEnableActiveScan() {
-        return enableActiveScan;
-    }
-
+    /**
+     * @param enableActiveScan Enables the Active Scan (Default: true)
+     */
     public static void setEnableActiveScan(boolean enableActiveScan) {
         PenetrationTestingService.enableActiveScan = enableActiveScan;
     }
 
-    public static boolean isEnableSpiderScan() {
-        return enableSpiderScan;
-    }
-
+    /**
+     * @param enableSpiderScan Enables the Spider Scan (Default: true)
+     */
     public static void setEnableSpiderScan(boolean enableSpiderScan) {
         PenetrationTestingService.enableSpiderScan = enableSpiderScan;
     }
@@ -112,6 +96,8 @@ public final class PenetrationTestingService {
 
     /**
      * @param urlToScan Is the url to be scanned
+     * It generates a JSON Report in a predefined location
+     * If there are a previous report, the function replaces the previous report with a new one
      */
     public static void runScanner(String urlToScan) {
         //-----------------------------------------------------------------------------------------------------------
@@ -266,7 +252,7 @@ public final class PenetrationTestingService {
         //Get alert List to shown in the LOG
         FileWriter fileWriter = null;
         try {
-            byte[] bytes = clientApi.core.htmlreport();
+            byte[] bytes = clientApi.core.jsonreport();
             String stringFile = new String(bytes, StandardCharsets.UTF_8);
             //Validates if the File Location don't exists, is created
             File fileValidator = new File(reportFileLocation);
