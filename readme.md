@@ -105,14 +105,14 @@ The performed Scan includes **Passive Scan**, **Active Scan** and **Spider Scan*
 
 ## Usage
 Generate a <**jar**> file using the next command:
-```xml
+```sh
 mvn clean -U package
 ```
 When you have the <**jar**> file ready, you can import it in your project to call the scanner.
 
 ---
 To install your library to use it as a normal dependency, you should execute this command:
-```xml
+```sh
 mvn clean -U install
 ```
 In case you executed the previous command, you can call the dependency putting this dependency rule in your **POM.xml** file.
@@ -131,7 +131,7 @@ This project requires the next previous configurations:
 3. The **Owasp Zap** must be configured with the same **IP** and **PORT** that you are going to use in your project. 
 
 Here is an example to run your ZAP with the previous described configuration.
-```xml
+```sh
 java -jar "ZAPLOCATION\zap-2.8.0.jar" -daemon -host 127.0.0.1 -port 9090 -config api.disablekey=true
 ```
 
