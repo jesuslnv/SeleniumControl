@@ -145,10 +145,20 @@ public final class PenetrationTestingService {
         }
         //-----------------------------------------------------------------------------------------------------------
         //Call the function to generate the HTML Report
-        generateHTMLReport();
+        try {
+            byte[] bytes = clientApi.core.htmlreport();
+            generateFileReport(bytes, ".html");
+        } catch (ClientApiException ex) {
+            LOGGER.error("Error getting the HTML Report: {}", ex.getMessage());
+        }
         //-----------------------------------------------------------------------------------------------------------
         //Call the function to generate the JSON Report
-        generateJSONReport();
+        try {
+            byte[] bytes = clientApi.core.jsonreport();
+            generateFileReport(bytes, ".json");
+        } catch (ClientApiException ex) {
+            LOGGER.error("Error getting the HTML Report: {}", ex.getMessage());
+        }
         //-----------------------------------------------------------------------------------------------------------
         //Set the current URL scanned to the previous
         previousUrlScanned = urlToScan;
@@ -260,11 +270,10 @@ public final class PenetrationTestingService {
         }
     }
 
-    private static void generateHTMLReport() {
+    private static void generateFileReport(byte[] bytes, String extension) {
         //Get alert List to shown in the LOG
         FileWriter fileWriter = null;
         try {
-            byte[] bytes = clientApi.core.htmlreport();
             String stringFile = new String(bytes, StandardCharsets.UTF_8);
             //Validates if the File Location don't exists, is created
             File fileValidator = new File(reportFileLocation);
@@ -272,38 +281,10 @@ public final class PenetrationTestingService {
                 fileValidator.mkdirs();
             }
             //Creates the report file
-            File reportFile = new File(reportFileLocation + reportFileName + ".html");
+            File reportFile = new File(reportFileLocation + reportFileName + extension);
             fileWriter = new FileWriter(reportFile);
             fileWriter.write(stringFile);
-        } catch (ClientApiException | IOException ex) {
-            LOGGER.error("Error generating HTML report: {}", ex.getMessage());
-        } finally {
-            if (fileWriter != null) {
-                try {
-                    fileWriter.close();
-                } catch (IOException ex) {
-                    LOGGER.error("Error closing the file: {}", ex.getMessage());
-                }
-            }
-        }
-    }
-
-    private static void generateJSONReport() {
-        //Get alert List to shown in the LOG
-        FileWriter fileWriter = null;
-        try {
-            byte[] bytes = clientApi.core.jsonreport();
-            String stringFile = new String(bytes, StandardCharsets.UTF_8);
-            //Validates if the File Location don't exists, is created
-            File fileValidator = new File(reportFileLocation);
-            if(!fileValidator.exists()){
-                fileValidator.mkdirs();
-            }
-            //Creates the report file
-            File reportFile = new File(reportFileLocation + reportFileName + ".json");
-            fileWriter = new FileWriter(reportFile);
-            fileWriter.write(stringFile);
-        } catch (ClientApiException | IOException ex) {
+        } catch (IOException ex) {
             LOGGER.error("Error generating HTML report: {}", ex.getMessage());
         } finally {
             if (fileWriter != null) {
