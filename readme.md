@@ -143,6 +143,6 @@ java -jar "ZAPLOCATION\zap-2.8.0.jar" -daemon -host 127.0.0.1 -port 9090 -config
 [sonar-shield]: https://sonarcloud.io/api/project_badges/measure?project=jesuslnv_SeleniumControl&metric=alert_status
 [sonar-url]: https://sonarcloud.io/dashboard?id=jesuslnv_SeleniumControl
 [license-shield]: https://img.shields.io/github/license/jesuslnv/SeleniumControl.svg
-[license-url]: https://github.com/jesuslnv/SeleniumControl/blob/master/LICENSE.txt
+[license-url]: https://github.com/jesuslnv/SeleniumControl/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=1E5799
 [linkedin-url]: https://pe.linkedin.com/in/jesus-luis-neira-vizcarra-27b4b31a
