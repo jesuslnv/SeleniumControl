@@ -106,7 +106,21 @@ Generate a <**jar**> file using the next command:
 ```xml
 mvn clean -U package
 ```
-When you have the <**jar**> file ready, you can import it in your project to call the scanner 
+When you have the <**jar**> file ready, you can import it in your project to call the scanner.
+
+---
+To install your library to use it as a normal dependency, you should execute this command:
+```xml
+mvn clean -U install
+```
+In case you executed the previous command, you can call the dependency putting this dependency rule in your **POM.xml** file.
+```xml
+<dependency>
+    <groupId>SeleniumControl</groupId>
+    <artifactId>SeleniumControl</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
 
 ## Dependencies
 This project requires the next previous configurations:
