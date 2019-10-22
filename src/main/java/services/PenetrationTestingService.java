@@ -19,7 +19,7 @@ public final class PenetrationTestingService {
     private static String scannerStrength = "High";
     private static String scannerThreshold = "Low";
     private static String reportFileLocation = "target/zapReport/";
-    private static String reportFileName = "report.html";
+    private static String reportFileName = "report";
     private static boolean enablePassiveScan = true;
     private static boolean enableActiveScan = true;
     private static boolean enableSpiderScan = true;
@@ -144,8 +144,11 @@ public final class PenetrationTestingService {
             runSpiderScan(urlToScan);
         }
         //-----------------------------------------------------------------------------------------------------------
-        //Call the function to generate the File Report
-        generateFileReport();
+        //Call the function to generate the HTML Report
+        generateHTMLReport();
+        //-----------------------------------------------------------------------------------------------------------
+        //Call the function to generate the JSON Report
+        generateJSONReport();
         //-----------------------------------------------------------------------------------------------------------
         //Set the current URL scanned to the previous
         previousUrlScanned = urlToScan;
@@ -257,7 +260,7 @@ public final class PenetrationTestingService {
         }
     }
 
-    private static void generateFileReport() {
+    private static void generateHTMLReport() {
         //Get alert List to shown in the LOG
         FileWriter fileWriter = null;
         try {
@@ -269,7 +272,35 @@ public final class PenetrationTestingService {
                 fileValidator.mkdirs();
             }
             //Creates the report file
-            File reportFile = new File(reportFileLocation + reportFileName);
+            File reportFile = new File(reportFileLocation + reportFileName + ".html");
+            fileWriter = new FileWriter(reportFile);
+            fileWriter.write(stringFile);
+        } catch (ClientApiException | IOException ex) {
+            LOGGER.error("Error generating HTML report: {}", ex.getMessage());
+        } finally {
+            if (fileWriter != null) {
+                try {
+                    fileWriter.close();
+                } catch (IOException ex) {
+                    LOGGER.error("Error closing the file: {}", ex.getMessage());
+                }
+            }
+        }
+    }
+
+    private static void generateJSONReport() {
+        //Get alert List to shown in the LOG
+        FileWriter fileWriter = null;
+        try {
+            byte[] bytes = clientApi.core.jsonreport();
+            String stringFile = new String(bytes, StandardCharsets.UTF_8);
+            //Validates if the File Location don't exists, is created
+            File fileValidator = new File(reportFileLocation);
+            if(!fileValidator.exists()){
+                fileValidator.mkdirs();
+            }
+            //Creates the report file
+            File reportFile = new File(reportFileLocation + reportFileName + ".json");
             fileWriter = new FileWriter(reportFile);
             fileWriter.write(stringFile);
         } catch (ClientApiException | IOException ex) {
