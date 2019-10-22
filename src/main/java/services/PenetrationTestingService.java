@@ -20,6 +20,8 @@ public final class PenetrationTestingService {
     private static String scannerThreshold = "Low";
     private static String reportFileLocation = "target/zapReport/";
     private static String reportFileName = "report";
+    private static boolean enableHTMLReport = true;
+    private static boolean enableJSONReport = true;
     private static boolean enablePassiveScan = true;
     private static boolean enableActiveScan = true;
     private static boolean enableSpiderScan = true;
@@ -32,6 +34,7 @@ public final class PenetrationTestingService {
     }
 
     //<editor-fold desc="GETTER AND SETTERS">
+
     /**
      * @param httpIp Is the IP to establish the ZAP connection (Default: "127.0.0.1")
      */
@@ -75,6 +78,20 @@ public final class PenetrationTestingService {
     }
 
     /**
+     * @param enableHTMLReport Enables the creation of an HTML Report (Default: true)
+     */
+    public static void setEnableHTMLReport(boolean enableHTMLReport) {
+        PenetrationTestingService.enableHTMLReport = enableHTMLReport;
+    }
+
+    /**
+     * @param enableJSONReport Enables the creation of an JSON Report (Default: true)
+     */
+    public static void setEnableJSONReport(boolean enableJSONReport) {
+        PenetrationTestingService.enableJSONReport = enableJSONReport;
+    }
+
+    /**
      * @param enablePassiveScan Enables the Passive Scan (Default: true)
      */
     public static void setEnablePassiveScan(boolean enablePassiveScan) {
@@ -105,8 +122,8 @@ public final class PenetrationTestingService {
 
     /**
      * @param urlToScan Is the url to be scanned
-     * It generates a HTML Report in a predefined location
-     * If there are a previous report, the function replaces the previous report with a new one
+     *                  It generates a HTML Report in a predefined location
+     *                  If there are a previous report, the function replaces the previous report with a new one
      */
     public static void runScanner(String urlToScan) {
         //-----------------------------------------------------------------------------------------------------------
@@ -145,19 +162,23 @@ public final class PenetrationTestingService {
         }
         //-----------------------------------------------------------------------------------------------------------
         //Call the function to generate the HTML Report
-        try {
-            byte[] bytes = clientApi.core.htmlreport();
-            generateFileReport(bytes, ".html");
-        } catch (ClientApiException ex) {
-            LOGGER.error("Error getting the HTML Report: {}", ex.getMessage());
+        if (enableHTMLReport) {
+            try {
+                byte[] bytes = clientApi.core.htmlreport();
+                generateFileReport(bytes, ".html");
+            } catch (ClientApiException ex) {
+                LOGGER.error("Error getting the HTML Report: {}", ex.getMessage());
+            }
         }
         //-----------------------------------------------------------------------------------------------------------
         //Call the function to generate the JSON Report
-        try {
-            byte[] bytes = clientApi.core.jsonreport();
-            generateFileReport(bytes, ".json");
-        } catch (ClientApiException ex) {
-            LOGGER.error("Error getting the HTML Report: {}", ex.getMessage());
+        if (enableJSONReport) {
+            try {
+                byte[] bytes = clientApi.core.jsonreport();
+                generateFileReport(bytes, ".json");
+            } catch (ClientApiException ex) {
+                LOGGER.error("Error getting the JSON Report: {}", ex.getMessage());
+            }
         }
         //-----------------------------------------------------------------------------------------------------------
         //Set the current URL scanned to the previous
@@ -277,7 +298,7 @@ public final class PenetrationTestingService {
             String stringFile = new String(bytes, StandardCharsets.UTF_8);
             //Validates if the File Location don't exists, is created
             File fileValidator = new File(reportFileLocation);
-            if(!fileValidator.exists()){
+            if (!fileValidator.exists()) {
                 fileValidator.mkdirs();
             }
             //Creates the report file
