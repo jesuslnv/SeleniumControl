@@ -91,7 +91,9 @@ The performed Scan includes **Passive Scan**, **Active Scan** and **Spider Scan*
 |scannerStrength                    |"High"                 | Defines the Scanner Strength to be considered in all the Scans|
 |scannerThreshold                   |"Low"                  | Defines the Scanner Threshold to be considered in all the Scans|
 |reportFileLocation                 |"target/zapReport/"    | Defines the location for the report File|
-|reportFileName                     |"report.html"          | Defines the report File Name|
+|reportFileName                     |"report"               | Defines the report File Name|
+|enableHTMLReport                   |true                   | Enables the HTML report generation (True = Enabled, False = Disabled)|
+|enableJSONReport                   |true                   | Enables the JSON report generation (True = Enabled, False = Disabled)|
 |enablePassiveScan                  |true                   | Enables the Passive Scanner (True = Enabled, False = Disabled)|
 |enableActiveScan                   |true                   | Enables the Active Scanner (True = Enabled, False = Disabled)|
 |enableSpiderScan                   |true                   | Enables the Spider Scanner (True = Enabled, False = Disabled)|
