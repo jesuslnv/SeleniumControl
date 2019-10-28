@@ -103,6 +103,17 @@ The performed Scan includes **Passive Scan**, **Active Scan** and **Spider Scan*
 |---                                |---|
 |runScanner                         |Runs the main scanner that includes all the defined scans, and it generates a HTML file report |
 
+## Dependencies
+This project requires the next previous configurations:
+1. The [**Owasp Zap**](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project) instance running.
+2. The **Owasp Zap** apikey must be disabled.
+3. The **Owasp Zap** must be configured with the same **IP** and **PORT** that you are going to use in your project. 
+
+Here is an example to run your ZAP with the previous described configuration.
+```sh
+java -jar "ZAPLOCATION\zap-2.8.0.jar" -daemon -host 127.0.0.1 -port 9090 -config api.disablekey=true
+```
+
 ## Usage
 Generate a <**jar**> file using the next command:
 ```sh
@@ -124,15 +135,14 @@ In case you executed the previous command, you can call the dependency putting t
 </dependency>
 ```
 
-## Dependencies
-This project requires the next previous configurations:
-1. The [**Owasp Zap**](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project) instance running.
-2. The **Owasp Zap** apikey must be disabled.
-3. The **Owasp Zap** must be configured with the same **IP** and **PORT** that you are going to use in your project. 
-
-Here is an example to run your ZAP with the previous described configuration.
-```sh
-java -jar "ZAPLOCATION\zap-2.8.0.jar" -daemon -host 127.0.0.1 -port 9090 -config api.disablekey=true
+When your project library is imported the next step is call an element in your main project referencing the proper **XPath**.
+```java
+ButtonControl buttonControl = new ButtonControl(webDriver, "XPATH");
+buttonControl.click();
+SelectControl selectControl = new ButtonControl(webDriver, "XPATH");
+selectControl.isControlExist();
+TextControl textControl = new TextControl(webDriver, "XPATH");
+textControl.setText(user);
 ```
 
 <!-- LINKS -->
