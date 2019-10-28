@@ -136,14 +136,24 @@ In case you executed the previous command, you can call the dependency putting t
 ```
 
 When your project library is imported the next step is call an element in your main project referencing the proper **XPath**.
+- Example to use a **ButtonControl** java implementation:
 ```java
 ButtonControl buttonControl = new ButtonControl(webDriver, "XPATH");
 buttonControl.click();
+```
+- Example to use a **SelectControl** java implementation:
+```java
 SelectControl selectControl = new ButtonControl(webDriver, "XPATH");
 selectControl.isControlExist();
+```
+- Example to use a **TextControl** java implementation:
+```java
 TextControl textControl = new TextControl(webDriver, "XPATH");
 textControl.setText(user);
 ```
+When you use any of the mentioned implementation, is important to initialize your **webDriver** parameter and set the proper **XPath** in each operation because each one is different for each call.
+Each component have a internal function specified at the beginning of this documentation.
+
 
 <!-- LINKS -->
 [stars-shield]: https://img.shields.io/github/stars/jesuslnv/SeleniumControl.svg
