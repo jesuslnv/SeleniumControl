@@ -272,7 +272,7 @@ public final class PenetrationTestingService {
                 progressStuck++;
                 progress = Integer.parseInt(((ApiResponseElement) clientApi.spider.status(scanId)).getValue());
                 //After 90 seconds the "Spider Scan" is automatically stopped to avoid a permanent Stuck bug
-                if (progressStuck >= 180) {
+                if (progressStuck >= 300) {
                     //Stop and remove all Scans
                     clientApi.spider.stopAllScans();
                     clientApi.spider.removeAllScans();
