@@ -46,6 +46,7 @@ The Control component contains all the functions to manipulate all the existing 
 |isControlExist                     |Validates if the Control exist in the view|
 |dragAndDrop                        |Allows to Drag and Drop elements in the view |
 |mouseHover                         |Locates the mouse in specified Xpath|
+|sendkeyToElement                   |Sends a keystroke to the predefined Element by Xpath|
 
 There is a list of different controls to be used: 
 

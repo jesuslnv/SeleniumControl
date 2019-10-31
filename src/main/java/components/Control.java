@@ -1,9 +1,6 @@
 package components;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -67,5 +64,14 @@ public abstract class Control {
         WebElement elementSource = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
         ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(" + xPosition + "," + yPosition + ")", "");
         actions.moveToElement(elementSource).build().perform();
+    }
+
+    /**
+     * Sends a Key Stroke to the predefined Element by xPath
+     */
+    public void sendkeyToElement(Keys keySent) {
+        WebDriverWait wait = new WebDriverWait(webDriver, 60);
+        WebElement elementSource = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
+        elementSource.sendKeys(keySent);
     }
 }
