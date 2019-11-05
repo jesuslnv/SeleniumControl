@@ -123,7 +123,8 @@ The performed Scan includes **Passive Scan**, **Active Scan** and **Spider Scan*
 |enablePassiveScan                  |true                   | Enables the Passive Scanner (True = Enabled, False = Disabled)|
 |enableActiveScan                   |true                   | Enables the Active Scanner (True = Enabled, False = Disabled)|
 |enableSpiderScan                   |true                   | Enables the Spider Scanner (True = Enabled, False = Disabled)|
-|previousUrlScanned                 |""                     | Stores the previous URL scanned |
+|spiderScanTimeOut                  |3600                   | Defines the Spider Scan TimeOut|
+|previousUrlScanned                 |""                     | Stores the previous URL scanned|
 
 |Function Name                      |Action Perfomed|
 |---                                |---|

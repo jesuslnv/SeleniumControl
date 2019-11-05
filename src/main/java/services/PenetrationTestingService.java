@@ -131,7 +131,7 @@ public final class PenetrationTestingService {
     /**
      * @param urlToScan Is the url to be scanned
      *                  It generates a HTML Report in a predefined location
-     *                  If there are a previous report, the function replaces the previous report with a new one
+     *                  If there are a previous report file with the same name, the function replaces the previous report with a new one
      */
     public static void runScanner(String urlToScan) {
         //-----------------------------------------------------------------------------------------------------------
