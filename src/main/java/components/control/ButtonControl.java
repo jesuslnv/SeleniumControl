@@ -18,6 +18,7 @@ public final class ButtonControl extends Control {
     private boolean autoScroll = true;
 
     /**
+     * Defines the time to wait before click on element
      * @param waitForClick Defines the time to wait before click on element
      */
     public void setWaitForClick(int waitForClick) {
@@ -25,7 +26,8 @@ public final class ButtonControl extends Control {
     }
 
     /**
-     * @param autoScroll Defines the time to wait before start actions in a function
+     *
+     * @param autoScroll Enables the option to auto scroll the view to the element (Default: true)
      */
     public void setAutoScroll(boolean autoScroll) {
         this.autoScroll = autoScroll;

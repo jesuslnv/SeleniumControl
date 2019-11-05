@@ -17,6 +17,7 @@ public final class TextControl extends Control {
     private long waitAfterClean = 0;
     private long waitForClick = 0;
     private boolean cleanText = true;
+    private boolean autoScroll = true;
 
     /**
      * @param waitAfterClean Defines the time to wait after clean a Text
@@ -30,6 +31,13 @@ public final class TextControl extends Control {
      */
     public void setWaitForClick(int waitForClick) {
         this.waitForClick = waitForClick;
+    }
+
+    /**
+     * @param autoScroll Enables the option to auto scroll the view to the element (Default: true)
+     */
+    public void setAutoScroll(boolean autoScroll) {
+        this.autoScroll = autoScroll;
     }
 
     /**
@@ -58,11 +66,15 @@ public final class TextControl extends Control {
     }
 
     /**
+     *
      * @param value Is the text value to be written
      */
     public void setText(String value) {
         WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
         WebElement inputText = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
+        if (autoScroll) {
+            navigateToElementLocation(inputText);
+        }
         ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(" + xPosition + "," + yPosition + ")", "");
         if (cleanText) {
             inputText.clear();
@@ -77,7 +89,7 @@ public final class TextControl extends Control {
     }
 
     /**
-     * @param value             is the Text to be written in the predefined xPath component
+     * @param value             is the Text to be written in the predefined xPath Element
      * @param autoCompleteXpath is the xPath for the displayed popup text to be clicked
      */
     public void setTextAutoComplete(String value, String autoCompleteXpath) {
@@ -97,11 +109,15 @@ public final class TextControl extends Control {
     }
 
     /**
-     * @return Returns the text contained by the specified xPath component
+     * @return Returns the text contained by the specified xPath Element
      */
     public String getContainedText() {
         WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
         WebElement inputUser = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
         return inputUser.getText();
+    }
+
+    private void navigateToElementLocation(WebElement webElement) {
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView(true);", webElement);
     }
 }

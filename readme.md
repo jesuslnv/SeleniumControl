@@ -53,11 +53,36 @@ There is a list of different controls to be used:
 #### A. ButtonControl
 Is a control for manipulate any **Button** or **Link** in the **WebSite**.
 
+|Function Name                      |Action Perfomed|
+|---                                |---|
+|setWaitForClick                    |Defines the time to wait before click on element|
+|setAutoScroll                      |Enables the option to auto scroll the view to the element (Default: true)|
+|click                              |Allows to "Click" on specified Element|
+|rightClick                         |Allows to "Right Click" on specified Button Element|
+|doubleClick                        |Allows to "Double Click" on specified Button Element|
+
+
 #### B. SelectControl
 Is a control for manipulate any **Select** in the **WebSite**.
 
+|Function Name                      |Action Perfomed|
+|---                                |---|
+|setWaitForClick                    |Defines the time to wait before click on element|
+|setAutoScroll                      |Enables the option to auto scroll the view to the element (Default: true)|
+|selectElement                      |Allows to select the value inside a Select Element (Works with a select HTML component)|
+|selectButtonElement                |Allows to select the specified item inside a Select Element|
+|selectCheckBox                     |Allows to check multiple items inside a Select Element|
+
 #### C. TextControl
 Is a control for manipulate any **Text** in the **WebSite**.
+
+|Function Name                      |Action Perfomed|
+|---                                |---|
+|setWaitForClick                    |Defines the time to wait before click on element|
+|setAutoScroll                      |Enables the option to auto scroll the view to the element (Default: true)|
+|setText                            |Allows to write the value inside a Text Element|
+|setTextAutoComplete                |Allows to select the specified item displayed after a Text Autocomplete Element|
+|getContainedText                   |Returns the text contained by the specified Element|
 
 # Services
 There are different necessary services to manipulate variables in Selenium and also to run tests that don't belong to Selenium by default.

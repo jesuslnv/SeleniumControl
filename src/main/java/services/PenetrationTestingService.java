@@ -25,6 +25,7 @@ public final class PenetrationTestingService {
     private static boolean enablePassiveScan = true;
     private static boolean enableActiveScan = true;
     private static boolean enableSpiderScan = true;
+    private static int spiderScan_TimeOut = 1800;
     private static String previousUrlScanned = "";
     //-------------------------------------------------------------------------------
     private static Map<String, String> attackCodes = new HashMap<>();
@@ -110,6 +111,13 @@ public final class PenetrationTestingService {
      */
     public static void setEnableSpiderScan(boolean enableSpiderScan) {
         PenetrationTestingService.enableSpiderScan = enableSpiderScan;
+    }
+
+    /**
+     * @param spiderScan_TimeOut Set the Spider Scan TimeOut in seconds (Default: 1800)
+     */
+    public static void setSpiderScan_TimeOut(int spiderScan_TimeOut) {
+        PenetrationTestingService.spiderScan_TimeOut = spiderScan_TimeOut;
     }
 
     /**
@@ -269,10 +277,13 @@ public final class PenetrationTestingService {
             while (progress < 100) {
                 Thread.sleep(1000);
                 scanTime++;
-                progressStuck++;
                 progress = Integer.parseInt(((ApiResponseElement) clientApi.spider.status(scanId)).getValue());
-                //After 90 seconds the "Spider Scan" is automatically stopped to avoid a permanent Stuck bug
-                if (progressStuck >= 300) {
+                //After "300" seconds if the scan stay in 99% it cancels the current Scan.
+                if (progress == 99) {
+                    progressStuck++;
+                }
+                //After "timeOut" seconds the "Spider Scan" is automatically stopped to avoid a permanent Stuck bug
+                if ((scanTime >= spiderScan_TimeOut) || (progressStuck >= 300)) {
                     //Stop and remove all Scans
                     clientApi.spider.stopAllScans();
                     clientApi.spider.removeAllScans();

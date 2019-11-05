@@ -44,7 +44,7 @@ public abstract class Control {
     }
 
     /**
-     * @param dropElementXpath Place where the base Element xPath will be dropped
+     * @param dropElementXpath place where the base Element xPath will be dropped
      */
     public void dragAndDrop(String dropElementXpath) {
         Actions actions = new Actions(webDriver);
@@ -67,7 +67,7 @@ public abstract class Control {
     }
 
     /**
-     * Sends a Key Stroke to the predefined Element by xPath
+     * @param keySent stores a Key to send in the predefined Element by xPath
      */
     public void sendkeyToElement(Keys keySent) {
         WebDriverWait wait = new WebDriverWait(webDriver, 60);

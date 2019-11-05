@@ -18,12 +18,21 @@ public final class SelectControl extends Control {
     private static final Logger LOGGER = LogManager.getLogger();
     private int timeOut = 60;
     private long waitForClick = 0;
+    private boolean autoScroll = true;
 
     /**
+     * Defines the time to wait before click on element
      * @param waitForClick Defines the time to wait before click on element
      */
     public void setWaitForClick(int waitForClick) {
         this.waitForClick = waitForClick;
+    }
+
+    /**
+     * @param autoScroll Enables the option to auto scroll the view to the element (Default: true)
+     */
+    public void setAutoScroll(boolean autoScroll) {
+        this.autoScroll = autoScroll;
     }
 
     /**
@@ -45,11 +54,15 @@ public final class SelectControl extends Control {
     }
 
     /**
-     * @param value Is the "Value" to search inside the specified xPath component
+     * Allows to select the value inside a Select Element
+     * @param value Is the "Value" to search inside the specified xPath Element
      */
     public void selectElement(String value) {
         WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
         WebElement selector = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
+        if (autoScroll) {
+            navigateToElementLocation(selector);
+        }
         Select dropDown = new Select(selector);
         List<WebElement> options = dropDown.getOptions();
         for (WebElement option : options) {
@@ -67,13 +80,15 @@ public final class SelectControl extends Control {
     }
 
     /**
-     * @param elementXPath Is the button element displayed after clicking in the specified xPath component
+     * Allows to select the specified item inside a Select Element
+     * @param elementToSelectXPath Is the button element displayed after clicking in the specified xPath Element
      */
-    public void selectButtonElement(String elementXPath) {
+    public void selectButtonElement(String elementToSelectXPath) {
         WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
         WebElement selector = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
-        Actions action = new Actions(webDriver);
-        action.moveToElement(selector).build().perform();
+        if (autoScroll) {
+            navigateToElementLocation(selector);
+        }
         try {
             Thread.sleep(waitForClick * 1000);
         } catch (InterruptedException ex) {
@@ -81,9 +96,10 @@ public final class SelectControl extends Control {
             Thread.currentThread().interrupt();
         }
         selector.click();
-        WebElement elementToSelect = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(elementXPath)));
-        // Scrolls the element to be visible
-        ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView(true);", elementToSelect);
+        WebElement elementToSelect = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(elementToSelectXPath)));
+        if (autoScroll) {
+            navigateToElementLocation(elementToSelect);
+        }
         try {
             Thread.sleep(waitForClick * 1000);
         } catch (InterruptedException ex) {
@@ -94,6 +110,7 @@ public final class SelectControl extends Control {
     }
 
     /**
+     * Allows to check multiple items inside a Select Element
      * @param listOfElementsXPath List of xPaths Elements to be checked
      */
     public void selectCheckBox(List<String> listOfElementsXPath) {
@@ -101,31 +118,47 @@ public final class SelectControl extends Control {
         WebElement selector = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
         try {
             Thread.sleep(waitForClick * 1000);
+            if (autoScroll) {
+                navigateToElementLocation(selector);
+            }
             Actions actions = new Actions(webDriver);
-            actions.moveToElement(selector).moveToElement(selector).click().build().perform();
+            actions.moveToElement(selector).click().build().perform();
             for (String elementXPath : listOfElementsXPath) {
-                // If this element is closed for any reason, it will be open again
+                //If this element is closed for any reason, it will be open again
                 if (!webDriver.findElement(By.xpath(elementXPath)).isDisplayed()) {
                     ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(" + xPosition + "," + yPosition + ")", "");
                     Thread.sleep(waitForClick * 1000);
+                    if (autoScroll) {
+                        navigateToElementLocation(selector);
+                    }
                     actions = new Actions(webDriver);
-                    actions.moveToElement(selector).moveToElement(selector).click().build().perform();
+                    actions.moveToElement(selector).click().build().perform();
                 }
                 WebElement elementToSelect = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(elementXPath)));
                 Thread.sleep(waitForClick * 1000);
+                if (autoScroll) {
+                    navigateToElementLocation(selector);
+                }
                 actions = new Actions(webDriver);
-                actions.moveToElement(elementToSelect).moveToElement(elementToSelect).click().build().perform();
-                // If checkbox is still visible I close the Combo
+                actions.moveToElement(elementToSelect).click().build().perform();
+                //If checkbox is still visible I close the Combo
                 if (webDriver.findElement(By.xpath(elementXPath)).isDisplayed()) {
                     ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(" + xPosition + "," + yPosition + ")", "");
                     Thread.sleep(waitForClick * 1000);
+                    if (autoScroll) {
+                        navigateToElementLocation(selector);
+                    }
                     actions = new Actions(webDriver);
-                    actions.moveToElement(selector).moveToElement(selector).click().build().perform();
+                    actions.moveToElement(selector).click().build().perform();
                 }
             }
         } catch (InterruptedException ex) {
             LOGGER.error(ex.getMessage());
             Thread.currentThread().interrupt();
         }
+    }
+
+    private void navigateToElementLocation(WebElement webElement) {
+        ((JavascriptExecutor) webDriver).executeScript("arguments[0].scrollIntoView(true);", webElement);
     }
 }
