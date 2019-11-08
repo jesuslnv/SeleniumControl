@@ -25,7 +25,7 @@ public final class PenetrationTestingService {
     private static boolean enablePassiveScan = true;
     private static boolean enableActiveScan = true;
     private static boolean enableSpiderScan = true;
-    private static int spiderScanTimeOut = 3600;
+    private static int spiderScanTimeOut = 30;
     private static String previousUrlScanned = "";
     //-------------------------------------------------------------------------------
     private static Map<String, String> attackCodes = new HashMap<>();
@@ -114,7 +114,7 @@ public final class PenetrationTestingService {
     }
 
     /**
-     * @param spiderScanTimeOut Set the Spider Scan TimeOut in seconds (Default: 3600)
+     * @param spiderScanTimeOut Set the Spider Scan TimeOut in minutes (Default: 30)
      */
     public static void setSpiderScanTimeOut(int spiderScanTimeOut) {
         PenetrationTestingService.spiderScanTimeOut = spiderScanTimeOut;
@@ -267,6 +267,13 @@ public final class PenetrationTestingService {
         LOGGER.info("--------------------------Starting Spider Scan---------------------------");
         LOGGER.info("Scanning URL: {}", urlToScan);
         try {
+            //Clear all Spider Scans
+            clientApi.spider.removeAllScans();
+            //Set all the Options in the Spider Scan
+            clientApi.core.setMode("protect");
+            clientApi.spider.setOptionThreadCount(50);
+            clientApi.spider.setOptionMaxDepth(5);
+            clientApi.spider.setOptionMaxDuration(spiderScanTimeOut);
             //Enable specific Active Scanner
             ApiResponse apiResponse = clientApi.spider.scan(urlToScan, null, null, null, null);
             String scanId = ((ApiResponseElement) apiResponse).getValue();
@@ -278,17 +285,17 @@ public final class PenetrationTestingService {
                 Thread.sleep(1000);
                 scanTime++;
                 progress = Integer.parseInt(((ApiResponseElement) clientApi.spider.status(scanId)).getValue());
-                //After "300" seconds if the scan stay in 99% it cancels the current Scan.
+                //After "300" seconds if the scan stay stuck in 99% it cancels the current Scan.
                 if (progress == 99) {
                     progressStuck++;
                 }
-                //After "timeOut" seconds the "Spider Scan" is automatically stopped to avoid a permanent Stuck bug
-                if ((scanTime >= spiderScanTimeOut) || (progressStuck >= 300)) {
+                //After "300" seconds the "Spider Scan" is automatically stopped to avoid a permanent Stuck bug
+                if (progressStuck >= 300) {
                     //Stop and remove all Scans
                     clientApi.spider.stopAllScans();
                     clientApi.spider.removeAllScans();
                     //Generates an Exception due a possible stuck
-                    throw new InterruptedException("Spider Scan timeout " + progressStuck + " seconds.");
+                    throw new InterruptedException("Spider Scan stuck timeout " + progressStuck + " seconds.");
                 }
             }
             LOGGER.info("Spider Scan Completed in {} seconds", scanTime);
