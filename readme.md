@@ -185,8 +185,8 @@ Each component have a internal function specified at the beginning of this docum
 <!-- LINKS -->
 [stars-shield]: https://img.shields.io/github/stars/jesuslnv/SeleniumControl.svg
 [stars-url]: https://github.com/jesuslnv/SeleniumControl/stargazers
-[travis-shield]: https://travis-ci.org/jesuslnv/SeleniumControl.svg?branch=master
-[travis-url]: https://travis-ci.org/jesuslnv/SeleniumControl
+[travis-shield]: https://travis-ci.com/jesuslnv/SeleniumControl.svg?branch=master
+[travis-url]: https://travis-ci.com/jesuslnv/SeleniumControl
 [sonar-shield]: https://sonarcloud.io/api/project_badges/measure?project=jesuslnv_SeleniumControl&metric=alert_status
 [sonar-url]: https://sonarcloud.io/dashboard?id=jesuslnv_SeleniumControl
 [license-shield]: https://img.shields.io/badge/License-MIT-green.svg
