@@ -1,11 +1,11 @@
 language: java
-dist: trusty
+#dist: trusty
 jdk: oraclejdk8
 git:
   depth: false
 addons:
   sonarcloud:
-    organization: "d3f8a5336ce9588e797e9a71f16a14997b5949856daf7e11f94a1ff158"
+    organization: "seleniumcontrol"
     token:
       secure: "446b47aa14536c91027759248032762a1e1d6276"
     branches:
