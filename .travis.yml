@@ -5,7 +5,7 @@ addons:
   sonarcloud:
     organization: "d3f8a5336ce9588e797e9a71f16a14997b5949856daf7e11f94a1ff158"
     token:
-      secure: "bb125257eb44d0169e71ce42b0e2bac005fcd6cd"
+      secure: "7d38b145055f5fc23efd482c6af5c762062f5483" #TmpKey "bb125257eb44d0169e71ce42b0e2bac005fcd6cd"
     branches:
       - master
 script:
