@@ -203,6 +203,9 @@ public final class PenetrationTestingService {
             //Change all Passive Scans Threshold
             configurePassiveScanThreshold();
             //-----------------------------------------------------------------------------------------------------------
+            //Set the OWASP Zap Mode for the Passive Scan
+            clientApi.core.setMode("standard");
+            //-----------------------------------------------------------------------------------------------------------
             //Start the Passive Scanner
             ApiResponse apiResponse = clientApi.pscan.recordsToScan();
             int scanTime = 0;
@@ -270,7 +273,7 @@ public final class PenetrationTestingService {
             //Clear all Spider Scans
             clientApi.spider.removeAllScans();
             //Set all the Options in the Spider Scan
-            clientApi.core.setMode("protect");
+            clientApi.core.setMode("attack");
             clientApi.spider.setOptionThreadCount(50);
             clientApi.spider.setOptionMaxDepth(5);
             clientApi.spider.setOptionMaxDuration(spiderScanTimeOut);
