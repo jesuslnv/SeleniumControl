@@ -28,7 +28,7 @@ There are different components two main components declared in the project:
 ## Page
 The Page component contains all the functions related to the **WebSite** that allows you to navigate it.
 
-|Function Name                      |Action Perfomed|
+|Function Name                      |Action Performed|
 |---                                |---|
 |switchToTab                        |Switch To Specific Tab using Name|
 |switchToLastTab                    |Switch To Last Tab|
@@ -39,7 +39,7 @@ The Page component contains all the functions related to the **WebSite** that al
 ## Control
 The Control component contains all the functions to manipulate all the existing elements in the **WebSite**.
 
-|Function Name                      |Action Perfomed|
+|Function Name                      |Action Performed|
 |---                                |---|
 |setxPosition                       |Moves the view in axis "X"|
 |setyPosition                       |Moves the view in axis "Y"|
@@ -53,7 +53,7 @@ There is a list of different controls to be used:
 #### A. ButtonControl
 Is a control for manipulate any **Button** or **Link** in the **WebSite**.
 
-|Function Name                      |Action Perfomed|
+|Function Name                      |Action Performed|
 |---                                |---|
 |setWaitForClick                    |Defines the time to wait before click on element|
 |setAutoScroll                      |Enables the option to auto scroll the view to the element (Default: true)|
@@ -65,7 +65,7 @@ Is a control for manipulate any **Button** or **Link** in the **WebSite**.
 #### B. SelectControl
 Is a control for manipulate any **Select** in the **WebSite**.
 
-|Function Name                      |Action Perfomed|
+|Function Name                      |Action Performed|
 |---                                |---|
 |setWaitForClick                    |Defines the time to wait before click on element|
 |setAutoScroll                      |Enables the option to auto scroll the view to the element (Default: true)|
@@ -76,7 +76,7 @@ Is a control for manipulate any **Select** in the **WebSite**.
 #### C. TextControl
 Is a control for manipulate any **Text** in the **WebSite**.
 
-|Function Name                      |Action Perfomed|
+|Function Name                      |Action Performed|
 |---                                |---|
 |setWaitForClick                    |Defines the time to wait before click on element|
 |setAutoScroll                      |Enables the option to auto scroll the view to the element (Default: true)|
@@ -90,7 +90,7 @@ There are different necessary services to manipulate variables in Selenium and a
 ## DateService
 This service helps to interact with a Date and perform different operations
 
-|Function Name                      |Action Perfomed|
+|Function Name                      |Action Performed|
 |---                                |---|
 |getDateTimeFormat                  |Returns the Date formatted as String|
 |getDateOffset                      |Returns the Date formatted as String with the amount of days added|
@@ -99,7 +99,7 @@ This service helps to interact with a Date and perform different operations
 ## ParameterService
 This service allows you to store or manipulate parameters
 
-|Function Name                      |Action Perfomed|
+|Function Name                      |Action Performed|
 |---                                |---|
 |setParameter                       |Sets a parameter to be stored|
 |getParameter                       |Returns the value of a previously stored parameter|
@@ -126,9 +126,30 @@ The performed Scan includes **Passive Scan**, **Active Scan** and **Spider Scan*
 |spiderScanTimeOut                  |30                     | Defines the Spider Scan TimeOut in minutes|
 |previousUrlScanned                 |""                     | Stores the previous URL scanned|
 
-|Function Name                      |Action Perfomed|
+|Function Name                      |Action Performed|
 |---                                |---|
 |runScanner                         |Runs the main scanner that includes all the defined scans, and it generates a HTML file report |
+
+Attack codes that **Active Scan** is using:
+
+|Attack Type                 |
+|---                         |
+|DIRECTORY BROWSING          |
+|PATH TRAVERSAL              |
+|REMOTE FILE INCLUSION       |
+|SOURCE CODE DISCLOSURE      |
+|EXTERNAL REDIRECT           |
+|BUFFER OVERFLOW             |
+|FORMAT STRING_ERROR         |
+|CRLF INJECTION              |
+|PARAMETER TAMPERING         |
+|SERVER SIDE INCLUDE         |
+|CROSS SITE SCRIPTING        |
+|SQL INJECTION               |
+|SCRIPT ACTIVE SCAN RULES    |
+|SERVER SIDE CODE INJECTION  |
+|REMOTE OS COMMAND INJECTION |
+
 
 ## Dependencies
 This project requires the next previous configurations:
