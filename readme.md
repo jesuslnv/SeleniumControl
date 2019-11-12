@@ -4,11 +4,11 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-# Selenium Control
+#Selenium Control
 
 This is a base project to use as "Base Library" in your main Selenium Projects which simplifies the declaration and use of web components.
 
-# Getting Started
+#Getting Started
 
 This project doesn't run anything by itself but you can compile and use it as a base library to call different components in your Selenium Web Testing:
 * [Components](#Components)
@@ -22,10 +22,10 @@ This project doesn't run anything by itself but you can compile and use it as a 
     * [ParameterService](#ParameterService)
     * [PenetrationTestingService](#PenetrationTestingService)
 
-# Components
+#Components
 There are different components two main components declared in the project:
 
-## Page
+##Page
 The Page component contains all the functions related to the **WebSite** that allows you to navigate it.
 
 |Function Name                      |Action Performed|
@@ -36,7 +36,7 @@ The Page component contains all the functions related to the **WebSite** that al
 |waitForModal                       |Wait for Modal to disappear|
 |waitForPageLoad                    |Wait for Page Load|
 
-## Control
+##Control
 The Control component contains all the functions to manipulate all the existing elements in the **WebSite**.
 
 |Function Name                      |Action Performed|
@@ -50,7 +50,7 @@ The Control component contains all the functions to manipulate all the existing 
 
 There is a list of different controls to be used: 
 
-#### A. ButtonControl
+####A. ButtonControl
 Is a control for manipulate any **Button** or **Link** in the **WebSite**.
 
 |Function Name                      |Action Performed|
@@ -62,7 +62,7 @@ Is a control for manipulate any **Button** or **Link** in the **WebSite**.
 |doubleClick                        |Allows to "Double Click" on specified Button Element|
 
 
-#### B. SelectControl
+####B. SelectControl
 Is a control for manipulate any **Select** in the **WebSite**.
 
 |Function Name                      |Action Performed|
@@ -73,7 +73,7 @@ Is a control for manipulate any **Select** in the **WebSite**.
 |selectButtonElement                |Allows to select the specified item inside a Select Element|
 |selectCheckBox                     |Allows to check multiple items inside a Select Element|
 
-#### C. TextControl
+####C. TextControl
 Is a control for manipulate any **Text** in the **WebSite**.
 
 |Function Name                      |Action Performed|
@@ -84,10 +84,10 @@ Is a control for manipulate any **Text** in the **WebSite**.
 |setTextAutoComplete                |Allows to select the specified item displayed after a Text Autocomplete Element|
 |getContainedText                   |Returns the text contained by the specified Element|
 
-# Services
+#Services
 There are different necessary services to manipulate variables in Selenium and also to run tests that don't belong to Selenium by default.
 
-## DateService
+##DateService
 This service helps to interact with a Date and perform different operations
 
 |Function Name                      |Action Performed|
@@ -96,7 +96,7 @@ This service helps to interact with a Date and perform different operations
 |getDateOffset                      |Returns the Date formatted as String with the amount of days added|
 |addMinutes                         |Returns the Date modified in Minutes as Date|
 
-## ParameterService
+##ParameterService
 This service allows you to store or manipulate parameters
 
 |Function Name                      |Action Performed|
@@ -106,7 +106,7 @@ This service allows you to store or manipulate parameters
 |encryptString                      |Used to encrypt a String|
 |decryptString                      |Used to decrypt a String|
 
-## PenetrationTestingService
+##PenetrationTestingService
 This service allows you to run a scanner that connects directly to a running **OWASP ZAP** instance and execute different tests to detect different security vulnerabilities.
 The performed Scan includes **Passive Scan**, **Active Scan** and **Spider Scan**.
 
@@ -151,7 +151,7 @@ Attack codes that **Active Scan** is using:
 |REMOTE OS COMMAND INJECTION |
 
 
-## Dependencies
+##Dependencies
 This project requires the next previous configurations:
 1. The [**Owasp Zap**](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project) instance running.
 2. The **Owasp Zap** apikey must be disabled.
@@ -162,7 +162,7 @@ Here is an example to run your ZAP with the previous described configuration.
 java -jar "ZAPLOCATION\zap-2.8.0.jar" -daemon -host 127.0.0.1 -port 9090 -config api.disablekey=true
 ```
 
-## Usage
+##Usage
 Generate a <**jar**> file using the next command:
 ```sh
 mvn clean -U package
@@ -202,6 +202,9 @@ textControl.setText(user);
 When you use any of the mentioned implementation, is important to initialize your **webDriver** parameter and set the proper **XPath** in each operation because each one is different for each call.
 Each component have a internal function specified at the beginning of this documentation.
 
+##Project Example
+Here is an [example](https://github.com/jesuslnv/Infrastructure) project that you can download and run on your PC to test this library working.
+Also the base documentation for this project is in the GitHub Readme and inside the source code.
 
 <!-- LINKS -->
 [stars-shield]: https://img.shields.io/github/stars/jesuslnv/SeleniumControl.svg
