@@ -179,7 +179,7 @@ In case you executed the previous command, you can call the dependency putting t
 <dependency>
     <groupId>SeleniumControl</groupId>
     <artifactId>SeleniumControl</artifactId>
-    <version>1.0.0</version>
+    <version>1.0</version>
 </dependency>
 ```
 
