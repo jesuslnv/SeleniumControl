@@ -203,7 +203,7 @@ When you use any of the mentioned implementation, is important to initialize you
 Each component have a internal function specified at the beginning of this documentation.
 
 ## Project Example
-Here is an [example](https://github.com/jesuslnv/Infrastructure) project that you can download and run on your PC to test this library working.
+Here is a [sample](https://github.com/jesuslnv/Infrastructure) project that you can download and run on your PC to test this library.
 Also the base documentation for this project is in the GitHub Readme and inside the source code.
 
 <!-- LINKS -->
