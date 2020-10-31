@@ -105,6 +105,9 @@ This service allows you to store or manipulate parameters
 |getParameter                       |Returns the value of a previously stored parameter|
 |encryptString                      |Used to encrypt a String|
 |decryptString                      |Used to decrypt a String|
+|requestGetService                  |Used to return a response from a URL |
+|requestPostService                 |Used to return a response from a URL|
+|requestPutService                  |Used to return a response from a URL |
 
 ## PenetrationTestingService
 This service allows you to run a scanner that connects directly to a running **OWASP ZAP** instance and execute different tests to detect different security vulnerabilities.
