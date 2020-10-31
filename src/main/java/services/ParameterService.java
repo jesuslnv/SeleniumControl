@@ -1,5 +1,12 @@
 package services;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -8,7 +15,10 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -88,5 +98,75 @@ public final class ParameterService {
             LOGGER.error("Error creating Custom Key Spec: {}", ex.getMessage());
         }
         return secretKeySpec;
+    }
+
+    /**
+     * @param url     Is the URL from the API to be tested
+     * @param headers Are the Headers from the API to be tested
+     * @return Returns the response from requested Service
+     */
+    public static HttpResponse requestGetService(String url, Map<String, String> headers) {
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpGet httpGet = new HttpGet(url);
+        for (Map.Entry<String, String> header : headers.entrySet()) {
+            httpGet.addHeader(header.getKey(), header.getValue());
+        }
+        try {
+            LOGGER.info("Starting HttpGet Service Test for API: " + url);
+            return httpClient.execute(httpGet);
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @param url              Is the URL from the API to be tested
+     * @param headers          Are the Headers from the API to be tested
+     * @param bodyFileLocation Is the Body File location to use
+     * @return Returns the response from requested Service
+     */
+    public static HttpResponse requestPostService(String url, Map<String, String> headers, String bodyFileLocation) {
+        //Start HTTP Parameters
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost(url);
+        for (Map.Entry<String, String> header : headers.entrySet()) {
+            httpPost.addHeader(header.getKey(), header.getValue());
+        }
+        try {
+            String body = new String(Files.readAllBytes(Paths.get(bodyFileLocation)));
+            StringEntity stringEntity = new StringEntity(body);
+            httpPost.setEntity(stringEntity);
+            LOGGER.info("Starting HttpPost Service Test for API: " + url);
+            return httpClient.execute(httpPost);
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * @param url              Is the URL from the API to be tested
+     * @param headers          Are the Headers from the API to be tested
+     * @param bodyFileLocation Is the Body File location to use
+     * @return Returns the response from requested Service
+     */
+    public static HttpResponse requestPutService(String url, Map<String, String> headers, String bodyFileLocation) {
+        //Start HTTP Parameters
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        HttpPut httpPut = new HttpPut(url);
+        for (Map.Entry<String, String> header : headers.entrySet()) {
+            httpPut.addHeader(header.getKey(), header.getValue());
+        }
+        try {
+            String body = new String(Files.readAllBytes(Paths.get(bodyFileLocation)));
+            StringEntity stringEntity = new StringEntity(body);
+            httpPut.setEntity(stringEntity);
+            LOGGER.info("Starting HttpPut Service Test for API: " + url);
+            return httpClient.execute(httpPut);
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage());
+            return null;
+        }
     }
 }
