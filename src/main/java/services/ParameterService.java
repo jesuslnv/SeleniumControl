@@ -106,12 +106,11 @@ public final class ParameterService {
      * @return Returns the response from requested Service
      */
     public static HttpResponse requestGetService(String url, Map<String, String> headers) {
-        CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet(url);
         for (Map.Entry<String, String> header : headers.entrySet()) {
             httpGet.addHeader(header.getKey(), header.getValue());
         }
-        try {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             LOGGER.info("Starting HttpGet Service Test for API: " + url);
             return httpClient.execute(httpGet);
         } catch (IOException e) {
@@ -127,13 +126,11 @@ public final class ParameterService {
      * @return Returns the response from requested Service
      */
     public static HttpResponse requestPostService(String url, Map<String, String> headers, String bodyFileLocation) {
-        //Start HTTP Parameters
-        CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(url);
         for (Map.Entry<String, String> header : headers.entrySet()) {
             httpPost.addHeader(header.getKey(), header.getValue());
         }
-        try {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             String body = new String(Files.readAllBytes(Paths.get(bodyFileLocation)));
             StringEntity stringEntity = new StringEntity(body);
             httpPost.setEntity(stringEntity);
@@ -152,13 +149,11 @@ public final class ParameterService {
      * @return Returns the response from requested Service
      */
     public static HttpResponse requestPutService(String url, Map<String, String> headers, String bodyFileLocation) {
-        //Start HTTP Parameters
-        CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPut httpPut = new HttpPut(url);
         for (Map.Entry<String, String> header : headers.entrySet()) {
             httpPut.addHeader(header.getKey(), header.getValue());
         }
-        try {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             String body = new String(Files.readAllBytes(Paths.get(bodyFileLocation)));
             StringEntity stringEntity = new StringEntity(body);
             httpPut.setEntity(stringEntity);
