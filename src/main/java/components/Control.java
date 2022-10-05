@@ -5,11 +5,22 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public abstract class Control {
     protected final WebDriver webDriver;
     protected String xPath;
     protected int xPosition = 0;
     protected int yPosition = 0;
+
+    /**
+     * @param webDriver WebDriver base Definition
+     * @param xPath     Base Component xPath to use
+     */
+    protected Control(WebDriver webDriver, String xPath) {
+        this.webDriver = webDriver;
+        this.xPath = xPath;
+    }
 
     /**
      * @param xPosition Defines the X Position to Move the View
@@ -26,19 +37,10 @@ public abstract class Control {
     }
 
     /**
-     * @param webDriver WebDriver base Definition
-     * @param xPath     Base Component xPath to use
-     */
-    protected Control(WebDriver webDriver, String xPath) {
-        this.webDriver = webDriver;
-        this.xPath = xPath;
-    }
-
-    /**
      * @return True or False if the control Exists or Not
      */
     public boolean isControlExist() {
-        WebDriverWait wait = new WebDriverWait(webDriver, 60);
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(60));
         WebElement webElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xPath)));
         return (webElement != null);
     }
@@ -48,7 +50,7 @@ public abstract class Control {
      */
     public void dragAndDrop(String dropElementXpath) {
         Actions actions = new Actions(webDriver);
-        WebDriverWait wait = new WebDriverWait(webDriver, 60);
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(60));
         WebElement elementSource = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
         WebElement elementTarget = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(dropElementXpath)));
         ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(" + xPosition + "," + yPosition + ")", "");
@@ -60,7 +62,7 @@ public abstract class Control {
      */
     public void mouseHover() {
         Actions actions = new Actions(webDriver);
-        WebDriverWait wait = new WebDriverWait(webDriver, 60);
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(60));
         WebElement elementSource = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
         ((JavascriptExecutor) webDriver).executeScript("window.scrollBy(" + xPosition + "," + yPosition + ")", "");
         actions.moveToElement(elementSource).build().perform();
@@ -70,7 +72,7 @@ public abstract class Control {
      * @param keySent stores a Key to send in the predefined Element by xPath
      */
     public void sendkeyToElement(Keys keySent) {
-        WebDriverWait wait = new WebDriverWait(webDriver, 60);
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(60));
         WebElement elementSource = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
         elementSource.sendKeys(keySent);
     }

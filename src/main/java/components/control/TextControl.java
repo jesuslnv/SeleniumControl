@@ -11,6 +11,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public final class TextControl extends Control {
     private static final Logger LOGGER = LogManager.getLogger();
     private int timeOut = 60;
@@ -18,6 +20,24 @@ public final class TextControl extends Control {
     private long waitForClick = 0;
     private boolean cleanText = true;
     private boolean autoScroll = true;
+
+    /**
+     * @param webDriver WebDriver base Definition
+     * @param xPath     Base Component xPath to use
+     */
+    public TextControl(WebDriver webDriver, String xPath) {
+        super(webDriver, xPath);
+    }
+
+    /**
+     * @param webDriver   WebDriver base Definition
+     * @param xPath       Base Component xPath to use
+     * @param condTimeOut TimeOut to modify (Base is 60 seconds)
+     */
+    public TextControl(WebDriver webDriver, String xPath, int condTimeOut) {
+        super(webDriver, xPath);
+        this.timeOut = condTimeOut;
+    }
 
     /**
      * @param waitAfterClean Defines the time to wait after clean a Text
@@ -48,29 +68,10 @@ public final class TextControl extends Control {
     }
 
     /**
-     * @param webDriver WebDriver base Definition
-     * @param xPath     Base Component xPath to use
-     */
-    public TextControl(WebDriver webDriver, String xPath) {
-        super(webDriver, xPath);
-    }
-
-    /**
-     * @param webDriver   WebDriver base Definition
-     * @param xPath       Base Component xPath to use
-     * @param condTimeOut TimeOut to modify (Base is 60 seconds)
-     */
-    public TextControl(WebDriver webDriver, String xPath, int condTimeOut) {
-        super(webDriver, xPath);
-        this.timeOut = condTimeOut;
-    }
-
-    /**
-     *
      * @param value Is the text value to be written
      */
     public void setText(String value) {
-        WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(timeOut));
         WebElement inputText = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
         if (autoScroll) {
             navigateToElementLocation(inputText);
@@ -96,7 +97,7 @@ public final class TextControl extends Control {
         //Using the base SetText
         setText(value);
         //Adding an option to Click on the displayed autocomplete popup when you write the text
-        WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(timeOut));
         WebElement inputAutoComplete = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(autoCompleteXpath)));
         Actions actions = new Actions(webDriver);
         try {
@@ -112,7 +113,7 @@ public final class TextControl extends Control {
      * @return Returns the text contained by the specified xPath Element
      */
     public String getContainedText() {
-        WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(timeOut));
         WebElement inputUser = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
         return inputUser.getText();
     }

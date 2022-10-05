@@ -6,26 +6,31 @@
 
 # Selenium Control
 
-This is a base project to use as "Base Library" in your main Selenium Projects which simplifies the declaration and use of web components.
+This is a base project to use as "Base Library" in your main Selenium Projects which simplifies the declaration and use
+of web components.
 
 # Getting Started
 
-This project doesn't run anything by itself but you can compile and use it as a base library to call different components in your Selenium Web Testing:
+This project doesn't run anything by itself but you can compile and use it as a base library to call different
+components in your Selenium Web Testing:
+
 * [Components](#Components)
     * [Page](#Page)
     * [Control](#Control)
-      1. [ButtonControl](#a-buttoncontrol)
-      2. [SelectControl](#b-SelectControl)
-      3. [TextControl](#c-TextControl)
+        1. [ButtonControl](#a-buttoncontrol)
+        2. [SelectControl](#b-SelectControl)
+        3. [TextControl](#c-TextControl)
 * [Services](#Services)
     * [DateService](#DateService)
     * [ParameterService](#ParameterService)
     * [PenetrationTestingService](#PenetrationTestingService)
 
 # Components
+
 There are different components two main components declared in the project:
 
 ## Page
+
 The Page component contains all the functions related to the **WebSite** that allows you to navigate it.
 
 |Function Name                      |Action Performed|
@@ -37,6 +42,7 @@ The Page component contains all the functions related to the **WebSite** that al
 |waitForPageLoad                    |Wait for Page Load|
 
 ## Control
+
 The Control component contains all the functions to manipulate all the existing elements in the **WebSite**.
 
 |Function Name                      |Action Performed|
@@ -48,9 +54,10 @@ The Control component contains all the functions to manipulate all the existing 
 |mouseHover                         |Locates the mouse in specified Xpath|
 |sendkeyToElement                   |Sends a keystroke to the predefined Element by Xpath|
 
-There is a list of different controls to be used: 
+There is a list of different controls to be used:
 
 #### A. ButtonControl
+
 Is a control for manipulate any **Button** or **Link** in the **WebSite**.
 
 |Function Name                      |Action Performed|
@@ -61,8 +68,8 @@ Is a control for manipulate any **Button** or **Link** in the **WebSite**.
 |rightClick                         |Allows to "Right Click" on specified Button Element|
 |doubleClick                        |Allows to "Double Click" on specified Button Element|
 
-
 #### B. SelectControl
+
 Is a control for manipulate any **Select** in the **WebSite**.
 
 |Function Name                      |Action Performed|
@@ -74,6 +81,7 @@ Is a control for manipulate any **Select** in the **WebSite**.
 |selectCheckBox                     |Allows to check multiple items inside a Select Element|
 
 #### C. TextControl
+
 Is a control for manipulate any **Text** in the **WebSite**.
 
 |Function Name                      |Action Performed|
@@ -85,9 +93,12 @@ Is a control for manipulate any **Text** in the **WebSite**.
 |getContainedText                   |Returns the text contained by the specified Element|
 
 # Services
-There are different necessary services to manipulate variables in Selenium and also to run tests that don't belong to Selenium by default.
+
+There are different necessary services to manipulate variables in Selenium and also to run tests that don't belong to
+Selenium by default.
 
 ## DateService
+
 This service helps to interact with a Date and perform different operations
 
 |Function Name                      |Action Performed|
@@ -97,6 +108,7 @@ This service helps to interact with a Date and perform different operations
 |addMinutes                         |Returns the Date modified in Minutes as Date|
 
 ## ParameterService
+
 This service allows you to store or manipulate parameters
 
 |Function Name                      |Action Performed|
@@ -110,7 +122,9 @@ This service allows you to store or manipulate parameters
 |requestPutService                  |Used to return a response from a URL |
 
 ## PenetrationTestingService
-This service allows you to run a scanner that connects directly to a running **OWASP ZAP** instance and execute different tests to detect different security vulnerabilities.
+
+This service allows you to run a scanner that connects directly to a running **OWASP ZAP** instance and execute
+different tests to detect different security vulnerabilities.
 The performed Scan includes **Passive Scan**, **Active Scan** and **Spider Scan**.
 
 |Predefined Vars                    |Default Value          | Description |
@@ -153,32 +167,42 @@ Attack codes that **Active Scan** is using:
 |SERVER SIDE CODE INJECTION  |
 |REMOTE OS COMMAND INJECTION |
 
-
 ## Dependencies
+
 This project requires the next previous configurations:
+
 1. The [**Owasp Zap**](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project) instance running.
 2. The **Owasp Zap** apikey must be disabled.
-3. The **Owasp Zap** must be configured with the same **IP** and **PORT** that you are going to use in your project. 
+3. The **Owasp Zap** must be configured with the same **IP** and **PORT** that you are going to use in your project.
 
 Here is an example to run your ZAP with the previous described configuration.
+
 ```sh
 java -jar "ZAPLOCATION\zap-2.8.0.jar" -daemon -host 127.0.0.1 -port 9090 -config api.disablekey=true
 ```
 
 ## Usage
+
 Generate a <**jar**> file using the next command:
+
 ```sh
 mvn clean -U package
 ```
+
 When you have the <**jar**> file ready, you can import it in your project to call the scanner.
 
 ---
 To install your library to use it as a normal dependency, you should execute this command:
+
 ```sh
 mvn clean -U install
 ```
-In case you executed the previous command, you can call the dependency putting this dependency rule in your **POM.xml** file.
+
+In case you executed the previous command, you can call the dependency putting this dependency rule in your **POM.xml**
+file.
+
 ```xml
+
 <dependency>
     <groupId>SeleniumControl</groupId>
     <artifactId>SeleniumControl</artifactId>
@@ -186,37 +210,58 @@ In case you executed the previous command, you can call the dependency putting t
 </dependency>
 ```
 
-When your project library is imported the next step is call an element in your main project referencing the proper **XPath**.
+When your project library is imported the next step is call an element in your main project referencing the proper **
+XPath**.
+
 - Example to use a **ButtonControl** java implementation:
+
 ```java
-ButtonControl buttonControl = new ButtonControl(webDriver, "XPATH");
-buttonControl.click();
+ButtonControl buttonControl=new ButtonControl(webDriver,"XPATH");
+        buttonControl.click();
 ```
+
 - Example to use a **SelectControl** java implementation:
+
 ```java
-SelectControl selectControl = new ButtonControl(webDriver, "XPATH");
-selectControl.isControlExist();
+SelectControl selectControl=new ButtonControl(webDriver,"XPATH");
+        selectControl.isControlExist();
 ```
+
 - Example to use a **TextControl** java implementation:
+
 ```java
-TextControl textControl = new TextControl(webDriver, "XPATH");
-textControl.setText(user);
+TextControl textControl=new TextControl(webDriver,"XPATH");
+        textControl.setText(user);
 ```
-When you use any of the mentioned implementation, is important to initialize your **webDriver** parameter and set the proper **XPath** in each operation because each one is different for each call.
+
+When you use any of the mentioned implementation, is important to initialize your **webDriver** parameter and set the
+proper **XPath** in each operation because each one is different for each call.
 Each component have a internal function specified at the beginning of this documentation.
 
 ## Project Example
-Here is a [sample](https://github.com/jesuslnv/Infrastructure) project that you can download and run on your PC to test this library.
+
+Here is a [sample](https://github.com/jesuslnv/Infrastructure) project that you can download and run on your PC to test
+this library.
 Also the base documentation for this project is in the GitHub Readme and inside the source code.
 
 <!-- LINKS -->
+
 [stars-shield]: https://img.shields.io/github/stars/jesuslnv/SeleniumControl.svg
+
 [stars-url]: https://github.com/jesuslnv/SeleniumControl/stargazers
+
 [travis-shield]: https://travis-ci.com/jesuslnv/SeleniumControl.svg?branch=master
+
 [travis-url]: https://travis-ci.com/jesuslnv/SeleniumControl
+
 [sonar-shield]: https://sonarcloud.io/api/project_badges/measure?project=jesuslnv_SeleniumControl&metric=alert_status
+
 [sonar-url]: https://sonarcloud.io/dashboard?id=jesuslnv_SeleniumControl
+
 [license-shield]: https://img.shields.io/badge/License-MIT-green.svg
+
 [license-url]: https://github.com/jesuslnv/SeleniumControl/blob/master/LICENSE
+
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=1E5799
+
 [linkedin-url]: https://pe.linkedin.com/in/jesus-luis-neira-vizcarra-27b4b31a

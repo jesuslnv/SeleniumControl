@@ -11,27 +11,13 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public final class ButtonControl extends Control {
     private static final Logger LOGGER = LogManager.getLogger();
     private int timeOut = 60;
     private long waitForClick = 0;
     private boolean autoScroll = true;
-
-    /**
-     * Defines the time to wait before click on element
-     * @param waitForClick Defines the time to wait before click on element
-     */
-    public void setWaitForClick(int waitForClick) {
-        this.waitForClick = waitForClick;
-    }
-
-    /**
-     *
-     * @param autoScroll Enables the option to auto scroll the view to the element (Default: true)
-     */
-    public void setAutoScroll(boolean autoScroll) {
-        this.autoScroll = autoScroll;
-    }
 
     /**
      * @param webDriver WebDriver base Definition
@@ -52,10 +38,26 @@ public final class ButtonControl extends Control {
     }
 
     /**
+     * Defines the time to wait before click on element
+     *
+     * @param waitForClick Defines the time to wait before click on element
+     */
+    public void setWaitForClick(int waitForClick) {
+        this.waitForClick = waitForClick;
+    }
+
+    /**
+     * @param autoScroll Enables the option to auto scroll the view to the element (Default: true)
+     */
+    public void setAutoScroll(boolean autoScroll) {
+        this.autoScroll = autoScroll;
+    }
+
+    /**
      * Allows to "Click" on specified xPath Element
      */
     public void click() {
-        WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(timeOut));
         WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
         if (autoScroll) {
             navigateToElementLocation(btn);
@@ -73,7 +75,7 @@ public final class ButtonControl extends Control {
      * Allows to "Right Click" on specified xPath Element
      */
     public void rightClick() {
-        WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(timeOut));
         WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
         if (autoScroll) {
             navigateToElementLocation(btn);
@@ -92,7 +94,7 @@ public final class ButtonControl extends Control {
      * Allows to "Double Click" on specified xPath Element
      */
     public void doubleClick() {
-        WebDriverWait wait = new WebDriverWait(webDriver, timeOut);
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(timeOut));
         WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xPath)));
         if (autoScroll) {
             navigateToElementLocation(btn);

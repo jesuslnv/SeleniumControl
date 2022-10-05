@@ -29,8 +29,8 @@ import java.util.Map;
 
 public final class ParameterService {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static Map<String, String> scDictionary = new HashMap<>();
     private static final String ENCRYPT_KEY = "KeyGeneratedByJesusLNV";
+    private static Map<String, String> scDictionary = new HashMap<>();
 
     private ParameterService() {
     }

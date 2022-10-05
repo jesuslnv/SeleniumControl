@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 
 public abstract class Page {
@@ -65,7 +66,7 @@ public abstract class Page {
             switchToTab(mainTabName);
         }
         webDriver.navigate().to("about:downloads");
-        WebDriverWait wait = new WebDriverWait(webDriver, timeOutDownload);
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(timeOutDownload));
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//*[contains(@displayName,'" + fileName + "') and @progress='100'])[1]")));
         return true;
     }
@@ -77,7 +78,7 @@ public abstract class Page {
     public void waitForModal(String modalXPath, int timeOut) {
         try {
             boolean isVisible = false;
-            WebDriverWait wait = new WebDriverWait(webDriver, 5);
+            WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(5));
             wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(modalXPath)));
             for (int i = 0; i < timeOut; i++) {
                 isVisible = !webDriver.findElements(By.xpath(modalXPath)).isEmpty();
@@ -100,8 +101,11 @@ public abstract class Page {
      * @param timeOutLoad Time in seconds to wait until Page Loads
      */
     public void waitForPageLoad(int timeOutLoad) {
-        WebDriverWait wait = new WebDriverWait(webDriver, timeOutLoad);
-        ExpectedCondition<Boolean> pageLoadCondition = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(timeOutLoad));
+        ExpectedCondition<Boolean> pageLoadCondition = driver -> {
+            assert driver != null;
+            return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+        };
         wait.until(pageLoadCondition);
     }
 }
