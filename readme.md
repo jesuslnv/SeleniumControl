@@ -202,7 +202,6 @@ In case you executed the previous command, you can call the dependency putting t
 file.
 
 ```xml
-
 <dependency>
     <groupId>SeleniumControl</groupId>
     <artifactId>SeleniumControl</artifactId>
@@ -215,23 +214,23 @@ XPath**.
 
 - Example to use a **ButtonControl** java implementation:
 
-```java
+```bash
 ButtonControl buttonControl=new ButtonControl(webDriver,"XPATH");
-        buttonControl.click();
+buttonControl.click();
 ```
 
 - Example to use a **SelectControl** java implementation:
 
-```java
+```bash
 SelectControl selectControl=new ButtonControl(webDriver,"XPATH");
-        selectControl.isControlExist();
+selectControl.isControlExist();
 ```
 
 - Example to use a **TextControl** java implementation:
 
-```java
+```bash
 TextControl textControl=new TextControl(webDriver,"XPATH");
-        textControl.setText(user);
+textControl.setText(user);
 ```
 
 When you use any of the mentioned implementation, is important to initialize your **webDriver** parameter and set the
@@ -242,7 +241,7 @@ Each component have a internal function specified at the beginning of this docum
 
 Here is a [sample](https://github.com/jesuslnv/Infrastructure) project that you can download and run on your PC to test
 this library.
-Also the base documentation for this project is in the GitHub Readme and inside the source code.
+The base documentation for this project is in the GitHub Readme and inside the source code.
 
 <!-- LINKS -->
 
