@@ -121,66 +121,6 @@ This service allows you to store or manipulate parameters
 |requestPostService                 |Used to return a response from a URL|
 |requestPutService                  |Used to return a response from a URL |
 
-## PenetrationTestingService
-
-This service allows you to run a scanner that connects directly to a running **OWASP ZAP** instance and execute
-different tests to detect different security vulnerabilities.
-The performed Scan includes **Passive Scan**, **Active Scan** and **Spider Scan**.
-
-|Predefined Vars                    |Default Value          | Description |
-|---                                |---                    |---          |
-|httpIp                             |"127.0.0.1"            | Defines the IP where the OwaspZap is running|
-|httpPort                           |9090                   | Defines the PORT where the OwaspZap is using|
-|scannerStrength                    |"High"                 | Defines the Scanner Strength to be considered in all the Scans|
-|scannerThreshold                   |"Low"                  | Defines the Scanner Threshold to be considered in all the Scans|
-|reportFileLocation                 |"target/zapReport/"    | Defines the location for the report File|
-|reportFileName                     |"report"               | Defines the report File Name|
-|enableHTMLReport                   |true                   | Enables the HTML report generation (True = Enabled, False = Disabled)|
-|enableJSONReport                   |true                   | Enables the JSON report generation (True = Enabled, False = Disabled)|
-|enablePassiveScan                  |true                   | Enables the Passive Scanner (True = Enabled, False = Disabled)|
-|enableActiveScan                   |true                   | Enables the Active Scanner (True = Enabled, False = Disabled)|
-|enableSpiderScan                   |true                   | Enables the Spider Scanner (True = Enabled, False = Disabled)|
-|spiderScanTimeOut                  |30                     | Defines the Spider Scan TimeOut in minutes|
-|previousUrlScanned                 |""                     | Stores the previous URL scanned|
-
-|Function Name                      |Action Performed|
-|---                                |---|
-|runScanner                         |Runs the main scanner that includes all the defined scans, and it generates a HTML file report |
-
-Attack codes that **Active Scan** is using:
-
-|Attack Type                 |
-|---                         |
-|DIRECTORY BROWSING          |
-|PATH TRAVERSAL              |
-|REMOTE FILE INCLUSION       |
-|SOURCE CODE DISCLOSURE      |
-|EXTERNAL REDIRECT           |
-|BUFFER OVERFLOW             |
-|FORMAT STRING_ERROR         |
-|CRLF INJECTION              |
-|PARAMETER TAMPERING         |
-|SERVER SIDE INCLUDE         |
-|CROSS SITE SCRIPTING        |
-|SQL INJECTION               |
-|SCRIPT ACTIVE SCAN RULES    |
-|SERVER SIDE CODE INJECTION  |
-|REMOTE OS COMMAND INJECTION |
-
-## Dependencies
-
-This project requires the next previous configurations:
-
-1. The [**Owasp Zap**](https://www.owasp.org/index.php/OWASP_Zed_Attack_Proxy_Project) instance running.
-2. The **Owasp Zap** apikey must be disabled.
-3. The **Owasp Zap** must be configured with the same **IP** and **PORT** that you are going to use in your project.
-
-Here is an example to run your ZAP with the previous described configuration.
-
-```sh
-java -jar "ZAPLOCATION\zap-2.8.0.jar" -daemon -host 127.0.0.1 -port 9090 -config api.disablekey=true
-```
-
 ## Usage
 
 Generate a <**jar**> file using the next command:
